@@ -50,7 +50,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: trackmymeal.jar
-          path: backend/target/app.jar # must match the finalName in the pom.xml
+          path: backend/target/trackmymeal.jar # must match the finalName in the pom.xml
 
   push-to-docker-hub:
     runs-on: ubuntu-latest
