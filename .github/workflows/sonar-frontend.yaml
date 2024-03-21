@@ -1,4 +1,4 @@
-name: SonarCloud - Backend
+name: SonarCloud - Frontend
 on:
   push:
     branches:
