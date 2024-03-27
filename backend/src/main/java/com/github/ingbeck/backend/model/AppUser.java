@@ -16,7 +16,7 @@ import java.util.Map;
 public class AppUser {
     private String id;
     private String name;
-    private String birthdate;
+    private int age;
     private String avatarUrl;
     private Gender gender;
     private int height;
@@ -29,7 +29,7 @@ public class AppUser {
     public AppUser(Map<String, Object> attributes){
         this.id = getStringAttribute(attributes, "sub");
         this.name = getStringAttribute(attributes, "name");
-        this.birthdate = "";
+        this.age = 0;
         this.avatarUrl = getStringAttribute(attributes, "picture");
         this.gender = null;
         this.height = 0;

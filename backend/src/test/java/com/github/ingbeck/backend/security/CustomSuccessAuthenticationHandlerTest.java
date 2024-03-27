@@ -44,7 +44,7 @@ class CustomSuccessAuthenticationHandlerTest {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("sub", "987654321");
             attributes.put("name", "Max Mustermann");
-            attributes.put("birthdate", "1991-14-07");
+            attributes.put("age", 0);
             attributes.put("picture", "https://example.com/mustermax.jpg");
             attributes.put("gender", null);
             attributes.put("height", 0);
@@ -59,7 +59,7 @@ class CustomSuccessAuthenticationHandlerTest {
             AppUser user = new AppUser(
                     "987654321",
                     "Max Mustermann",
-                    "1991-14-07",
+                    0,
                     "https://example.com/mustermax.jpg",
                     null,
                     0,
@@ -92,7 +92,7 @@ class CustomSuccessAuthenticationHandlerTest {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("sub", "987654321");
             attributes.put("name", "Max Mustermann");
-            attributes.put("birthdate", "1991-14-07");
+            attributes.put("age", 0);
             attributes.put("picture", "https://example.com/mustermax.jpg");
             attributes.put("gender", null);
             attributes.put("height", 0);
@@ -107,7 +107,7 @@ class CustomSuccessAuthenticationHandlerTest {
             AppUser user = new AppUser(
                     "987654321",
                     "Max Mustermann",
-                    "1991-14-07",
+                    0,
                     "https://example.com/mustermax.jpg",
                     null,
                     0,
