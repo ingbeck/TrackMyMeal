@@ -1,6 +1,6 @@
 
 import {AppUser} from "../types/AppUser.ts";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {
     Button,
     FormControl,
@@ -34,6 +34,7 @@ type FormInput = {
 export default function RegistrationScreen(props: Readonly<RegistrationScreenProps>) {
 
     const params = useParams()
+    const navigate = useNavigate()
     const initialFormData:FormInput = {
         birthdateDay:0,
         birthdateMonth:0,
@@ -81,8 +82,9 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
             weight : Number(formData.weight),
             activityLevel : formData.activityLevel
         }
-        props.createUser(params.id, appUserCreateDto)
         e.preventDefault()
+        props.createUser(params.id, appUserCreateDto)
+        navigate("/home")
     }
 
 
@@ -94,10 +96,10 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
             </div>
             <form className={"regscreen-form"} onSubmit={handleOnSubmit}>
                 <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Geschlecht</InputLabel>
+                    <InputLabel>Geschlecht</InputLabel>
                     <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
+                        labelId="gender"
+                        id="gender"
                         label="Geschlecht"
                         name={"gender"}
                         onChange={handleSelectChange}
@@ -108,7 +110,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                 </FormControl>
                 <div className={"regscreen-form-date-wrapper"}>
                     <TextField
-                        id="filled-number"
                         label="Tag"
                         type="number"
                         InputLabelProps={{
@@ -119,7 +120,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                         onChange={handleChange}
                     />
                     <TextField
-                        id="filled-number"
                         label="Monat"
                         type="number"
                         InputLabelProps={{
@@ -130,7 +130,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                         onChange={handleChange}
                     />
                     <TextField
-                        id="filled-number"
                         label="Jahr"
                         type="number"
                         InputLabelProps={{
@@ -143,7 +142,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                 </div>
                 <FormControl fullWidth>
                 <TextField
-                    id="filled-number"
                     label="Größe"
                     type="number"
                     InputLabelProps={{
@@ -159,7 +157,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                 </FormControl>
                 <FormControl fullWidth>
                 <TextField
-                    id="filled-number"
                     label="Gewicht"
                     type="number"
                     InputLabelProps={{
@@ -174,9 +171,9 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                 />
                 </FormControl>
                 <FormControl>
-                    <FormLabel id="demo-radio-buttons-group-label">Wie aktiv bist du?</FormLabel>
+                    <FormLabel>Wie aktiv bist du?</FormLabel>
                 <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
+                    aria-labelledby="group-label"
                     defaultValue="female"
                     name="activityLevel"
                     onChange={handleChange}

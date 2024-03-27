@@ -51,6 +51,7 @@ export default function App() {
       <Layout>
           <Routes>
               <Route path={"/"} element={<StartScreen login={login}/>}/>
+              <Route path={"/home"} element={<h1>Home</h1>}/>
               <Route path={"/registration/:id"} element={<RegistrationScreen getUser={getAppUser} createUser={createUser} appUser={appUser}/>}/>
           </Routes>
       </Layout>
