@@ -44,6 +44,7 @@ class UserControllerTest {
         AppUser appUser = new AppUser(
                 "1",
                 "Max Mustermann",
+                "14.06.1991",
                 0,
                 "https://example.com/mustermax.jpg",
                 null,
@@ -61,7 +62,7 @@ class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {
-                          "age": 32,
+                          "birthdate": "14.06.1991",
                           "gender" : "MALE",
                           "height": 180,
                           "weight": 90,
@@ -74,6 +75,7 @@ class UserControllerTest {
                                         {
                                             "id": "1",
                                             "name": "Max Mustermann",
+                                            "birthdate": "14.06.1991",
                                             "age": 32,
                                             "avatarUrl": "https://example.com/mustermax.jpg",
                                             "gender": "MALE",

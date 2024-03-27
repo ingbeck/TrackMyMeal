@@ -8,6 +8,12 @@ import com.nimbusds.openid.connect.sdk.claims.Gender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.DateFormatter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Service
@@ -20,13 +26,14 @@ public class UserService {
     }
 
     public AppUser createUser(String id, AppUserCreateDto appUserCreateDto){
-        int bmr = (int)calculateBMR(appUserCreateDto.height(), appUserCreateDto.weight(), appUserCreateDto.age(), appUserCreateDto.gender());
+        int bmr = (int)calculateBMR(appUserCreateDto.height(), appUserCreateDto.weight(), calculateAge(appUserCreateDto.birthdate()), appUserCreateDto.gender());
         int bmrWithActivity = (int)(bmr * appUserCreateDto.activityLevel().getLevel());
         AppUser currentUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Element with id: " + id + " not in database!"));
         AppUser appUserToSave = new AppUser(
                 id,
                 currentUser.getName(),
-                appUserCreateDto.age(),
+                appUserCreateDto.birthdate(),
+                calculateAge(appUserCreateDto.birthdate()),
                 currentUser.getAvatarUrl(),
                 appUserCreateDto.gender(),
                 appUserCreateDto.height(),
@@ -45,5 +52,12 @@ public class UserService {
         }else{
             return 655.1 + 9.563 * weight + 1.85 * height - 4.676 * age;
         }
+    }
+
+    private int calculateAge(String birthdate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDateTime dateBirthdate = LocalDate.parse(birthdate, formatter).atStartOfDay();
+
+        return (int)ChronoUnit.YEARS.between(dateBirthdate, LocalDateTime.now());
     }
 }

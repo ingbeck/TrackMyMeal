@@ -1,6 +1,5 @@
 package com.github.ingbeck.backend.model;
 
-import com.nimbusds.openid.connect.sdk.claims.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +15,7 @@ import java.util.Map;
 public class AppUser {
     private String id;
     private String name;
+    private String birthdate;
     private int age;
     private String avatarUrl;
     private AppUserGender gender;
@@ -29,6 +29,7 @@ public class AppUser {
     public AppUser(Map<String, Object> attributes){
         this.id = getStringAttribute(attributes, "sub");
         this.name = getStringAttribute(attributes, "name");
+        this.birthdate = "";
         this.age = 0;
         this.avatarUrl = getStringAttribute(attributes, "picture");
         this.gender = null;

@@ -22,7 +22,7 @@ class UserServiceTest {
     void createUser_whenUserExistsAndCalledWithValidAppUserCreateDto_thenReturnAppUserWithDtosValue(){
         //GIVEN
         AppUserCreateDto appUserCreateDto = new AppUserCreateDto(
-                32,
+                "14.06.1991",
                 AppUserGender.MALE,
                 180,
                 90,
@@ -45,7 +45,7 @@ class UserServiceTest {
     void createUser_whenCalledWithInvalidIID_thenThrowException() throws NoSuchElementException{
         //GIVEN
         AppUserCreateDto appUserCreateDto = new AppUserCreateDto(
-                32,
+                "14.06.1991",
                 AppUserGender.MALE,
                 180,
                 90,
@@ -56,12 +56,13 @@ class UserServiceTest {
     }
 
     private static AppUser getAppUser(AppUserCreateDto appUserCreateDto) {
-        int bmr = (int)(66.47 + 13.75 * appUserCreateDto.weight() + 5.003 * appUserCreateDto.height() - 6.755 * appUserCreateDto.age());
+        int bmr = (int)(66.47 + 13.75 * appUserCreateDto.weight() + 5.003 * appUserCreateDto.height() - 6.755 * 32);
         int bmrWithActivity = (int)(bmr * appUserCreateDto.activityLevel().getLevel());
 
         AppUser expected = new AppUser(
                 "1",
                 "Max Mustermann",
+                "14.06.1991",
                 32,
                 "https://example.com/mustermax.jpg",
                 AppUserGender.MALE,

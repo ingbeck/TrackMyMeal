@@ -59,6 +59,7 @@ class CustomSuccessAuthenticationHandlerTest {
             AppUser user = new AppUser(
                     "987654321",
                     "Max Mustermann",
+                    "",
                     0,
                     "https://example.com/mustermax.jpg",
                     null,
@@ -107,6 +108,7 @@ class CustomSuccessAuthenticationHandlerTest {
             AppUser user = new AppUser(
                     "987654321",
                     "Max Mustermann",
+                    "",
                     0,
                     "https://example.com/mustermax.jpg",
                     null,
