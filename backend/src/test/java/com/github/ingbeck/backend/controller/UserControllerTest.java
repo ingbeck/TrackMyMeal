@@ -76,14 +76,12 @@ class UserControllerTest {
                                             "name": "Max Mustermann",
                                             "age": 32,
                                             "avatarUrl": "https://example.com/mustermax.jpg",
-                                            "gender": {
-                                                "value": "MALE"
-                                            },
+                                            "gender": "MALE",
                                             "height": 180,
                                             "weight": 90,
                                             "activityLevel": "COUCHPOTATO",
-                                            "bmr": 1699,
-                                            "bmrWithActivity": 2038,
+                                            "bmr": 1988,
+                                            "bmrWithActivity": 2385,
                                             "newUser": false
                                         }
                                         """));

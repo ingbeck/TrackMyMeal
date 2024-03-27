@@ -18,7 +18,7 @@ public class AppUser {
     private String name;
     private int age;
     private String avatarUrl;
-    private Gender gender;
+    private AppUserGender gender;
     private int height;
     private int weight;
     private ActivityLevel activityLevel;

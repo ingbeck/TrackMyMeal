@@ -20,6 +20,11 @@ public class UserController {
             return new AppUser(user.getAttributes());
     }
 
+    @GetMapping("/{id}")
+    public AppUser getUser(@PathVariable String id){
+        return userService.getUser(id);
+    }
+
     @PutMapping("/{id}")
     public AppUser createUser(@PathVariable String id, @RequestBody AppUserCreateDto appUserCreateDto){
         return userService.createUser(id, appUserCreateDto);

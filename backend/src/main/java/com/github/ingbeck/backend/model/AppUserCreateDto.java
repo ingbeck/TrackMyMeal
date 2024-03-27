@@ -4,7 +4,7 @@ import com.nimbusds.openid.connect.sdk.claims.Gender;
 
 public record AppUserCreateDto(
         int age,
-        Gender gender,
+        AppUserGender gender,
         int height,
         int weight,
         ActivityLevel activityLevel

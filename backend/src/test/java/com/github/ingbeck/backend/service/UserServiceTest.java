@@ -3,6 +3,7 @@ package com.github.ingbeck.backend.service;
 import com.github.ingbeck.backend.model.ActivityLevel;
 import com.github.ingbeck.backend.model.AppUser;
 import com.github.ingbeck.backend.model.AppUserCreateDto;
+import com.github.ingbeck.backend.model.AppUserGender;
 import com.github.ingbeck.backend.repository.UserRepository;
 import com.nimbusds.openid.connect.sdk.claims.Gender;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class UserServiceTest {
         //GIVEN
         AppUserCreateDto appUserCreateDto = new AppUserCreateDto(
                 32,
-                Gender.MALE,
+                AppUserGender.MALE,
                 180,
                 90,
                 ActivityLevel.ATHLETE
@@ -45,7 +46,7 @@ class UserServiceTest {
         //GIVEN
         AppUserCreateDto appUserCreateDto = new AppUserCreateDto(
                 32,
-                Gender.MALE,
+                AppUserGender.MALE,
                 180,
                 90,
                 ActivityLevel.ATHLETE
@@ -63,7 +64,7 @@ class UserServiceTest {
                 "Max Mustermann",
                 32,
                 "https://example.com/mustermax.jpg",
-                Gender.MALE,
+                AppUserGender.MALE,
                 180,
                 90,
                 ActivityLevel.ATHLETE,
