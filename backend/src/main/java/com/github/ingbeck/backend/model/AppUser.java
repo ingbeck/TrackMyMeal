@@ -22,6 +22,8 @@ public class AppUser {
     private int height;
     private int weight;
     private ActivityLevel activityLevel;
+    private int bmr;
+    private int bmrWithActivity;
     private boolean isNewUser;
 
     public AppUser(Map<String, Object> attributes){
@@ -33,6 +35,8 @@ public class AppUser {
         this.height = 0;
         this.weight = 0;
         this.activityLevel = null;
+        this.bmr = 0;
+        this.bmrWithActivity = 0;
         this.isNewUser = true;
     }
 
@@ -40,18 +44,18 @@ public class AppUser {
 
 enum ActivityLevel
 {
-    ATHLETE(4),
-    PUMPER(3),
-    PEDESTRIAN(2),
-    COUCHPOTATO(1);
+    ATHLETE(1.725),
+    PUMPER(1.55),
+    PEDESTRIAN(1.375),
+    COUCHPOTATO(1.2);
 
-    private int level;
+    private double level;
 
-    ActivityLevel(int level) {
+    ActivityLevel(double level) {
         this.level = level;
     }
 
-    public int getLevel() {
+    public double getLevel() {
         return level;
     }
 }

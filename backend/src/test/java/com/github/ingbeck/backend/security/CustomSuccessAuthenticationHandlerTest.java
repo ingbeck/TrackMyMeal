@@ -50,6 +50,8 @@ class CustomSuccessAuthenticationHandlerTest {
             attributes.put("height", 0);
             attributes.put("weight", 0);
             attributes.put("activityLevel", null);
+            attributes.put("bmr", 0);
+            attributes.put("bmrWithActivity", 0);
             attributes.put("isNewUser", false);
             when(authentication.getPrincipal()).thenReturn(oAuth2User);
             when(oAuth2User.getAttributes()).thenReturn(attributes);
@@ -63,6 +65,8 @@ class CustomSuccessAuthenticationHandlerTest {
                     0,
                     0,
                     null,
+                    0,
+                    0,
                     true
             );
 
@@ -94,6 +98,8 @@ class CustomSuccessAuthenticationHandlerTest {
             attributes.put("height", 0);
             attributes.put("weight", 0);
             attributes.put("activityLevel", null);
+            attributes.put("bmr", 0);
+            attributes.put("bmrWithActivity", 0);
             attributes.put("isNewUser", false);
             when(authentication.getPrincipal()).thenReturn(oAuth2User);
             when(oAuth2User.getAttributes()).thenReturn(attributes);
@@ -107,6 +113,8 @@ class CustomSuccessAuthenticationHandlerTest {
                     0,
                     0,
                     null,
+                    0,
+                    0,
                     true
             );
 
