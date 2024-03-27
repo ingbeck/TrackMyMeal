@@ -1,0 +1,15 @@
+.regscreen-caption-wrapper{
+    margin: 0 20px 0 20px;
+}
+.regscreen-form{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.regscreen-form-date-wrapper{
+    display: flex;
+    gap: 10px
+}

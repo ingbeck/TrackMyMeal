@@ -1,6 +1,7 @@
 export type AppUser = {
     id : string,
     name : string,
+    birthdate : string,
     age : number,
     avatarUrl : string,
     gender : string,
