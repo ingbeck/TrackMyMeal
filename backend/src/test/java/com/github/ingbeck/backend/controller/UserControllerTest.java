@@ -1,6 +1,8 @@
 package com.github.ingbeck.backend.controller;
 
+import com.github.ingbeck.backend.model.ActivityLevel;
 import com.github.ingbeck.backend.model.AppUser;
+import com.github.ingbeck.backend.model.AppUserGender;
 import com.github.ingbeck.backend.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,6 +28,46 @@ class UserControllerTest {
     MockMvc mvc;
     @Autowired
     private UserRepository userRepository;
+
+    @Test
+    void getUser_whenCalledWithValidId_thenReturnMaxMustermann() throws Exception{
+        //GIVEN
+        AppUser appUser = new AppUser(
+                "1",
+                "Max Mustermann",
+                "14.06.1991",
+                32,
+                "https://example.com/mustermax.jpg",
+                AppUserGender.MALE,
+                180,
+                90,
+                ActivityLevel.COUCHPOTATO,
+                1988,
+                2385,
+                false
+        );
+        userRepository.save(appUser);
+
+        //WHEN & THEN
+        mvc.perform(get("/api/users/1"))
+                .andExpect(content()
+                        .json("""
+                                        {
+                                            "id": "1",
+                                            "name": "Max Mustermann",
+                                            "birthdate": "14.06.1991",
+                                            "age": 32,
+                                            "avatarUrl": "https://example.com/mustermax.jpg",
+                                            "gender": "MALE",
+                                            "height": 180,
+                                            "weight": 90,
+                                            "activityLevel": "COUCHPOTATO",
+                                            "bmr": 1988,
+                                            "bmrWithActivity": 2385,
+                                            "newUser": false
+                                        }
+                                        """));
+    }
 
     @Test
     void testGetMe_withLoggedInUser_expectUser() throws Exception {
