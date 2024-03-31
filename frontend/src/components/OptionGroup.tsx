@@ -10,6 +10,7 @@ export default function OptionGroup(props: Readonly<OptionGroupProps>) {
     const [activeButton, setActiveButton] = useState(null)
 
 
+    // @ts-ignore
     function chooseOption(event){
         setActiveButton(event.target.id)
         props.handleOption(event.target.value)
