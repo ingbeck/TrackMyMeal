@@ -50,7 +50,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
             ...formData,
             [name]: value
         })
-        console.log(formData);
     }
 
     function handleGenderOption(value:string){
@@ -58,7 +57,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
             ...formData,
             gender: value
         })
-        console.log(formData)
     }
 
 
@@ -104,44 +102,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                 </FormControl>
                 <Button fullWidth variant={"contained"} type={"submit"}>Fertig</Button>
             </form>
-            {/*
-            <form className={"regscreen-form"} onSubmit={handleOnSubmit}>
-                <FormControl fullWidth>
-                    <InputLabel>Geschlecht</InputLabel>
-                    <Select
-                        labelId="gender"
-                        label="Geschlecht"
-                        name={"gender"}
-                        value={formData.gender}
-                        onChange={handleSelectChange}
-                    >
-                        <MenuItem value={"MALE"}>männlich</MenuItem>
-                        <MenuItem value={"FEMALE"}>weiblich</MenuItem>
-                    </Select>
-                </FormControl>
-                <div className="form-group">
-                    <input name={"birthday"} className="regscreen-form-input" type="date"
-                           onChange={handleChange} defaultValue={"333333333"} required/>
-                    <label htmlFor="form_name1" className={"regscreen-form-label"}>Geburtstag<span
-                        className="gl-form-asterisk"></span></label>
-                </div>
-                <div className="form-group">
-                    <input name={"height"} className="regscreen-form-input" type="number" maxLength={3}
-                           pattern="\d*" onChange={handleChange} required/>
-                    <label htmlFor="form_name1" className={"regscreen-form-label full-width"}>Größe<span
-                        className="gl-form-asterisk"></span></label>
-                </div>
-                <div className="form-group">
-                    <input id="form_name2" name={"weight"} className="regscreen-form-input" type="number"
-                           maxLength={3} pattern="\d*" onChange={handleChange} required/>
-                    <label htmlFor="form_name2" className={"regscreen-form-label"}>Gewicht<span
-                        className="gl-form-asterisk"></span></label>
-                </div>
-                */}
-            {/*  <Button id="btn-submit" variant={"contained"} type={"submit"} className={"btn-submit"}>Los
-                    gehts!</Button>
-            </form>*/}
-
         </div>
     );
 }
