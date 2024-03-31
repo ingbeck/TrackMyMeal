@@ -35,7 +35,7 @@ class UserControllerTest {
         AppUser appUser = new AppUser(
                 "1",
                 "Max Mustermann",
-                "14.06.1991",
+                "1991-06-14",
                 32,
                 "https://example.com/mustermax.jpg",
                 AppUserGender.MALE,
@@ -55,7 +55,7 @@ class UserControllerTest {
                                         {
                                             "id": "1",
                                             "name": "Max Mustermann",
-                                            "birthdate": "14.06.1991",
+                                            "birthdate": "1991-06-14",
                                             "age": 32,
                                             "avatarUrl": "https://example.com/mustermax.jpg",
                                             "gender": "MALE",
@@ -87,7 +87,7 @@ class UserControllerTest {
         AppUser appUser = new AppUser(
                 "1",
                 "Max Mustermann",
-                "14.06.1991",
+                "1991-06-14",
                 0,
                 "https://example.com/mustermax.jpg",
                 null,
@@ -105,7 +105,7 @@ class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {
-                          "birthdate": "14.06.1991",
+                          "birthdate": "1991-06-14",
                           "gender" : "MALE",
                           "height": 180,
                           "weight": 90,
@@ -118,7 +118,7 @@ class UserControllerTest {
                                         {
                                             "id": "1",
                                             "name": "Max Mustermann",
-                                            "birthdate": "14.06.1991",
+                                            "birthdate": "1991-06-14",
                                             "age": 32,
                                             "avatarUrl": "https://example.com/mustermax.jpg",
                                             "gender": "MALE",
