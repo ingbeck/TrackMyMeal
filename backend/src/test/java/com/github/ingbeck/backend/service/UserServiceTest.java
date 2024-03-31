@@ -22,7 +22,7 @@ class UserServiceTest {
     void createUser_whenUserExistsAndCalledWithValidAppUserCreateDto_thenReturnAppUserWithDtosValue(){
         //GIVEN
         AppUserCreateDto appUserCreateDto = new AppUserCreateDto(
-                "14.06.1991",
+                "1991-06-14",
                 AppUserGender.MALE,
                 180,
                 90,
@@ -45,7 +45,7 @@ class UserServiceTest {
     void createUser_whenCalledWithInvalidIID_thenThrowException() throws NoSuchElementException{
         //GIVEN
         AppUserCreateDto appUserCreateDto = new AppUserCreateDto(
-                "14.06.1991",
+                "1991-06-14",
                 AppUserGender.MALE,
                 180,
                 90,
@@ -62,7 +62,7 @@ class UserServiceTest {
         AppUser expected = new AppUser(
                 "1",
                 "Max Mustermann",
-                "14.06.1991",
+                "1991-06-14",
                 32,
                 "https://example.com/mustermax.jpg",
                 AppUserGender.MALE,
