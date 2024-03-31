@@ -1,0 +1,32 @@
+.optiongroup {
+    display: flex;
+    width: 100%;
+    box-shadow: 0px 0px 5px #6f81a5;
+    border: none;
+}
+
+.optiongroup-button {
+    flex-basis: 100%;
+    display: flex;
+    -webkit-appearance: none;
+    border-radius: 0;
+    height: 60px;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    background: white;
+}
+
+.optiongroup-button-active {
+    flex-basis: 100%;
+    display: flex;
+    -webkit-appearance: none;
+    height: 60px;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    background: lightblue;
+}
+

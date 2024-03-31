@@ -1,19 +1,13 @@
 
 import {AppUser} from "../types/AppUser.ts";
 import {useNavigate, useParams} from "react-router-dom";
-import {
-    Button,
-    FormControl,
-    FormControlLabel, FormLabel, InputAdornment,
-    InputLabel,
-    MenuItem,
-    Radio,
-    RadioGroup,
-    Select, SelectChangeEvent, TextField,
-} from "@mui/material";
 import {ChangeEvent, useEffect, useState} from "react";
 import "./RegistrationScreen.css"
 import {AppUserCreateDto} from "../types/AppUserCreateDto.ts";
+import FloatingNumberInput from "../components/FloatingNumberInput.tsx";
+import OptionGroup from "../components/OptionGroup.tsx";
+import {Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import FloatingDatePicker from "../components/FloatingDatePicker.tsx";
 
 type RegistrationScreenProps = {
     getUser : (id:string | undefined) => void,
@@ -21,10 +15,8 @@ type RegistrationScreenProps = {
     appUser : AppUser
 }
 
-type FormInput = {
-    birthdateDay:number,
-    birthdateMonth:number,
-    birthdateYear:number,
+export type FormInput = {
+    birthday : string,
     gender : string,
     height : number,
     weight : number,
@@ -36,16 +28,15 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
     const params = useParams()
     const navigate = useNavigate()
     const initialFormData:FormInput = {
-        birthdateDay:0,
-        birthdateMonth:0,
-        birthdateYear:0,
+        birthday:"",
         gender:"",
         height: 0,
         weight: 0,
         activityLevel: ""
     }
     const[formData, setFormData] = useState<FormInput>(initialFormData)
-
+    const optionsGender:{id:number, label:string, value:string}[] = [{id: 1, label:"männlich", value:"MALE"},
+        {id: 2, label: "weiblich", value: "FEMALE"}];
 
     useEffect(() => {
         props.getUser(params.id)
@@ -62,130 +53,95 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
         console.log(formData);
     }
 
-    function handleSelectChange(event: SelectChangeEvent<HTMLSelectElement>){
-        const value = event.target.value;
-        const name = event.target.name;
-
+    function handleGenderOption(value:string){
         setFormData({
             ...formData,
-            [name]: value
+            gender: value
         })
         console.log(formData)
     }
 
-    // @ts-ignore
-    function handleOnSubmit(e){
+
+    function handleOnSubmit(e: { preventDefault: () => void; }){
         const appUserCreateDto:AppUserCreateDto = {
-            birthdate : formData.birthdateDay+"."+formData.birthdateMonth+"."+formData.birthdateYear,
-            gender : formData.gender,
-            height : Number(formData.height),
-            weight : Number(formData.weight),
-            activityLevel : formData.activityLevel
-        }
+                birthdate : formData.birthday,
+                gender : formData.gender,
+                height : Number(formData.height),
+                weight : Number(formData.weight),
+                activityLevel : formData.activityLevel
+            }
+
         e.preventDefault()
         props.createUser(params.id, appUserCreateDto)
         navigate("/home")
     }
 
-
+    // @ts-ignore
     return (
         <div>
             <div className={"regscreen-caption-wrapper"}>
                 <h1>Willkommen {props.appUser.name}!</h1>
                 <p>Bevor du loslegen kannst, benötigen wir noch ein paar Information über dich:</p>
             </div>
+            <form onSubmit={handleOnSubmit}>
+                <OptionGroup options={optionsGender} handleOption={handleGenderOption}/>
+                <FloatingDatePicker label={"Geburtsdatum"} name={"birthday"} handleChange={handleChange}/>
+                <FloatingNumberInput label={"Größe"} name={"height"} maxLength={3} handleChange={handleChange} unit={"cm"}/>
+                <FloatingNumberInput label={"Gewicht"} name={"weight"} maxLength={3} handleChange={handleChange} unit={"kg"}/>
+                <FormControl fullWidth>
+                    <FormLabel>Wie aktiv bist du?</FormLabel>
+                    <RadioGroup
+                        aria-labelledby="group-label"
+                        defaultValue="female"
+                        name="activityLevel"
+                        onChange={handleChange}
+                    >
+                        <FormControlLabel value="ATHLETE" control={<Radio/>} label="Leistungssportler"/>
+                        <FormControlLabel value="PUMPER" control={<Radio/>} label="Discopumper"/>
+                        <FormControlLabel value="PEDESTRIAN" control={<Radio/>} label="Spaziergänger"/>
+                        <FormControlLabel value="COUCHPOTATO" control={<Radio/>} label="Couchpotato"/>
+                    </RadioGroup>
+                </FormControl>
+                <Button fullWidth variant={"contained"} type={"submit"}>Fertig</Button>
+            </form>
+            {/*
             <form className={"regscreen-form"} onSubmit={handleOnSubmit}>
                 <FormControl fullWidth>
                     <InputLabel>Geschlecht</InputLabel>
                     <Select
                         labelId="gender"
-                        id="gender"
                         label="Geschlecht"
                         name={"gender"}
+                        value={formData.gender}
                         onChange={handleSelectChange}
                     >
                         <MenuItem value={"MALE"}>männlich</MenuItem>
                         <MenuItem value={"FEMALE"}>weiblich</MenuItem>
                     </Select>
                 </FormControl>
-                <div className={"regscreen-form-date-wrapper"}>
-                    <TextField
-                        label="Tag"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        name={"birthdateDay"}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        label="Monat"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        name={"birthdateMonth"}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        label="Jahr"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        name={"birthdateYear"}
-                        onChange={handleChange}
-                    />
+                <div className="form-group">
+                    <input name={"birthday"} className="regscreen-form-input" type="date"
+                           onChange={handleChange} defaultValue={"333333333"} required/>
+                    <label htmlFor="form_name1" className={"regscreen-form-label"}>Geburtstag<span
+                        className="gl-form-asterisk"></span></label>
                 </div>
-                <FormControl fullWidth>
-                <TextField
-                    label="Größe"
-                    type="number"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    InputProps={{
-                        endAdornment: <InputAdornment position="end">cm</InputAdornment>
-                    }}
-                    variant="outlined"
-                    name={"height"}
-                    onChange={handleChange}
-                />
-                </FormControl>
-                <FormControl fullWidth>
-                <TextField
-                    label="Gewicht"
-                    type="number"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    InputProps={{
-                        endAdornment: <InputAdornment position="end">kg</InputAdornment>
-                    }}
-                    variant="outlined"
-                    name={"weight"}
-                    onChange={handleChange}
-                />
-                </FormControl>
-                <FormControl>
-                    <FormLabel>Wie aktiv bist du?</FormLabel>
-                <RadioGroup
-                    aria-labelledby="group-label"
-                    defaultValue="female"
-                    name="activityLevel"
-                    onChange={handleChange}
-                >
-                    <FormControlLabel value="ATHLETE" control={<Radio />} label="Leistungssportler" />
-                    <FormControlLabel value="PUMPER" control={<Radio />} label="Discopumper" />
-                    <FormControlLabel value="PEDESTRIAN" control={<Radio />} label="Spaziergänger" />
-                    <FormControlLabel value="COUCHPOTATO" control={<Radio />} label="Couchpotato" />
-                </RadioGroup>
-                </FormControl>
-                <Button variant={"contained"} type={"submit"}>Los gehts!</Button>
-            </form>
+                <div className="form-group">
+                    <input name={"height"} className="regscreen-form-input" type="number" maxLength={3}
+                           pattern="\d*" onChange={handleChange} required/>
+                    <label htmlFor="form_name1" className={"regscreen-form-label full-width"}>Größe<span
+                        className="gl-form-asterisk"></span></label>
+                </div>
+                <div className="form-group">
+                    <input id="form_name2" name={"weight"} className="regscreen-form-input" type="number"
+                           maxLength={3} pattern="\d*" onChange={handleChange} required/>
+                    <label htmlFor="form_name2" className={"regscreen-form-label"}>Gewicht<span
+                        className="gl-form-asterisk"></span></label>
+                </div>
+                */}
+            {/*  <Button id="btn-submit" variant={"contained"} type={"submit"} className={"btn-submit"}>Los
+                    gehts!</Button>
+            </form>*/}
+
         </div>
     );
 }
