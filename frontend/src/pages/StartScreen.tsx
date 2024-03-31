@@ -1,4 +1,3 @@
-import {Avatar, Button} from "@mui/material";
 import "./StartScreen.css"
 
 type StartScreenProps = {
@@ -11,9 +10,12 @@ export default function StartScreen(props: Readonly<StartScreenProps>) {
         <>
             <div className={"startpage"}>
                 <div className={"startpage-wrapper"}>
-                    <Avatar className={"startpage-wrapper-logo"}/>
+                    <img src={"../src/assets/Logo.svg"} className={"startpage-wrapper-logo"}/>
                     <h1 className={"startpage-wrapper-text"}>Track My Meal</h1>
-                    <Button variant={"contained"} onClick={props.login}>Login</Button>
+                    <div className={"btn-login"} onClick={props.login}>
+                        <img src={"../src/assets/google.svg"}/>
+                        <span>Mit Google anmelden</span>
+                    </div>
                 </div>
             </div>
         </>
