@@ -11,7 +11,7 @@ type FloatingNumberInputProps = {
 export default function FloatingNumberInput(props: Readonly<FloatingNumberInputProps>) {
 
     const [value, setValue] = useState('');
-    const regex = new RegExp(/^[0-9]*$/)
+    const regex = new RegExp(/^\d*$/)
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const value = e.target.value
