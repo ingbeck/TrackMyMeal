@@ -4,16 +4,12 @@ import com.github.ingbeck.backend.model.AppUser;
 import com.github.ingbeck.backend.model.AppUserCreateDto;
 import com.github.ingbeck.backend.model.AppUserGender;
 import com.github.ingbeck.backend.repository.UserRepository;
-import com.nimbusds.openid.connect.sdk.claims.Gender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Service
@@ -55,7 +51,7 @@ public class UserService {
     }
 
     private int calculateAge(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime dateBirthdate = LocalDate.parse(birthdate, formatter).atStartOfDay();
 
         return (int)ChronoUnit.YEARS.between(dateBirthdate, LocalDateTime.now());
