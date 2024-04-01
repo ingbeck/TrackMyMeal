@@ -44,12 +44,14 @@ class CustomSuccessAuthenticationHandlerTest {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("sub", "987654321");
             attributes.put("name", "Max Mustermann");
-            attributes.put("birthdate", "1991-14-07");
+            attributes.put("age", 0);
             attributes.put("picture", "https://example.com/mustermax.jpg");
             attributes.put("gender", null);
             attributes.put("height", 0);
             attributes.put("weight", 0);
             attributes.put("activityLevel", null);
+            attributes.put("bmr", 0);
+            attributes.put("bmrWithActivity", 0);
             attributes.put("isNewUser", false);
             when(authentication.getPrincipal()).thenReturn(oAuth2User);
             when(oAuth2User.getAttributes()).thenReturn(attributes);
@@ -57,12 +59,15 @@ class CustomSuccessAuthenticationHandlerTest {
             AppUser user = new AppUser(
                     "987654321",
                     "Max Mustermann",
-                    "1991-14-07",
+                    "",
+                    0,
                     "https://example.com/mustermax.jpg",
                     null,
                     0,
                     0,
                     null,
+                    0,
+                    0,
                     true
             );
 
@@ -88,12 +93,14 @@ class CustomSuccessAuthenticationHandlerTest {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("sub", "987654321");
             attributes.put("name", "Max Mustermann");
-            attributes.put("birthdate", "1991-14-07");
+            attributes.put("age", 0);
             attributes.put("picture", "https://example.com/mustermax.jpg");
             attributes.put("gender", null);
             attributes.put("height", 0);
             attributes.put("weight", 0);
             attributes.put("activityLevel", null);
+            attributes.put("bmr", 0);
+            attributes.put("bmrWithActivity", 0);
             attributes.put("isNewUser", false);
             when(authentication.getPrincipal()).thenReturn(oAuth2User);
             when(oAuth2User.getAttributes()).thenReturn(attributes);
@@ -101,12 +108,15 @@ class CustomSuccessAuthenticationHandlerTest {
             AppUser user = new AppUser(
                     "987654321",
                     "Max Mustermann",
-                    "1991-14-07",
+                    "",
+                    0,
                     "https://example.com/mustermax.jpg",
                     null,
                     0,
                     0,
                     null,
+                    0,
+                    0,
                     true
             );
 

@@ -1,0 +1,17 @@
+.regscreen-caption-wrapper{
+    margin: 0 auto;
+    max-width: 340px;
+}
+
+form {
+    padding-top: 15px;
+    max-width: 340px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.btn-submit {
+    width: 100%;
+}
