@@ -13,6 +13,7 @@ export default function FloatingNumberInput(props: Readonly<FloatingNumberInputP
 
     const [value, setValue] = useState('');
     const regex = new RegExp(/^\d*$/)
+    const hasError = props.error !== "" && props.error !== undefined
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const value = e.target.value
@@ -29,10 +30,16 @@ export default function FloatingNumberInput(props: Readonly<FloatingNumberInputP
     }
 
     return (
-        <div className="input-container">
-            <input type={"number"} value={value} id="input" name={props.name} pattern="\d*" inputMode={"numeric"} onChange={handleChange}/>
+        <div className={hasError ? "input-container-error" : "input-container"}>
+            <input type={"number"}
+                   value={value}
+                   id="input"
+                   name={props.name}
+                   pattern="\d*"
+                   inputMode={"numeric"}
+                   onChange={handleChange}/>
             <label className={value && 'filled'} htmlFor={"input"}>
-                {props.label}
+                {hasError ? props.error : props.label}
             </label>
         </div>
     );

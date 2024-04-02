@@ -3,11 +3,13 @@ import "./OptionGroup.css"
 
 type OptionGroupProps = {
     options: { id: number, label: string, value: string }[],
-    handleOption: (value: string) => void
+    handleOption: (value: string) => void,
+    error? : string
 }
 
 export default function OptionGroup(props: Readonly<OptionGroupProps>) {
     const [activeButton, setActiveButton] = useState(null)
+    const hasError = props.error !== "" && props.error !== undefined
 
 
     // @ts-ignore
@@ -17,14 +19,17 @@ export default function OptionGroup(props: Readonly<OptionGroupProps>) {
     }
 
     return (
-        <div className={"optiongroup"}>
-            {props.options.map((option) => <button
-                key={option.id}
-                id={option.label}
-                value={option.value}
-                type={"button"}
-                className={activeButton === option.label ? "optiongroup-button-active" : "optiongroup-button"}
-                onClick={chooseOption}>{option.label}</button>)}
-        </div>
+        <>
+            <div className={hasError ? "optiongroup-error" : "optiongroup"}>
+                {props.options.map((option) => <button
+                    key={option.id}
+                    id={option.label}
+                    value={option.value}
+                    type={"button"}
+                    className={activeButton === option.label ? "optiongroup-button-active" : "optiongroup-button"}
+                    onClick={chooseOption}>{option.label}</button>)}
+            </div>
+            {hasError && <label className={"optiongroup-label"}>{props.error}</label>}
+        </>
     );
 }
