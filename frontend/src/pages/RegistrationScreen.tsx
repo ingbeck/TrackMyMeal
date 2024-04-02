@@ -8,6 +8,7 @@ import FloatingNumberInput from "../components/FloatingNumberInput.tsx";
 import OptionGroup from "../components/OptionGroup.tsx";
 import {Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 import FloatingDatePicker from "../components/FloatingDatePicker.tsx";
+import * as Yup from 'yup';
 
 type RegistrationScreenProps = {
     getUser : (id:string | undefined) => void,
@@ -23,6 +24,14 @@ export type FormInput = {
     activityLevel : string
 }
 
+type ErrorState = {
+    birthday : string,
+    gender : string,
+    height : string,
+    weight : string,
+    activityLevel : string
+}
+
 export default function RegistrationScreen(props: Readonly<RegistrationScreenProps>) {
 
     const params = useParams()
@@ -34,7 +43,35 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
         weight: 0,
         activityLevel: ""
     }
+    const validationSchema = Yup.object().shape({
+        birthday: Yup.date()
+            .typeError("Bitte Datum angeben")
+            .max(new Date(Date.now() - 567648000000), "Du musst mindestens 18 Jahre alt sein")
+            .required("Required"),
+        gender: Yup.mixed()
+            .oneOf(["MALE", "FEMALE"], "Bitte Geschlecht auswählen")
+            .required(),
+        height: Yup.number()
+            .positive("Bitte Größe angeben")
+            .typeError("Bitte Größe angeben")
+            .required(),
+        weight: Yup.number()
+            .positive("Bitte Gewicht angeben")
+            .typeError("Bitte Gewicht angeben")
+            .required(),
+        activityLevel: Yup.mixed()
+            .oneOf(["ATHLETE", "PUMPER", "PEDESTRIAN", "COUCHPOTATO"], "Bitte Aktivitätslevel auswählen")
+            .required()
+    });
+
     const[formData, setFormData] = useState<FormInput>(initialFormData)
+    const[errors, setErrors] = useState<ErrorState>({
+        birthday: "",
+        gender: "",
+        height: "",
+        weight: "",
+        activityLevel: ""
+    });
     const optionsGender:{id:number, label:string, value:string}[] = [{id: 1, label:"männlich", value:"MALE"},
         {id: 2, label: "weiblich", value: "FEMALE"}];
 
@@ -59,19 +96,36 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
         })
     }
 
-
-    function handleOnSubmit(e: { preventDefault: () => void; }){
-        const appUserCreateDto:AppUserCreateDto = {
-                birthdate : formData.birthday,
-                gender : formData.gender,
-                height : Number(formData.height),
-                weight : Number(formData.weight),
-                activityLevel : formData.activityLevel
-            }
-
+    function handleOnSubmit(e: { preventDefault: () => void; }) {
         e.preventDefault()
-        props.createUser(params.id, appUserCreateDto)
-        navigate("/home")
+        validationSchema.validate(formData,{abortEarly: false})
+            .then(() => {
+                const appUserCreateDto: AppUserCreateDto = {
+                    birthdate: formData.birthday,
+                    gender: formData.gender,
+                    height: Number(formData.height),
+                    weight: Number(formData.weight),
+                    activityLevel: formData.activityLevel
+                }
+                props.createUser(params.id, appUserCreateDto)
+                navigate("/home")
+            })
+            .catch((error: Yup.ValidationError) => {
+                const newErrors: ErrorState = {
+                    birthday: "",
+                    gender: "",
+                    height: "",
+                    weight: "",
+                    activityLevel: ""
+                }
+                //@ts-ignore
+                error.inner.forEach((currentError) =>
+                    // @ts-ignore
+                    newErrors[currentError.path] = currentError.message
+                )
+                setErrors(newErrors)
+                console.log(errors)
+            })
     }
 
     // @ts-ignore

@@ -6,7 +6,8 @@ type FloatingNumberInputProps = {
     name: string,
     maxLength : number,
     unit : string | undefined,
-    handleChange: (event: ChangeEvent<HTMLInputElement>) => void
+    handleChange: (event: ChangeEvent<HTMLInputElement>) => void,
+    error? : string
 }
 export default function FloatingNumberInput(props: Readonly<FloatingNumberInputProps>) {
 
