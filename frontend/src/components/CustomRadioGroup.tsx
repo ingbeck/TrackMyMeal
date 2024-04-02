@@ -18,9 +18,8 @@ export default function CustomRadioGroup(props: Readonly<CustomRadioGroupProps>)
                     <label className={"radio-container-label"}>{props.label}</label>
                     {
                         props.choices.map((choice) =>
-                            <div className={"radio-container-choice"}>
+                            <div className={"radio-container-choice"} key={choice.id}>
                                 <input type={"radio"}
-                                       key={choice.id}
                                        id={choice.label}
                                        name={"activityLevel"}
                                        value={choice.value}
