@@ -16,20 +16,21 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 
-input[type="number"] {
+input[type="number"]{
     -moz-appearance: textfield;
-}
-
-input[type="date"]::-webkit-datetime-edit-text {
-    display: none;
 }
 
 .input-container-datepicker{
     -webkit-appearance: none;
-    background: transparent;
+    background: white;
     color: black;
     align-self: stretch;
     flex-basis: 100%;
+    cursor: pointer;
+}
+
+.input-container-datepicker:focus{
+    cursor: text;
 }
 
 .input-container:focus-within label {
