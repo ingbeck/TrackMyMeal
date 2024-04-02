@@ -6,8 +6,10 @@ import "./RegistrationScreen.css"
 import {AppUserCreateDto} from "../types/AppUserCreateDto.ts";
 import FloatingNumberInput from "../components/FloatingNumberInput.tsx";
 import OptionGroup from "../components/OptionGroup.tsx";
-import {Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import {Button} from "@mui/material";
 import FloatingDatePicker from "../components/FloatingDatePicker.tsx";
+import * as Yup from 'yup';
+import CustomRadioGroup from "../components/CustomRadioGroup.tsx";
 
 type RegistrationScreenProps = {
     getUser : (id:string | undefined) => void,
@@ -23,6 +25,14 @@ export type FormInput = {
     activityLevel : string
 }
 
+type ErrorState = {
+    birthday : string,
+    gender : string,
+    height : string,
+    weight : string,
+    activityLevel : string
+}
+
 export default function RegistrationScreen(props: Readonly<RegistrationScreenProps>) {
 
     const params = useParams()
@@ -34,9 +44,46 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
         weight: 0,
         activityLevel: ""
     }
+    const validationSchema = Yup.object().shape({
+        birthday: Yup.date()
+            .typeError("Bitte Geburtsdatum angeben")
+            .max(new Date(Date.now() - 567648000000), "Du musst mindestens 18 Jahre alt sein")
+            .required("Required"),
+        gender: Yup.mixed()
+            .oneOf(["MALE", "FEMALE"], "Bitte Geschlecht auswählen")
+            .required(),
+        height: Yup.number()
+            .positive("Bitte Größe angeben")
+            .typeError("Bitte Größe angeben")
+            .required(),
+        weight: Yup.number()
+            .positive("Bitte Gewicht angeben")
+            .typeError("Bitte Gewicht angeben")
+            .required(),
+        activityLevel: Yup.mixed()
+            .oneOf(["ATHLETE", "PUMPER", "PEDESTRIAN", "COUCHPOTATO"], "Bitte Aktivitätslevel auswählen")
+            .required()
+    });
+
     const[formData, setFormData] = useState<FormInput>(initialFormData)
-    const optionsGender:{id:number, label:string, value:string}[] = [{id: 1, label:"männlich", value:"MALE"},
-        {id: 2, label: "weiblich", value: "FEMALE"}];
+    const[errors, setErrors] = useState<ErrorState>({
+        birthday: "",
+        gender: "",
+        height: "",
+        weight: "",
+        activityLevel: ""
+    });
+    const optionsGender:{id:number, label:string, value:string}[] = [
+        {id: 1, label:"männlich", value:"MALE"},
+        {id: 2, label: "weiblich", value: "FEMALE"}
+    ];
+
+    const choicesActivityLevel:{id:number, label:string, value:string}[] = [
+        {id: 1, label:"Leistungssportler", value:"ATHLETE"},
+        {id: 2, label: "Discopumper", value: "PUMPER"},
+        {id: 3, label: "Spaziergänger", value: "PEDESTRIAN"},
+        {id: 4, label: "Couchpotato", value: "COUCHPOTATO"}
+    ];
 
     useEffect(() => {
         props.getUser(params.id)
@@ -59,19 +106,36 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
         })
     }
 
-
-    function handleOnSubmit(e: { preventDefault: () => void; }){
-        const appUserCreateDto:AppUserCreateDto = {
-                birthdate : formData.birthday,
-                gender : formData.gender,
-                height : Number(formData.height),
-                weight : Number(formData.weight),
-                activityLevel : formData.activityLevel
-            }
-
+    function handleOnSubmit(e: { preventDefault: () => void; }) {
         e.preventDefault()
-        props.createUser(params.id, appUserCreateDto)
-        navigate("/home")
+        validationSchema.validate(formData,{abortEarly: false})
+            .then(() => {
+                const appUserCreateDto: AppUserCreateDto = {
+                    birthdate: formData.birthday,
+                    gender: formData.gender,
+                    height: Number(formData.height),
+                    weight: Number(formData.weight),
+                    activityLevel: formData.activityLevel
+                }
+                props.createUser(params.id, appUserCreateDto)
+                navigate("/home")
+            })
+            .catch((error: Yup.ValidationError) => {
+                const newErrors: ErrorState = {
+                    birthday: "",
+                    gender: "",
+                    height: "",
+                    weight: "",
+                    activityLevel: ""
+                }
+                //@ts-ignore
+                error.inner.forEach((currentError) =>
+                    // @ts-ignore
+                    newErrors[currentError.path] = currentError.message
+                )
+                setErrors(newErrors)
+                console.log(errors)
+            })
     }
 
     // @ts-ignore
@@ -82,24 +146,11 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                 <p>Bevor du loslegen kannst, benötigen wir noch ein paar Information über dich:</p>
             </div>
             <form onSubmit={handleOnSubmit}>
-                <OptionGroup options={optionsGender} handleOption={handleGenderOption}/>
-                <FloatingDatePicker label={"Geburtsdatum"} name={"birthday"} handleChange={handleChange}/>
-                <FloatingNumberInput label={"Größe"} name={"height"} maxLength={3} handleChange={handleChange} unit={"cm"}/>
-                <FloatingNumberInput label={"Gewicht"} name={"weight"} maxLength={3} handleChange={handleChange} unit={"kg"}/>
-                <FormControl fullWidth>
-                    <FormLabel>Wie aktiv bist du?</FormLabel>
-                    <RadioGroup
-                        aria-labelledby="group-label"
-                        defaultValue="female"
-                        name="activityLevel"
-                        onChange={handleChange}
-                    >
-                        <FormControlLabel value="ATHLETE" control={<Radio/>} label="Leistungssportler"/>
-                        <FormControlLabel value="PUMPER" control={<Radio/>} label="Discopumper"/>
-                        <FormControlLabel value="PEDESTRIAN" control={<Radio/>} label="Spaziergänger"/>
-                        <FormControlLabel value="COUCHPOTATO" control={<Radio/>} label="Couchpotato"/>
-                    </RadioGroup>
-                </FormControl>
+                <OptionGroup options={optionsGender} handleOption={handleGenderOption} error={errors.gender}/>
+                <FloatingDatePicker label={"Geburtsdatum"} name={"birthday"} handleChange={handleChange} error={errors.birthday}/>
+                <FloatingNumberInput label={"Größe"} name={"height"} maxLength={3} handleChange={handleChange} unit={"cm"} error={errors.height}/>
+                <FloatingNumberInput label={"Gewicht"} name={"weight"} maxLength={3} handleChange={handleChange} unit={"kg"} error={errors.weight}/>
+                <CustomRadioGroup label={"Wie aktiv bist du?"} choices={choicesActivityLevel} handleChange={handleChange} error={errors.activityLevel}/>
                 <Button fullWidth variant={"contained"} type={"submit"}>Fertig</Button>
             </form>
         </div>

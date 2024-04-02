@@ -1,0 +1,41 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-error{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4px;
+    border: solid #da1818;
+    box-shadow: 0 0 5px #6f81a5;
+}
+
+.radio-container{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+}
+
+.radio-container-error {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+}
+
+.radio-container-label{
+    color: #6f81a5;
+}
+
+.radio-container-label-error{
+    color: #da1818;
+    align-self: flex-start;
+}
+
+.radio-container-choice label{
+    margin-left: 8px;
+}
