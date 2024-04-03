@@ -12,8 +12,8 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
     }, [props, url]);
 
     return (
-        <>
-            <h1>Profil</h1>
-        </>
+        <h1>
+            Profil
+        </h1>
     );
 }

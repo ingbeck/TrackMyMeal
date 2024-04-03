@@ -19,28 +19,28 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                    className={props.currentRoute == "http://localhost:5173/home" ? "navbar-item-active" : "navbar-item"}>
                     <div>
                         <img src={TodayIcon} alt={""}/>
-                        <label>Heute</label>
+                        <span>Heute</span>
                     </div>
                 </button>
                 <button onClick={() => navigate("/calendar")}
                    className={props.currentRoute == "http://localhost:5173/calendar" ? "navbar-item-active" : "navbar-item"}>
                     <div>
                         <img src={CalendarIcon} alt={""}/>
-                        <label>Kalender</label>
+                        <span>Kalender</span>
                     </div>
                 </button>
                 <button onClick={() => navigate("/recipes")}
                    className={props.currentRoute == "http://localhost:5173/recipes" ? "navbar-item-active" : "navbar-item"}>
                     <div>
                         <img src={RecipeIcon} alt={""}/>
-                        <label>Rezepte</label>
+                        <span>Rezepte</span>
                     </div>
                 </button>
                 <button onClick={() => navigate("/profile")}
                    className={props.currentRoute == "http://localhost:5173/profile" ? "navbar-item-active" : "navbar-item"}>
                     <div>
                         <img src={ProfileIcon} alt={""}/>
-                        <label>Profil</label>
+                        <span>Profil</span>
                     </div>
                 </button>
             </div>

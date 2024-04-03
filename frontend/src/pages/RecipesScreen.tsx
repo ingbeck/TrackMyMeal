@@ -12,8 +12,8 @@ export default function RecipesScreen(props: Readonly<RecipesScreenProps>) {
     }, [props, url]);
 
     return (
-        <>
-            <h1>Rezepte</h1>
-        </>
+        <h1>
+            Rezepte
+        </h1>
     );
 }

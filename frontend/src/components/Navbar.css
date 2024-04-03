@@ -36,7 +36,7 @@
     width: 60px;
 }
 
-.navbar label{
+.navbar span{
     color: #333;
     margin-top: 4px;
     font-size: 14px;
@@ -58,7 +58,7 @@
 
 }
 
-.navbar-item-active label{
+.navbar-item-active span{
     color: #0a53e4;
     font-weight: bold;
 }
