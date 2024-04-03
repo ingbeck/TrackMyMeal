@@ -1,12 +1,20 @@
 import "./StartScreen.css"
 import Logo from "../assets/Logo.svg"
 import GoogleLogo from "../assets/google.svg"
+import {useEffect} from "react";
 
 type StartScreenProps = {
     login: () => void,
+    setCurrentRoute: (url:string) => void
 }
 
 export default function StartScreen(props: Readonly<StartScreenProps>) {
+
+    const url = window.location.href;
+
+    useEffect(() => {
+        props.setCurrentRoute(url)
+    }, []);
 
     return (
         <>

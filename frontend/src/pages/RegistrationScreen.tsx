@@ -4,16 +4,17 @@ import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, useEffect, useState} from "react";
 import "./RegistrationScreen.css"
 import {AppUserCreateDto} from "../types/AppUserCreateDto.ts";
-import FloatingNumberInput from "../components/FloatingNumberInput.tsx";
-import OptionGroup from "../components/OptionGroup.tsx";
+import FloatingNumberInput from "../components/registration/FloatingNumberInput.tsx";
+import OptionGroup from "../components/registration/OptionGroup.tsx";
 import {Button} from "@mui/material";
-import FloatingDatePicker from "../components/FloatingDatePicker.tsx";
+import FloatingDatePicker from "../components/registration/FloatingDatePicker.tsx";
 import * as Yup from 'yup';
-import CustomRadioGroup from "../components/CustomRadioGroup.tsx";
+import CustomRadioGroup from "../components/registration/CustomRadioGroup.tsx";
 
 type RegistrationScreenProps = {
     getUser : (id:string | undefined) => void,
     createUser : (id:string | undefined, appUserCreateDto:AppUserCreateDto) => void,
+    setCurrentRoute : (url:string) => void,
     appUser : AppUser
 }
 
@@ -36,6 +37,7 @@ type ErrorState = {
 export default function RegistrationScreen(props: Readonly<RegistrationScreenProps>) {
 
     const params = useParams()
+    const url = window.location.href;
     const navigate = useNavigate()
     const initialFormData:FormInput = {
         birthday:"",
@@ -84,6 +86,12 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
         {id: 3, label: "Spaziergänger", value: "PEDESTRIAN"},
         {id: 4, label: "Couchpotato", value: "COUCHPOTATO"}
     ];
+
+
+
+    useEffect(() => {
+        props.setCurrentRoute(url)
+    }, []);
 
     useEffect(() => {
         props.getUser(params.id)
