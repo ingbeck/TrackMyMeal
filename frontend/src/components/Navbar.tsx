@@ -6,38 +6,43 @@ import "./Navbar.css"
 import {useNavigate} from "react-router-dom";
 
 type NavbarProps = {
-    currentRoute: string
+    currentRoute : string,
+    appUrl : string
 }
 export default function Navbar(props: Readonly<NavbarProps>) {
 
     const navigate = useNavigate()
+    const homeRoute = props.appUrl + "/home"
+    const calendarRoute = props.appUrl + "/calendar"
+    const recipesRoute = props.appUrl + "/recipes"
+    const profileRoute = props.appUrl + "/profile"
 
     return (
         <nav className={"navbar"}>
             <div className={"navbar-wrapper"}>
                 <button onClick={() => navigate("/home")}
-                   className={props.currentRoute == "http://localhost:5173/home" ? "navbar-item-active" : "navbar-item"}>
+                   className={props.currentRoute == homeRoute ? "navbar-item-active" : "navbar-item"}>
                     <div>
                         <img src={TodayIcon} alt={""}/>
                         <span>Heute</span>
                     </div>
                 </button>
                 <button onClick={() => navigate("/calendar")}
-                   className={props.currentRoute == "http://localhost:5173/calendar" ? "navbar-item-active" : "navbar-item"}>
+                   className={props.currentRoute == calendarRoute ? "navbar-item-active" : "navbar-item"}>
                     <div>
                         <img src={CalendarIcon} alt={""}/>
                         <span>Kalender</span>
                     </div>
                 </button>
                 <button onClick={() => navigate("/recipes")}
-                   className={props.currentRoute == "http://localhost:5173/recipes" ? "navbar-item-active" : "navbar-item"}>
+                   className={props.currentRoute == recipesRoute ? "navbar-item-active" : "navbar-item"}>
                     <div>
                         <img src={RecipeIcon} alt={""}/>
                         <span>Rezepte</span>
                     </div>
                 </button>
                 <button onClick={() => navigate("/profile")}
-                   className={props.currentRoute == "http://localhost:5173/profile" ? "navbar-item-active" : "navbar-item"}>
+                   className={props.currentRoute == profileRoute ? "navbar-item-active" : "navbar-item"}>
                     <div>
                         <img src={ProfileIcon} alt={""}/>
                         <span>Profil</span>
