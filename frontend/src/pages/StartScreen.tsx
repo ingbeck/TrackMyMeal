@@ -14,7 +14,6 @@ export default function StartScreen(props: Readonly<StartScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-        console.log(url)
     }, []);
 
     return (

@@ -9,7 +9,9 @@ type LayoutProps = {
 
 export default function Layout(props: Readonly<LayoutProps>) {
 
-    const homeScreenUrl:string = "http://localhost:5173/home"
+    const startScreen:string = "http://localhost:5173/"
+    const regScreen:string = "http://localhost:5173/registration/"+props.appUserId
+    const isInApp = props.currentRoute != startScreen && props.currentRoute != regScreen
 
     return (
         <>
@@ -17,7 +19,7 @@ export default function Layout(props: Readonly<LayoutProps>) {
                 {props.children}
             </main>
             <footer>
-                {props.currentRoute === homeScreenUrl && <Navbar/>}
+                {isInApp && <Navbar currentRoute={props.currentRoute}/>}
             </footer>
         </>
     );

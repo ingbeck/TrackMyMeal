@@ -59,6 +59,9 @@ export default function App() {
                          createUser={createUser}
                          appUser={appUser}
                      setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/calendar"} element={<h1>Kalender</h1>}/>
+              <Route path={"/recipes"} element={<h1>Rezepte</h1>}/>
+              <Route path={"/Profile"} element={<h1>Profil</h1>}/>
           </Routes>
       </Layout>
   )
