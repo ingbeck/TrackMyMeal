@@ -6,6 +6,7 @@ import axios from "axios";
 import RegistrationScreen from "./pages/RegistrationScreen.tsx";
 import {AppUser} from "./types/AppUser.ts";
 import {AppUserCreateDto} from "./types/AppUserCreateDto.ts";
+import HomeScreen from "./pages/HomeScreen.tsx";
 
 export default function App() {
 
@@ -23,9 +24,7 @@ export default function App() {
         bmrWithActivity : 0,
         isNewUser : false
     })
-
-
-
+    const[currentRoute, setCurrentRoute] = useState<string>("")
 
     function login(){
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -50,11 +49,16 @@ export default function App() {
     }
 
     return (
-      <Layout>
+      <Layout currentRoute={currentRoute} appUserId={appUser.id}>
           <Routes>
-              <Route path={"/"} element={<StartScreen login={login}/>}/>
-              <Route path={"/home"} element={<h1>Home</h1>}/>
-              <Route path={"/registration/:id"} element={<RegistrationScreen getUser={getAppUser} createUser={createUser} appUser={appUser}/>}/>
+              <Route path={"/"} element={<StartScreen login={login} setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/home"} element={<HomeScreen setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/registration/:id"}
+                     element={<RegistrationScreen
+                         getUser={getAppUser}
+                         createUser={createUser}
+                         appUser={appUser}
+                     setCurrentRoute={setCurrentRoute}/>}/>
           </Routes>
       </Layout>
   )
