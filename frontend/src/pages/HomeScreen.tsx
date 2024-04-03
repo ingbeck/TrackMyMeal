@@ -12,8 +12,25 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
         }, [props, url]);
 
     return (
-        <h1>
-            Heute
-        </h1>
+        <>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+            <h1>Heute</h1>
+        </>
     );
 }

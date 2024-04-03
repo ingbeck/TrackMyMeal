@@ -26,14 +26,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60px;
 }
 
 .navbar-item-active div{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60px;
 }
 
 .navbar span{
@@ -60,5 +58,4 @@
 
 .navbar-item-active span{
     color: #0a53e4;
-    font-weight: bold;
 }
