@@ -4,13 +4,14 @@ import Navbar from "./Navbar.tsx";
 type LayoutProps = {
     children: ReactNode,
     currentRoute: string,
+    appUrl : string,
     appUserId : string
 }
 
 export default function Layout(props: Readonly<LayoutProps>) {
 
-    const startScreen:string = "http://localhost:5173/"
-    const regScreen:string = "http://localhost:5173/registration/"+props.appUserId
+    const startScreen:string = props.appUrl + "/"
+    const regScreen:string = props.appUrl + "/registration/" + props.appUserId
     const isInApp = props.currentRoute != startScreen && props.currentRoute != regScreen
 
     return (
@@ -18,7 +19,7 @@ export default function Layout(props: Readonly<LayoutProps>) {
             <main>
                 {props.children}
             </main>
-            {isInApp && <Navbar currentRoute={props.currentRoute}/>}
+            {isInApp && <Navbar currentRoute={props.currentRoute} appUrl={props.appUrl}/>}
         </div>
     );
 }
