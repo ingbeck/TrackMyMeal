@@ -1,4 +1,6 @@
 import "./StartScreen.css"
+import Logo from "../assets/Logo.svg"
+import GoogleLogo from "../assets/google.svg"
 
 type StartScreenProps = {
     login: () => void,
@@ -10,10 +12,10 @@ export default function StartScreen(props: Readonly<StartScreenProps>) {
         <>
             <div className={"startpage"}>
                 <div className={"startpage-wrapper"}>
-                    <img src={"../src/assets/Logo.svg"} className={"startpage-wrapper-logo"} alt={"Logo der App; eine Gabel, die von einem runden Fortschrittsbalken umgeben ist"}/>
+                    <img src={Logo} className={"startpage-wrapper-logo"} alt={"Logo der App; eine Gabel, die von einem runden Fortschrittsbalken umgeben ist"}/>
                     <h1 className={"startpage-wrapper-text"}>Track My Meal</h1>
                     <button className={"btn-login"} onClick={props.login}>
-                        <img src={"../src/assets/google.svg"} alt={"Logo von Google"}/>
+                        <img src={GoogleLogo} alt={"Logo von Google"}/>
                         <span>Mit Google anmelden</span>
                     </button>
                 </div>
