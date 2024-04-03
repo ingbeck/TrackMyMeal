@@ -16,8 +16,9 @@
     width: 100%;
 }
 
-.navbar a{
-    text-decoration: none;
+.navbar button{
+    border: none;
+    background: none;
 }
 
 
