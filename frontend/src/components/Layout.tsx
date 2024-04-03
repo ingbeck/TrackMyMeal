@@ -14,13 +14,11 @@ export default function Layout(props: Readonly<LayoutProps>) {
     const isInApp = props.currentRoute != startScreen && props.currentRoute != regScreen
 
     return (
-        <>
+        <div>
             <main>
                 {props.children}
             </main>
-            <footer>
-                {isInApp && <Navbar currentRoute={props.currentRoute}/>}
-            </footer>
-        </>
+            {isInApp && <Navbar currentRoute={props.currentRoute}/>}
+        </div>
     );
 }

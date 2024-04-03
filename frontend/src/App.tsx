@@ -7,6 +7,9 @@ import RegistrationScreen from "./pages/RegistrationScreen.tsx";
 import {AppUser} from "./types/AppUser.ts";
 import {AppUserCreateDto} from "./types/AppUserCreateDto.ts";
 import HomeScreen from "./pages/HomeScreen.tsx";
+import CalendarScreen from "./pages/CalendarScreen.tsx";
+import RecipesScreen from "./pages/RecipesScreen.tsx";
+import ProfileScreen from "./pages/ProfileScreen.tsx";
 
 export default function App() {
 
@@ -59,9 +62,9 @@ export default function App() {
                          createUser={createUser}
                          appUser={appUser}
                      setCurrentRoute={setCurrentRoute}/>}/>
-              <Route path={"/calendar"} element={<h1>Kalender</h1>}/>
-              <Route path={"/recipes"} element={<h1>Rezepte</h1>}/>
-              <Route path={"/Profile"} element={<h1>Profil</h1>}/>
+              <Route path={"/calendar"} element={<CalendarScreen setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/profile"} element={<ProfileScreen setCurrentRoute={setCurrentRoute}/> }/>
           </Routes>
       </Layout>
   )

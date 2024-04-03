@@ -1,32 +1,47 @@
-import HomeLogo from "../assets/AppIcons/57.png"
+import TodayIcon from "../assets/menu-icons/icon_today.svg"
+import CalendarIcon from "../assets/menu-icons/icon_calendar.svg"
+import RecipeIcon from "../assets/menu-icons/icon_recipe.svg"
+import ProfileIcon from "../assets/menu-icons/icon_profile.svg"
 import "./Navbar.css"
-export default function Navbar() {
+
+type NavbarProps = {
+    currentRoute: string
+}
+export default function Navbar(props: Readonly<NavbarProps>) {
+
     return (
-        <div className={"navbar"}>
-            <a href={"/home"}>
-                <div className={"navbar-item"}>
-                    <img src={HomeLogo}/>
-                    <label>Home</label>
-                </div>
-            </a>
-            <a href={"/home"}>
-                <div className={"navbar-item"}>
-                    <img src={HomeLogo}/>
-                    <label>Home</label>
-                </div>
-            </a>
-            <a href={"/home"}>
-                <div className={"navbar-item"}>
-                    <img src={HomeLogo}/>
-                    <label>Home</label>
-                </div>
-            </a>
-            <a href={"/home"}>
-                <div className={"navbar-item"}>
-                    <img src={HomeLogo}/>
-                    <label>Home</label>
-                </div>
-            </a>
-        </div>
+        <nav className={"navbar"}>
+            <div className={"navbar-wrapper"}>
+                <a href={"/home"}
+                   className={props.currentRoute == "http://localhost:5173/home" ? "navbar-item-active" : "navbar-item"}>
+                    <div>
+                        <img src={TodayIcon} alt={"Ein Klemmbrett mit einem Stift"}/>
+                        <label>Heute</label>
+                    </div>
+                </a>
+                <a href={"/calendar"}
+                   className={props.currentRoute == "http://localhost:5173/calendar" ? "navbar-item-active" : "navbar-item"}>
+                    <div>
+                        <img src={CalendarIcon} alt={"Ein Kalender"}/>
+                        <label>Kalender</label>
+                    </div>
+                </a>
+                <a href={"/recipes"}
+                   className={props.currentRoute == "http://localhost:5173/recipes" ? "navbar-item-active" : "navbar-item"}>
+                    <div>
+                        <img src={RecipeIcon} alt={"Ein Buch mit einem Lesezeichen darin"}/>
+                        <label>Rezepte</label>
+                    </div>
+                </a>
+                <a href={"/profile"}
+                   className={props.currentRoute == "http://localhost:5173/profile" ? "navbar-item-active" : "navbar-item"}>
+                    <div>
+                        <img src={ProfileIcon} alt={"Symbol eines Profilbildes"}/>
+                        <label>Profil</label>
+                    </div>
+                </a>
+            </div>
+
+        </nav>
     );
 }

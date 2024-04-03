@@ -9,12 +9,11 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
         useEffect(() => {
                 props.setCurrentRoute(url)
-                console.log(url)
-        }, []);
+        }, [props, url]);
 
     return (
         <>
-            <h1>Home</h1>
+            <h1>Heute</h1>
         </>
     );
 }
