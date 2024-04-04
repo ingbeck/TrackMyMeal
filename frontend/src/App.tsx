@@ -10,6 +10,7 @@ import HomeScreen from "./pages/HomeScreen.tsx";
 import CalendarScreen from "./pages/CalendarScreen.tsx";
 import RecipesScreen from "./pages/RecipesScreen.tsx";
 import ProfileScreen from "./pages/ProfileScreen.tsx";
+import LoginProcessingScreen from "./pages/LoginProcessingScreen.tsx";
 
 export default function App() {
 
@@ -60,10 +61,11 @@ export default function App() {
     }
 
     return (
-      <Layout currentRoute={currentRoute} appUserId={appUser.id} appUrl={appUrl}>
+      <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl}>
           <Routes>
               <Route path={"/"} element={<StartScreen login={login} setCurrentRoute={setCurrentRoute}/>}/>
-              <Route path={"/home"} element={<HomeScreen setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/login/:id"} element={<LoginProcessingScreen getUser={getAppUser}/>}/>
+              <Route path={"/home/:id"} element={<HomeScreen setCurrentRoute={setCurrentRoute} getAppUser={getAppUser}/>}/>
               <Route path={"/registration/:id"}
                      element={<RegistrationScreen
                          getUser={getAppUser}
@@ -72,7 +74,7 @@ export default function App() {
                      setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/calendar"} element={<CalendarScreen setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
-              <Route path={"/profile"} element={<ProfileScreen setCurrentRoute={setCurrentRoute}/> }/>
+              <Route path={"/profile/:id"} element={<ProfileScreen setCurrentRoute={setCurrentRoute} appUser={appUser} getAppUser={getAppUser}/> }/>
           </Routes>
       </Layout>
   )

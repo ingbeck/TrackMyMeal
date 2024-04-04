@@ -12,8 +12,8 @@ export default function LoginProcessingScreen(props: Readonly<LoginProcessingScr
 
     useEffect(() => {
         props.getUser(params.id)
-        navigate("/home")
-    }, []);
+        navigate("/home/"+params.id)
+    }, [navigate, params.id, props]);
 
     return (
         <h1>Login...</h1>
