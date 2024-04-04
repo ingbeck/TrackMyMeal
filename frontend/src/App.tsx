@@ -1,8 +1,7 @@
 import Layout from "./components/Layout.tsx";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import StartScreen from "./pages/StartScreen.tsx";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import RegistrationScreen from "./pages/RegistrationScreen.tsx";
 import {AppUser} from "./types/AppUser.ts";
 import {AppUserCreateDto} from "./types/AppUserCreateDto.ts";
@@ -10,6 +9,8 @@ import HomeScreen from "./pages/HomeScreen.tsx";
 import CalendarScreen from "./pages/CalendarScreen.tsx";
 import RecipesScreen from "./pages/RecipesScreen.tsx";
 import ProfileScreen from "./pages/ProfileScreen.tsx";
+import LoginProcessingScreen from "./pages/LoginProcessingScreen.tsx";
+import axios from "axios";
 
 export default function App() {
 
@@ -29,6 +30,7 @@ export default function App() {
         isNewUser : false
     })
     const[currentRoute, setCurrentRoute] = useState<string>("")
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAppUrl()
@@ -37,6 +39,11 @@ export default function App() {
     function login(){
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
         window.open(host + "/oauth2/authorization/google", "_self")
+    }
+
+    function logout(){
+        axios.post("/api/users/logout")
+            .then(() => navigate("/"))
     }
 
     function getAppUser(id:string | undefined){
@@ -60,10 +67,11 @@ export default function App() {
     }
 
     return (
-      <Layout currentRoute={currentRoute} appUserId={appUser.id} appUrl={appUrl}>
+      <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl}>
           <Routes>
               <Route path={"/"} element={<StartScreen login={login} setCurrentRoute={setCurrentRoute}/>}/>
-              <Route path={"/home"} element={<HomeScreen setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/login/:id"} element={<LoginProcessingScreen getUser={getAppUser}/>}/>
+              <Route path={"/home/:id"} element={<HomeScreen setCurrentRoute={setCurrentRoute} getAppUser={getAppUser}/>}/>
               <Route path={"/registration/:id"}
                      element={<RegistrationScreen
                          getUser={getAppUser}
@@ -72,7 +80,7 @@ export default function App() {
                      setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/calendar"} element={<CalendarScreen setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
-              <Route path={"/profile"} element={<ProfileScreen setCurrentRoute={setCurrentRoute}/> }/>
+              <Route path={"/profile/:id"} element={<ProfileScreen setCurrentRoute={setCurrentRoute} appUser={appUser} getAppUser={getAppUser} logout={logout}/> }/>
           </Routes>
       </Layout>
   )

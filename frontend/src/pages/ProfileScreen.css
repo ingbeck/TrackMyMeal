@@ -1,0 +1,45 @@
+.profilescreen{
+    padding: 0 24px 0 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profilescreen-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.profilescreen-title-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profilescreen-stats-wrapper h2{
+    margin-top: 40px;
+}
+
+.profilescreen-btn-edit{
+    margin-top: 100px;
+}
+
+.profilescreen-btn-edit,
+.profilescreen-title-wrapper button{
+    height: 30px;
+    border: none;
+    background: white;
+    border-radius: 4px;
+}
+
+.profilescreen-btn-edit:hover,
+.profilescreen-title-wrapper button:hover{
+    box-shadow: 0 0 5px #6f81a5;
+    border-radius: 4px;
+}
+
+.profilescreen-avatar{
+    height: 48px;
+    width: 48px;
+    border-radius: 100%;
+    background: white;
+}

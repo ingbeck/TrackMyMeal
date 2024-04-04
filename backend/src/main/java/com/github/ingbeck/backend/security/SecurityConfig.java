@@ -26,6 +26,7 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
     private final CustomSuccessAuthenticationHandler csa;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -35,7 +36,9 @@ public class SecurityConfig {
                 .oauth2Login(o -> o.successHandler(csa))
                 .authorizeHttpRequests(a -> a
                         .requestMatchers(HttpMethod.GET, "/api/users/me").authenticated()
-                        .anyRequest().permitAll());
+                        .anyRequest().permitAll())
+                .logout(logout -> logout.logoutUrl("/api/users/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> response.setStatus(200)));
         return http.build();
     }
 
