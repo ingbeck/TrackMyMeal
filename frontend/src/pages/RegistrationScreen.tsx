@@ -126,7 +126,7 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                     activityLevel: formData.activityLevel
                 }
                 props.createUser(params.id, appUserCreateDto)
-                navigate("/home")
+                navigate("/home/" + params.id)
             })
             .catch((error: Yup.ValidationError) => {
                 const newErrors: ErrorState = {
