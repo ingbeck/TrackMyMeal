@@ -1,10 +1,12 @@
 import {useEffect} from "react";
 import {AppUser} from "../types/AppUser.ts";
 import {useParams} from "react-router-dom";
+import "./ProfileScreen.css"
 
 type ProfileScreenProps = {
     setCurrentRoute : (url:string) => void,
-    getAppUser : (id:string | undefined) => void
+    getAppUser : (id:string | undefined) => void,
+    logout : () => void,
     appUser : AppUser
 }
 export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
@@ -21,10 +23,13 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
     }, [props, params.id]);
 
     return (
-        <>
-            <h1>Profil</h1>
+        <div className={"profilescreen"}>
+            <div className={"profilescreen-title-wrapper"}>
+                <h1>Dein Profil</h1>
+                <button onClick={props.logout}>Logout</button>
+            </div>
             <p>Name: {props.appUser.name}</p>
             <p>Geschlecht: {props.appUser.gender}</p>
-        </>
+        </div>
     );
 }

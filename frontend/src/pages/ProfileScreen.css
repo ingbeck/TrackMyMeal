@@ -1,0 +1,13 @@
+.profilescreen{
+    padding: 0 24px 0 24px;
+}
+
+.profilescreen-title-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profilescreen-title-wrapper button{
+    height: 30px;
+}
