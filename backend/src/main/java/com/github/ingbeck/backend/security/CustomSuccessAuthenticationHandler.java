@@ -2,7 +2,6 @@ package com.github.ingbeck.backend.security;
 
 import com.github.ingbeck.backend.model.AppUser;
 import com.github.ingbeck.backend.repository.UserRepository;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +23,13 @@ public class CustomSuccessAuthenticationHandler implements AuthenticationSuccess
 
     private final UserRepository userRepository;
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
         var principle = (OAuth2User)authentication.getPrincipal();
         String id = principle.getAttributes().get("sub").toString();
         AppUser appUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id:" + id + " not found!"));
 
         if(!appUser.isNewUser()){
-            response.sendRedirect(appURL + "/home");
+            response.sendRedirect(appURL + "/login/" + id);
         }else{
             appUser.setNewUser(false);
             userRepository.save(appUser);
