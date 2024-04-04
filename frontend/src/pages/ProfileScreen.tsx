@@ -24,12 +24,28 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
 
     return (
         <div className={"profilescreen"}>
-            <div className={"profilescreen-title-wrapper"}>
-                <h1>Dein Profil</h1>
-                <button onClick={props.logout}>Logout</button>
+            <div className={"profilescreen-wrapper"}>
+                <div className={"profilescreen-title-wrapper"}>
+                    <img src={props.appUser.avatarUrl} className={"profilescreen-avatar"} alt={" "}/>
+                    <h1>{props.appUser.name}</h1>
+                    <button onClick={props.logout}>Logout</button>
+                </div>
+                <div className={"profilescreen-stats-wrapper"}>
+                    <h2>Alter:</h2>
+                    <p>{props.appUser.age}</p>
+                    <h2>Größe:</h2>
+                    <p>{props.appUser.height} cm</p>
+                    <h2>Gewicht:</h2>
+                    <p>{props.appUser.weight} kg</p>
+                    <h2>Grundumsatz:</h2>
+                    <p>{props.appUser.bmr} kcal</p>
+                    <h2>Aktivitätslevel:</h2>
+                    <p>{props.appUser.activityLevel}</p>
+                </div>
+                <button className={"profilescreen-btn-edit"}>Profil bearbeiten</button>
             </div>
-            <p>Name: {props.appUser.name}</p>
-            <p>Geschlecht: {props.appUser.gender}</p>
+
         </div>
+
     );
 }
