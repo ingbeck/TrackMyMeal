@@ -23,6 +23,11 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
         props.getAppUser(params.id)
     }, [props, params.id]);
 
+    function deleteUser(){
+        if (window.confirm("Möchtest du dein Profil endgültig löschen?"))
+            props.deleteUser(params.id)
+    }
+
     return (
         <div className={"profilescreen"}>
             <div className={"profilescreen-wrapper"}>
@@ -44,7 +49,7 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                     <p>{props.appUser.activityLevel}</p>
                 </div>
                 <button className={"profilescreen-btn-edit"}>Profil bearbeiten</button>
-                <button onClick={() => props.deleteUser(params.id)} className={"profilescreen-btn-edit"}>Profil löschen</button>
+                <button onClick={deleteUser} className={"profilescreen-btn-edit"}>Profil löschen</button>
             </div>
 
         </div>
