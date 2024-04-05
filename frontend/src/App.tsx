@@ -66,6 +66,13 @@ export default function App() {
             .catch(error => console.log(error.message))
     }
 
+    function deleteUser(id: string | undefined){
+        axios.delete("/api/users/"+ id)
+            .then(() => {
+                navigate("/")
+            })
+    }
+
     return (
       <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl}>
           <Routes>
@@ -80,7 +87,12 @@ export default function App() {
                      setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/calendar"} element={<CalendarScreen setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
-              <Route path={"/profile/:id"} element={<ProfileScreen setCurrentRoute={setCurrentRoute} appUser={appUser} getAppUser={getAppUser} logout={logout}/> }/>
+              <Route path={"/profile/:id"} element={<ProfileScreen
+                  setCurrentRoute={setCurrentRoute}
+                  appUser={appUser}
+                  getAppUser={getAppUser}
+                  deleteUser={deleteUser}
+                  logout={logout}/> }/>
           </Routes>
       </Layout>
   )
