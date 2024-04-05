@@ -29,4 +29,9 @@ public class UserController {
     public AppUser createUser(@PathVariable String id, @RequestBody AppUserCreateDto appUserCreateDto){
         return userService.createUser(id, appUserCreateDto);
     }
+
+    @DeleteMapping("/{id}")
+    public  void deleteUserById(@PathVariable String id){
+        userService.deleteUserById(id);
+    }
 }

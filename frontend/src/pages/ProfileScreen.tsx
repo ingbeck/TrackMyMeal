@@ -6,6 +6,7 @@ import "./ProfileScreen.css"
 type ProfileScreenProps = {
     setCurrentRoute : (url:string) => void,
     getAppUser : (id:string | undefined) => void,
+    deleteUser : (id: string | undefined) => void,
     logout : () => void,
     appUser : AppUser
 }
@@ -43,6 +44,7 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                     <p>{props.appUser.activityLevel}</p>
                 </div>
                 <button className={"profilescreen-btn-edit"}>Profil bearbeiten</button>
+                <button onClick={() => props.deleteUser(params.id)} className={"profilescreen-btn-edit"}>Profil löschen</button>
             </div>
 
         </div>
