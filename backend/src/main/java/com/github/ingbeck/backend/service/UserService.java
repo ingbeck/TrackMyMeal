@@ -42,6 +42,10 @@ public class UserService {
         return userRepository.save(appUserToSave);
     }
 
+    public void deleteUserById(String id){
+        userRepository.deleteById(id);
+    }
+
     private double calculateBMR(int height, int weight, int age, AppUserGender gender) {
         if(gender == AppUserGender.MALE){
             return 66.47 + 13.75 * weight + 5.003 * height - 6.755 * age;
