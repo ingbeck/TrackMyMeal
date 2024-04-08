@@ -17,7 +17,6 @@ export default function StartScreen(props: Readonly<StartScreenProps>) {
     }, []);
 
     return (
-        <>
             <div className={"startpage"}>
                 <div className={"startpage-wrapper"}>
                     <img src={Logo} className={"startpage-wrapper-logo"} alt={"Logo der App; eine Gabel, die von einem runden Fortschrittsbalken umgeben ist"}/>
@@ -28,7 +27,5 @@ export default function StartScreen(props: Readonly<StartScreenProps>) {
                     </button>
                 </div>
             </div>
-        </>
-
     );
 }
