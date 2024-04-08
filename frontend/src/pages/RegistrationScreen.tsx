@@ -142,7 +142,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                     newErrors[currentError.path] = currentError.message
                 )
                 setErrors(newErrors)
-                console.log(errors)
             })
     }
 
