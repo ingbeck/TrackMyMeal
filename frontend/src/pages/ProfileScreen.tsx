@@ -187,12 +187,14 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                             </div>
                         </div>
                 }
-                {isEditable && <button onClick={update} className={"profilescreen-btn-edit"}>Speichern</button>}
-                <button onClick={cancel} className={"profilescreen-btn-edit"}>
-                    {isEditable ? "Abbrechen" : "Profil bearbeiten"}
-                </button>
-                {isEditable &&
-                    <button onClick={deleteUser} className={"profilescreen-btn-edit"}>Profil löschen</button>}
+                <div className={"profilescreen-btn-wrapper"}>
+                    {isEditable && <button onClick={update} className={"profilescreen-btn-edit"}>Speichern</button>}
+                    <button onClick={cancel} className={"profilescreen-btn-edit"}>
+                        {isEditable ? "Abbrechen" : "Profil bearbeiten"}
+                    </button>
+                    {isEditable && <button onClick={deleteUser} className={"profilescreen-btn-delete"}>Profil löschen</button>}
+                </div>
+
             </div>
 
         </div>
