@@ -92,7 +92,9 @@ export default function App() {
                   appUser={appUser}
                   getAppUser={getAppUser}
                   deleteUser={deleteUser}
-                  logout={logout}/> }/>
+                  logout={logout}
+                  updateUser={createUser}/>
+              }/>
           </Routes>
       </Layout>
   )
