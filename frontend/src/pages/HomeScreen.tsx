@@ -16,7 +16,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     useEffect(() => {
         props.getAppUser(params.id)
-    }, [props, params.id]);
+    }, [params.id]);
 
     return (
         <h1>

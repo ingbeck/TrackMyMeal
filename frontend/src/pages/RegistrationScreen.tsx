@@ -10,6 +10,7 @@ import {Button} from "@mui/material";
 import FloatingDatePicker from "../components/registration/FloatingDatePicker.tsx";
 import * as Yup from 'yup';
 import CustomRadioGroup from "../components/registration/CustomRadioGroup.tsx";
+import {validationSchema} from "../YupValidationSchema.ts";
 
 type RegistrationScreenProps = {
     getUser : (id:string | undefined) => void,
@@ -26,7 +27,7 @@ export type FormInput = {
     activityLevel : string
 }
 
-type ErrorState = {
+export type ErrorState = {
     birthday : string,
     gender : string,
     height : string,
@@ -46,26 +47,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
         weight: 0,
         activityLevel: ""
     }
-    const validationSchema = Yup.object().shape({
-        birthday: Yup.date()
-            .typeError("Bitte Geburtsdatum angeben")
-            .max(new Date(Date.now() - 567648000000), "Du musst mindestens 18 Jahre alt sein")
-            .required("Required"),
-        gender: Yup.mixed()
-            .oneOf(["MALE", "FEMALE"], "Bitte Geschlecht auswählen")
-            .required(),
-        height: Yup.number()
-            .positive("Bitte Größe angeben")
-            .typeError("Bitte Größe angeben")
-            .required(),
-        weight: Yup.number()
-            .positive("Bitte Gewicht angeben")
-            .typeError("Bitte Gewicht angeben")
-            .required(),
-        activityLevel: Yup.mixed()
-            .oneOf(["ATHLETE", "PUMPER", "PEDESTRIAN", "COUCHPOTATO"], "Bitte Aktivitätslevel auswählen")
-            .required()
-    });
 
     const[formData, setFormData] = useState<FormInput>(initialFormData)
     const[errors, setErrors] = useState<ErrorState>({
@@ -142,7 +123,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                     newErrors[currentError.path] = currentError.message
                 )
                 setErrors(newErrors)
-                console.log(errors)
             })
     }
 
