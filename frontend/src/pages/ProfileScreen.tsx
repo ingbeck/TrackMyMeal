@@ -2,8 +2,11 @@ import {ChangeEvent, useEffect, useState} from "react";
 import {AppUser} from "../types/AppUser.ts";
 import {useParams} from "react-router-dom";
 import "./ProfileScreen.css"
-import {FormInput} from "./RegistrationScreen.tsx";
+import {ErrorState, FormInput} from "./RegistrationScreen.tsx";
 import {AppUserCreateDto} from "../types/AppUserCreateDto.ts";
+import {getDateToday} from "../Utility.ts";
+import * as Yup from "yup";
+import {validationSchema} from "../YupValidationSchema.ts";
 
 type ProfileScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -17,22 +20,32 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
 
     const url = window.location.href;
     const params = useParams();
-    const[formData, setFormData] = useState<FormInput>({
+    const initialFormData:FormInput = {
         birthday : props.appUser.birthdate,
         gender : props.appUser.gender,
         height : props.appUser.height,
         weight : props.appUser.weight,
         activityLevel : props.appUser.activityLevel
-    })
+    }
+    const initialErrorState={
+        birthday: "",
+        gender: "",
+        height: "",
+        weight: "",
+        activityLevel: ""
+    }
+
+    const[formData, setFormData] = useState<FormInput>(initialFormData)
     const[isEditable, setIsEditable]=useState<boolean>(false)
+    const[errors, setErrors] = useState<ErrorState>(initialErrorState);
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [props, url]);
+    }, []);
 
     useEffect(() => {
         props.getAppUser(params.id)
-    }, [props, params.id]);
+    }, [params.id]);
 
     function deleteUser(){
         if (window.confirm("Möchtest du dein Profil endgültig löschen?"))
@@ -50,15 +63,41 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
     }
 
     function update(){
-        const appUserCreateDto: AppUserCreateDto = {
-            birthdate: formData.birthday,
-            gender: formData.gender,
-            height: Number(formData.height),
-            weight: Number(formData.weight),
-            activityLevel: formData.activityLevel
-        }
-        props.updateUser(params.id, appUserCreateDto)
-        setIsEditable(!isEditable)
+        validationSchema.validate(formData,{abortEarly: false})
+            .then(() => {
+                const appUserCreateDto: AppUserCreateDto = {
+                    birthdate: formData.birthday,
+                    gender: formData.gender,
+                    height: Number(formData.height),
+                    weight: Number(formData.weight),
+                    activityLevel: formData.activityLevel
+                }
+                props.updateUser(params.id, appUserCreateDto)
+                setIsEditable(!isEditable)
+                setErrors(initialErrorState)
+            })
+            .catch((error: Yup.ValidationError) => {
+                const newErrors: ErrorState = {
+                    birthday: "",
+                    gender: "",
+                    height: "",
+                    weight: "",
+                    activityLevel: ""
+                }
+                //@ts-ignore
+                error.inner.forEach((currentError) =>
+                    // @ts-ignore
+                    newErrors[currentError.path] = currentError.message
+                )
+                setErrors(newErrors)
+                console.log(errors)
+            })
+    }
+
+    function cancel(){
+        setFormData(initialFormData);
+        setIsEditable(!isEditable);
+        setErrors(initialErrorState);
     }
 
     function displayActivityLevel(activityLevel : string) : string | undefined{
@@ -98,17 +137,25 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                     isEditable
                         ?
                         <div className={"profilescreen-stats-wrapper"}>
-                            <div className={"profilescreen-stats-item"}>
+                            {errors.weight !== "" && <div className={"profilescreen-stats-item-error-message"}>{errors.weight}</div>}
+                            <div className={errors.weight !== "" ? "profilescreen-stats-item-error" :"profilescreen-stats-item"}>
                                 <span>Gewicht (in kg)</span>
                                 <input name={"weight"} value={formData.weight} onChange={handleChange} type={"number"}/>
                             </div>
-                            <div className={"profilescreen-stats-item"}>
-                            <span>Größe (in cm)</span>
+                            {errors.height !== "" && <div className={"profilescreen-stats-item-error-message"}>{errors.height}</div>}
+                            <div className={errors.height !== "" ? "profilescreen-stats-item-error" :"profilescreen-stats-item"}>
+                                <span>Größe (in cm)</span>
                                 <input name={"height"} value={formData.height} onChange={handleChange} type={"number"}/>
                             </div>
-                            <div className={"profilescreen-stats-item"}>
+                            {errors.birthday !== "" && <div className={"profilescreen-stats-item-error-message"}>{errors.birthday}</div>}
+                            <div className={errors.birthday !== "" ? "profilescreen-stats-item-error" :"profilescreen-stats-item"}>
                                 <span>Geburtstag</span>
-                                <input name={"birthday"} value={formData.birthday} type={"date"} onChange={handleChange}/>
+                                <input name={"birthday"}
+                                       value={formData.birthday}
+                                       type={"date"}
+                                       onChange={handleChange}
+                                       max={getDateToday()}
+                                />
                             </div>
                             <div className={"profilescreen-stats-item"}>
                                 <span>Aktivitätslevel</span>
@@ -119,7 +166,6 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                                     <option value={"COUCHPOTATO"}>Couchpotato</option>
                                 </select>
                             </div>
-
                         </div>
                         :
                         <div className={"profilescreen-stats-wrapper"}>
@@ -141,11 +187,12 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                             </div>
                         </div>
                 }
-                {isEditable && <button onClick={update} className={"profilescreen-btn-edit"}>Save</button>}
-                <button onClick={() => setIsEditable(!isEditable)} className={"profilescreen-btn-edit"}>Profil
-                    bearbeiten
+                {isEditable && <button onClick={update} className={"profilescreen-btn-edit"}>Speichern</button>}
+                <button onClick={cancel} className={"profilescreen-btn-edit"}>
+                    {isEditable ? "Abbrechen" : "Profil bearbeiten"}
                 </button>
-                <button onClick={deleteUser} className={"profilescreen-btn-edit"}>Profil löschen</button>
+                {isEditable &&
+                    <button onClick={deleteUser} className={"profilescreen-btn-edit"}>Profil löschen</button>}
             </div>
 
         </div>
