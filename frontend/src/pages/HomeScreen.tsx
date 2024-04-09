@@ -22,7 +22,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     useEffect(() => {
         props.getAppUser(params.id)
-        calculateProgress(props.appUser.bmrWithActivity, 800)
+        calculateProgress(props.appUser.bmrWithActivity, 999)
     }, [params.id]);
 
     function calculateProgress(whole:number, part:number ){
@@ -37,9 +37,9 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                 <h2>Ziel</h2>
                 <div id={"progress"} className={"progressbar"}>
                     <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"} style={{flex:progress}}>
-                        {progress > 0.25 && <label>800 kcal</label>}
+                        {progress > 0.25 && <span>800 kcal</span>}
                     </div>
-                    {progress < 0.25 && <label>800 kcal</label>}
+                    {progress < 0.25 && <span>800 kcal</span>}
                 </div>
                 <h3>{props.appUser.bmrWithActivity} kcal</h3>
             </div>

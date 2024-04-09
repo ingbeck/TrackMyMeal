@@ -21,7 +21,7 @@
     height: 60px;
 }
 
-.progressbar label{
+.progressbar span{
     align-self: flex-end;
     margin: 0 0 8px 8px;
 }
@@ -44,8 +44,8 @@
     height: 60px;
 }
 
-.progressbar-fill label,
-.progressbar-fill-overflow label{
+.progressbar-fill span,
+.progressbar-fill-overflow span{
     color: #ffffff;
     margin: 0 8px 8px 0;
 }
