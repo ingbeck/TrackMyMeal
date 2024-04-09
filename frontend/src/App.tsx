@@ -11,6 +11,7 @@ import RecipesScreen from "./pages/RecipesScreen.tsx";
 import ProfileScreen from "./pages/ProfileScreen.tsx";
 import LoginProcessingScreen from "./pages/LoginProcessingScreen.tsx";
 import axios from "axios";
+import {Diary} from "./types/Diary.ts";
 
 export default function App() {
 
@@ -29,6 +30,7 @@ export default function App() {
         bmrWithActivity : 0,
         isNewUser : false
     })
+    const[diary, setDiary] = useState<Diary>({id:"", userId:"", diaryEntries:[]});
     const[currentRoute, setCurrentRoute] = useState<string>("")
     const navigate = useNavigate();
 
@@ -66,6 +68,11 @@ export default function App() {
             .catch(error => console.log(error.message))
     }
 
+    function createDiary(id:string | undefined){
+        axios.post("/api/diaries/"+id)
+            .then(response => setDiary(response.data))
+    }
+
     function deleteUser(id: string | undefined){
         axios.delete("/api/users/"+ id)
             .then(() => {
@@ -78,13 +85,16 @@ export default function App() {
           <Routes>
               <Route path={"/"} element={<StartScreen login={login} setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/login/:id"} element={<LoginProcessingScreen getUser={getAppUser}/>}/>
-              <Route path={"/home/:id"} element={<HomeScreen setCurrentRoute={setCurrentRoute} getAppUser={getAppUser}/>}/>
-              <Route path={"/registration/:id"}
-                     element={<RegistrationScreen
-                         getUser={getAppUser}
-                         createUser={createUser}
-                         appUser={appUser}
-                     setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/home/:id"} element={<HomeScreen
+                  setCurrentRoute={setCurrentRoute}
+                  getAppUser={getAppUser}
+                  diary={diary}/>}/>
+              <Route path={"/registration/:id"} element={<RegistrationScreen
+                  getUser={getAppUser}
+                  createUser={createUser}
+                  createDiary={createDiary}
+                  appUser={appUser}
+                  setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/calendar"} element={<CalendarScreen setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/profile/:id"} element={<ProfileScreen

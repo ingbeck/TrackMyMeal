@@ -15,6 +15,7 @@ import {validationSchema} from "../YupValidationSchema.ts";
 type RegistrationScreenProps = {
     getUser : (id:string | undefined) => void,
     createUser : (id:string | undefined, appUserCreateDto:AppUserCreateDto) => void,
+    createDiary : (id:string | undefined) => void,
     setCurrentRoute : (url:string) => void,
     appUser : AppUser
 }
@@ -107,6 +108,7 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                     activityLevel: formData.activityLevel
                 }
                 props.createUser(params.id, appUserCreateDto)
+                props.createDiary(params.id)
                 navigate("/home/" + params.id)
             })
             .catch((error: Yup.ValidationError) => {

@@ -1,9 +1,11 @@
 import {useEffect} from "react";
 import {useParams} from "react-router-dom";
+import {Diary} from "../types/Diary.ts";
 
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
-    getAppUser : (id:string | undefined) => void
+    getAppUser : (id:string | undefined) => void,
+    diary : Diary
 }
 export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
