@@ -16,6 +16,6 @@ public class DiaryController {
 
     @PostMapping("/{id}")
     public Diary createNewDiary(@PathVariable String id){
-        return diaryService.creatNewDiary(id);
+        return diaryService.createNewDiary(id);
     }
 }
