@@ -88,6 +88,7 @@ export default function App() {
               <Route path={"/home/:id"} element={<HomeScreen
                   setCurrentRoute={setCurrentRoute}
                   getAppUser={getAppUser}
+                  appUser={appUser}
                   diary={diary}/>}/>
               <Route path={"/registration/:id"} element={<RegistrationScreen
                   getUser={getAppUser}

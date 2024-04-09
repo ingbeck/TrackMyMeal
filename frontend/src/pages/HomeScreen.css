@@ -1,0 +1,51 @@
+.homescreen{
+    padding: 0 24px 0 24px;
+}
+
+.homescreen-dailyProgress{
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 0 24px 0 24px;
+}
+
+.homescreen-dailyProgress h3{
+    align-self: flex-end;
+}
+
+.progressbar{
+    display: flex;
+    border-radius: 8px;
+    background: #c5cfe7;
+    height: 60px;
+}
+
+.progressbar label{
+    align-self: flex-end;
+    margin: 0 0 8px 8px;
+}
+
+.progressbar-fill{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    background: #6f81a5;
+    border-radius: 8px;
+    height: 60px;
+}
+
+.progressbar-fill-overflow{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    background: #da0762;
+    border-radius: 8px;
+    height: 60px;
+}
+
+.progressbar-fill label,
+.progressbar-fill-overflow label{
+    color: #ffffff;
+    margin: 0 8px 8px 0;
+}
