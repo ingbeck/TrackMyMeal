@@ -13,7 +13,7 @@ public class DiaryService {
 
     private final DiaryRepository diaryRepository;
 
-    public Diary creatNewDiary(String userId){
+    public Diary createNewDiary(String userId){
         List<DiaryEntry> emptyDiaryEntries = new ArrayList<>();
 
         return diaryRepository.save(new Diary(null, userId, emptyDiaryEntries));
