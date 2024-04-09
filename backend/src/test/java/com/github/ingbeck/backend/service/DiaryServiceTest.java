@@ -22,7 +22,7 @@ class DiaryServiceTest {
         when(diaryRepository.save(any(Diary.class))).thenReturn(expected);
 
         //WHEN
-        Diary actual = diaryService.creatNewDiary("321");
+        Diary actual = diaryService.createNewDiary("321");
 
         //THEN
         verify(diaryRepository).save(any(Diary.class));
