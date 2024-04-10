@@ -2,7 +2,7 @@ type BreakfastIconProps = {
     width : number,
     height : number
 }
-export default function BreakfastIcon(props: BreakfastIconProps) {
+export default function BreakfastIcon(props: Readonly<BreakfastIconProps>) {
     return (
         <svg width={props.width.toString()} height={props.height.toString()} viewBox={"0 0 32 32"} fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
