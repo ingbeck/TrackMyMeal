@@ -1,0 +1,9 @@
+.addfooditem{
+    padding: 0 24px 0 24px;
+}
+
+.addfooditem-header-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

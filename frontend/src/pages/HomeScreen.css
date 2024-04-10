@@ -1,5 +1,8 @@
 .homescreen{
     padding: 0 24px 0 24px;
+    display: flex;
+    flex-direction: column;
+    height: 900px;
 }
 
 .homescreen-dailyProgress{
