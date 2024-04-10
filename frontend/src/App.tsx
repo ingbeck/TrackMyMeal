@@ -12,6 +12,7 @@ import ProfileScreen from "./pages/ProfileScreen.tsx";
 import LoginProcessingScreen from "./pages/LoginProcessingScreen.tsx";
 import axios from "axios";
 import {Diary} from "./types/Diary.ts";
+import AddFoodItem from "./pages/AddFoodItem.tsx";
 
 export default function App() {
 
@@ -32,6 +33,7 @@ export default function App() {
     })
     const[diary, setDiary] = useState<Diary>({id:"", userId:"", diaryEntries:[]});
     const[currentRoute, setCurrentRoute] = useState<string>("")
+    const [currentMeal, setCurrentMeal] = useState<string>("")
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -88,6 +90,7 @@ export default function App() {
               <Route path={"/home/:id"} element={<HomeScreen
                   setCurrentRoute={setCurrentRoute}
                   getAppUser={getAppUser}
+                  setCurrentMeal={setCurrentMeal}
                   appUser={appUser}
                   diary={diary}/>}/>
               <Route path={"/registration/:id"} element={<RegistrationScreen
@@ -106,6 +109,7 @@ export default function App() {
                   logout={logout}
                   updateUser={createUser}/>
               }/>
+              <Route path={"/add-food-item"} element={<AddFoodItem mealType={currentMeal} appUser={appUser}/>}/>
           </Routes>
       </Layout>
   )
