@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DiaryRepository extends MongoRepository<Diary, String> {
 
-    public Diary findDiaryByUserId(String userId);
+     Diary findDiaryByUserId(String userId);
 }
