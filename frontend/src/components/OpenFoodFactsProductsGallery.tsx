@@ -2,7 +2,8 @@ import {OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
 import OpenFoodFactsProductCard from "./OpenFoodFactsProductCard.tsx";
 
 type OpenFoodFactsProductsGalleryProps ={
-    openFoodFactsProducts : OpenFoodFactsProducts | null
+    openFoodFactsProducts : OpenFoodFactsProducts | null,
+    onClickAddButton : () => void
 }
 
 export default function OpenFoodFactsProductsGallery(props: Readonly<OpenFoodFactsProductsGalleryProps>) {
@@ -10,7 +11,8 @@ export default function OpenFoodFactsProductsGallery(props: Readonly<OpenFoodFac
         <div>
             {props.openFoodFactsProducts !== null
                 ?
-                props.openFoodFactsProducts.products.map(product => product.name !== "" && <OpenFoodFactsProductCard product={product}/>)
+                props.openFoodFactsProducts.products.map(product => product.name !== "" && <OpenFoodFactsProductCard product={product}
+                                                                                                                     onClickAddButton={props.onClickAddButton}/>)
                 :
                 null
             }

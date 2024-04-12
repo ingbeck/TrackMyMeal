@@ -2,7 +2,8 @@ import {OpenFoodFactsProduct} from "../types/OpenFoodFactsProducts.ts";
 import "./OpenFoodFactsProductCard.css"
 
 type OpenFoodFactsProductCardProps = {
-    product : OpenFoodFactsProduct
+    product : OpenFoodFactsProduct,
+    onClickAddButton : () => void
 }
 export default function OpenFoodFactsProductCard(props: Readonly<OpenFoodFactsProductCardProps>) {
     return (
@@ -17,7 +18,7 @@ export default function OpenFoodFactsProductCard(props: Readonly<OpenFoodFactsPr
                         <label>100 g</label>
                     }
                 </div>
-                <button>+</button>
+                <button onClick={props.onClickAddButton}>+</button>
             </div>
             <div className={"card-body"}>
                 <label>{props.product.servingSize !== 0 ? props.product.nutriments.energyKcalServing : props.product.nutriments.energyKcal100g} kcal</label>
