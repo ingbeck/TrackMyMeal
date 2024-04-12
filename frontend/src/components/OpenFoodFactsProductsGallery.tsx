@@ -2,14 +2,18 @@ import {OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
 import OpenFoodFactsProductCard from "./OpenFoodFactsProductCard.tsx";
 
 type OpenFoodFactsProductsGalleryProps ={
-    openFoodFactsProducts : OpenFoodFactsProducts
+    openFoodFactsProducts : OpenFoodFactsProducts | null
 }
 
 export default function OpenFoodFactsProductsGallery(props: Readonly<OpenFoodFactsProductsGalleryProps>) {
     return (
         <div>
-            {props.openFoodFactsProducts.products.length != 0 &&
-                props.openFoodFactsProducts.products.map(product => <OpenFoodFactsProductCard product={product}/>)}
+            {props.openFoodFactsProducts !== null
+                ?
+                props.openFoodFactsProducts.products.map(product => product.name !== "" && <OpenFoodFactsProductCard product={product}/>)
+                :
+                null
+            }
         </div>
     );
 }
