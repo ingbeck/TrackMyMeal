@@ -12,8 +12,6 @@ export default function SearchComponent(props: Readonly<SearchComponentProps>) {
     }
 
     return (
-        <>
             <input onChange={handleInputOnChange}/>
-        </>
     )
 }

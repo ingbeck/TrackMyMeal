@@ -13,15 +13,15 @@ export default function OpenFoodFactsProductCard(props: Readonly<OpenFoodFactsPr
                     <label>{props.product.name}</label>
                     {props.product.servingSize !== 0
                         ?
-                        <label>{props.product.servingSize + " " + props.product.servingUnit}</label>
+                        <span>{props.product.servingSize + " " + props.product.servingUnit}</span>
                         :
-                        <label>100 g</label>
+                        <span>100 g</span>
                     }
                 </div>
                 <button onClick={props.onClickAddButton}>+</button>
             </div>
             <div className={"card-body"}>
-                <label>{props.product.servingSize !== 0 ? props.product.nutriments.energyKcalServing : props.product.nutriments.energyKcal100g} kcal</label>
+                <span>{props.product.servingSize !== 0 ? props.product.nutriments.energyKcalServing : props.product.nutriments.energyKcal100g} kcal</span>
             </div>
         </div>
     );
