@@ -1,9 +1,9 @@
-import {OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
+import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
 import OpenFoodFactsProductCard from "./OpenFoodFactsProductCard.tsx";
 
 type OpenFoodFactsProductsGalleryProps ={
     openFoodFactsProducts : OpenFoodFactsProducts | null,
-    onClickAddButton : () => void
+    onClickAddButton : (product: OpenFoodFactsProduct) => void
 }
 
 export default function OpenFoodFactsProductsGallery(props: Readonly<OpenFoodFactsProductsGalleryProps>) {
