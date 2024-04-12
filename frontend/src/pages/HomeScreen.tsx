@@ -27,12 +27,16 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [props, url]);
+    }, [params.id]);
 
     useEffect(() => {
         props.getAppUser(params.id)
+        console.log(props.appUser)
+    }, [props.appUser.bmrWithActivity === 0]);
+
+    useEffect(() => {
         calculateProgress(props.appUser.bmrWithActivity, 2000)
-    }, [params.id]);
+    }, [props.appUser.bmrWithActivity !== 0]);
 
     function calculateProgress(whole: number, part: number) {
         setProgress(part / whole)
@@ -72,11 +76,16 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
             <div className={"homescreen-dailyProgress"}>
                 <h2>Ziel</h2>
                 <div id={"progress"} className={"progressbar"}>
-                    <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"}
-                         style={{flex: progress}}>
-                        {progress > 0.25 && <span>800 kcal</span>}
-                    </div>
-                    {progress < 0.25 && <span>800 kcal</span>}
+                    {props.appUser.bmrWithActivity !== 0 &&
+                        <>
+                            <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"}
+                                 style={{flex: progress}}>
+                                {progress > 0.25 && <span>2000 kcal</span>}
+                            </div>
+                            {progress < 0.25 && <span>2000 kcal</span>}
+                        </>
+                    }
+
                 </div>
                 <h3>{props.appUser.bmrWithActivity} kcal</h3>
             </div>

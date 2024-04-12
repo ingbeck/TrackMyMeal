@@ -1,6 +1,6 @@
 package com.github.ingbeck.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Nutriments {
     int energy;
-    @JsonProperty("energy-kcal_100g")
+    @JsonAlias({"energy-kcal_100g"})
     int energyKcal100g;
-    @JsonProperty("energy-kcal_serving")
+    @JsonAlias({"energy-kcal_serving"})
     int energyKcalServing;
 }

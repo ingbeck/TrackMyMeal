@@ -1,6 +1,6 @@
 package com.github.ingbeck.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OpenFoodFactsProduct {
     Nutriments nutriments;
-    @JsonProperty("product_name")
+    @JsonAlias({"product_name"})
     String name;
-    @JsonProperty("serving_quantity")
+    @JsonAlias({"serving_quantity"})
     int servingSize;
-    @JsonProperty("serving_quantity_unit")
+    @JsonAlias({"serving_quantity_unit"})
     String servingUnit;
 }

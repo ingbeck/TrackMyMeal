@@ -109,7 +109,7 @@ export default function App() {
                   logout={logout}
                   updateUser={createUser}/>
               }/>
-              <Route path={"/add-food-item"} element={<AddFoodItem mealType={currentMeal} appUser={appUser}/>}/>
+              <Route path={"/add-food-item"} element={<AddFoodItem mealType={currentMeal} appUser={appUser} setCurrentRoute={setCurrentRoute}/>}/>
           </Routes>
       </Layout>
   )

@@ -1,0 +1,32 @@
+.card{
+    margin-top: 8px;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 8px;
+}
+
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid black 1px;
+    padding-bottom: 8px;
+}
+
+.card-header-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card-header button{
+    height: 32px;
+    width: 32px;
+}
+
+.card-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 8px;
+}
+

@@ -13,7 +13,8 @@ export default function Layout(props: Readonly<LayoutProps>) {
 
     const startScreen:string = props.appUrl + "/"
     const regScreen:string = props.appUrl + "/registration/" + props.appUser.id
-    const isInApp = props.currentRoute != startScreen && props.currentRoute != regScreen
+    const addFoodItemScreen = props.appUrl + "/add-food-item"
+    const isInApp = props.currentRoute != startScreen && props.currentRoute != regScreen  && props.currentRoute != addFoodItemScreen
 
     return (
         <div>
