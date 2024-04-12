@@ -11,6 +11,6 @@ export type OpenFoodFactsProduct = {
 
 type Nutriments = {
     energy : number,
-    energyKcal100g : number,
+    energyKcal100g: number,
     energyKcalServing : number
 }
