@@ -136,12 +136,12 @@ class OpenFoodFactsServiceTest {
                                                                  {
                                                                      "nutriments": {
                                                                          "energy": 2360,
-                                                                         "energy-kcal_100g": 566,
-                                                                         "energy-kcal_serving": 119
+                                                                         "energyKcal100g": 566,
+                                                                         "energyKcalServing": 119
                                                                      },
-                                                                     "product_name": "Kinderriegel",
-                                                                     "serving_quantity": 21,
-                                                                     "serving_quantity_unit": "g"
+                                                                     "name": "Kinderriegel",
+                                                                     "servingSize": 21,
+                                                                     "servingUnit": "g"
                                                                  }
                                                              ]
                                                          }
