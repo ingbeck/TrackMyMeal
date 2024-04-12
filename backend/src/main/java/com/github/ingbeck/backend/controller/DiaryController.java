@@ -14,6 +14,11 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
+    @GetMapping("/{userId}")
+    public Diary getDiaryByUserId(@PathVariable String userId){
+        return diaryService.getDiaryByUserId(userId);
+    }
+
     @PostMapping("/{id}")
     public Diary createNewDiary(@PathVariable String id){
         return diaryService.createNewDiary(id);
