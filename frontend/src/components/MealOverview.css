@@ -1,0 +1,13 @@
+.mealoverview{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    border: solid 1px black;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.mealoverview span{
+    font-size: 24px;
+}

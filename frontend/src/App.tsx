@@ -33,12 +33,16 @@ export default function App() {
     })
     const[diary, setDiary] = useState<Diary>({id:"", userId:"", diaryEntries:[]});
     const[currentRoute, setCurrentRoute] = useState<string>("")
-    const [currentMeal, setCurrentMeal] = useState<string>("")
+    const[currentMeal, setCurrentMeal] = useState<string>("")
     const navigate = useNavigate();
 
     useEffect(() => {
         getAppUrl()
     }, []);
+
+    useEffect(() => {
+        getDiaryByUserId(appUser.id)
+    }, [appUser.id !=""]);
 
     function login(){
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -60,6 +64,11 @@ export default function App() {
     function getAppUrl(){
         axios.get("/api/currentUrl")
             .then(response => setAppUrl(response.data))
+    }
+
+    function getDiaryByUserId(userId:string | undefined){
+        axios.get("/api/diaries/"+userId)
+            .then(response => setDiary(response.data))
     }
 
     function createUser(id:string | undefined, appUserCreateDto:AppUserCreateDto){
@@ -109,7 +118,7 @@ export default function App() {
                   logout={logout}
                   updateUser={createUser}/>
               }/>
-              <Route path={"/add-food-item"} element={<AddFoodItem mealType={currentMeal} appUser={appUser} setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/add-food-item"} element={<AddFoodItem mealType={currentMeal} appUser={appUser} setCurrentRoute={setCurrentRoute} setDiary={setDiary}/>}/>
           </Routes>
       </Layout>
   )
