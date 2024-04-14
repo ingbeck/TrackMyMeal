@@ -12,8 +12,8 @@ export default function OpenFoodFactsProductsGallery(props: Readonly<OpenFoodFac
         <div>
             {props.openFoodFactsProducts !== null
                 ?
-                props.openFoodFactsProducts.products.map((product, i) => product.name !== "" &&
-                    <OpenFoodFactsProductCard key={i} product={product} onClickAddButton={props.onClickAddButton}/>)
+                props.openFoodFactsProducts.products.map((product) => product.name !== "" &&
+                    <OpenFoodFactsProductCard key={product.id} product={product} onClickAddButton={props.onClickAddButton}/>)
                 :
                 null
             }

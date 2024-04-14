@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OpenFoodFactsProduct {
+    String id;
     Nutriments nutriments;
     @JsonAlias({"product_name"})
     String name;
