@@ -3,6 +3,7 @@ export type OpenFoodFactsProducts = {
 }
 
 export type OpenFoodFactsProduct = {
+    id : string,
     nutriments : Nutriments,
     name : string,
     servingSize : number,

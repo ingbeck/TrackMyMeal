@@ -11,11 +11,13 @@ import RecipesScreen from "./pages/RecipesScreen.tsx";
 import ProfileScreen from "./pages/ProfileScreen.tsx";
 import LoginProcessingScreen from "./pages/LoginProcessingScreen.tsx";
 import axios from "axios";
-import {Diary} from "./types/Diary.ts";
+import {Diary, DiaryEntry} from "./types/Diary.ts";
 import AddFoodItem from "./pages/AddFoodItem.tsx";
+import {getDateToday} from "./Utility.ts";
 
 export default function App() {
 
+    const today = getDateToday()
     const[appUrl, setAppUrl] = useState<string>("")
     const[appUser, setAppUser] = useState<AppUser>({
         id : "",
@@ -32,13 +34,24 @@ export default function App() {
         isNewUser : false
     })
     const[diary, setDiary] = useState<Diary>({id:"", userId:"", diaryEntries:[]});
+    const[currentDiaryEntry, setCurrentDiaryEntry] = useState<DiaryEntry | undefined >()
     const[currentRoute, setCurrentRoute] = useState<string>("")
-    const [currentMeal, setCurrentMeal] = useState<string>("")
+    const[currentMeal, setCurrentMeal] = useState<string>("")
     const navigate = useNavigate();
 
     useEffect(() => {
         getAppUrl()
     }, []);
+
+    useEffect(() => {
+        if(appUser.id !== ""){
+            getDiaryByUserId(appUser.id)
+        }
+    }, [appUser.id === ""]);
+
+    useEffect(() => {
+        setCurrentDiaryEntry(diary.diaryEntries.find(entry => entry.date === today))
+    }, [diary]);
 
     function login(){
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -62,6 +75,12 @@ export default function App() {
             .then(response => setAppUrl(response.data))
     }
 
+    function getDiaryByUserId(userId:string | undefined){
+        axios.get("/api/diaries/"+userId)
+            .then(response => setDiary(response.data))
+            .catch(error => console.log(error.message))
+    }
+
     function createUser(id:string | undefined, appUserCreateDto:AppUserCreateDto){
         axios.put("/api/users/" + id, appUserCreateDto)
             .then(response => {
@@ -83,16 +102,15 @@ export default function App() {
     }
 
     return (
-      <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl}>
+      <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl} setCurrentMeal={setCurrentMeal}>
           <Routes>
               <Route path={"/"} element={<StartScreen login={login} setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/login/:id"} element={<LoginProcessingScreen getUser={getAppUser}/>}/>
               <Route path={"/home/:id"} element={<HomeScreen
                   setCurrentRoute={setCurrentRoute}
                   getAppUser={getAppUser}
-                  setCurrentMeal={setCurrentMeal}
                   appUser={appUser}
-                  diary={diary}/>}/>
+                  currentDiaryEntry={currentDiaryEntry}/>}/>
               <Route path={"/registration/:id"} element={<RegistrationScreen
                   getUser={getAppUser}
                   createUser={createUser}
@@ -109,7 +127,7 @@ export default function App() {
                   logout={logout}
                   updateUser={createUser}/>
               }/>
-              <Route path={"/add-food-item"} element={<AddFoodItem mealType={currentMeal} appUser={appUser} setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/add-food-item"} element={<AddFoodItem mealType={currentMeal} appUser={appUser} setCurrentRoute={setCurrentRoute} setDiaryEntry={setCurrentDiaryEntry}/>}/>
           </Routes>
       </Layout>
   )

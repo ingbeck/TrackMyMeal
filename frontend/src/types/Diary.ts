@@ -14,5 +14,6 @@ export type FoodItem = {
     name : string,
     amount : number,
     unit : string,
+    calories : number,
     mealType : string
 }

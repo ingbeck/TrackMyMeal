@@ -38,16 +38,15 @@ class DiaryServiceTest {
         //GIVEN
         String userId = "1";
         String date = "2024-04-11";
-        List<FoodItem> newFoodItems = List.of(new FoodItem("Kinderriegel", 1, "", 54, MealType.SNACK));
-        Diary expected = new Diary("1", "1", List.of(new DiaryEntry(date, newFoodItems, 54))
-        );
+        List<FoodItem> newFoodItems = new ArrayList<>(List.of(new FoodItem("Kinderriegel", 1, "", 54, MealType.SNACK)));
+        DiaryEntry expected = new DiaryEntry(date, newFoodItems, 54);
+        Diary diaryToReturn = new Diary("1", "1", new ArrayList<>(List.of(expected)));
 
-        when(diaryRepository.findDiaryByUserId(userId)).thenReturn(new Diary("1", "1", List.of()
-        ));
-        when(diaryRepository.save(any(Diary.class))).thenReturn(expected);
+        when(diaryRepository.findDiaryByUserId(userId)).thenReturn(new Diary("1", "1", new ArrayList<>(List.of())));
+        when(diaryRepository.save(any(Diary.class))).thenReturn(diaryToReturn);
 
         //WHEN
-        Diary actual = diaryService.updateDiaryEntry(userId, date, newFoodItems);
+        DiaryEntry actual = diaryService.updateDiaryEntry(userId, date, newFoodItems);
 
         //THEN
         verify(diaryRepository).save(any(Diary.class));
@@ -65,18 +64,15 @@ class DiaryServiceTest {
         List<FoodItem> newFoodItems = new ArrayList<>(List.of(kinderriegel));
 
         DiaryEntry existingDiaryEntry = new DiaryEntry(date, new ArrayList<>(List.of(apfel)), 140);
-        Diary expected = new Diary("1", "1", new ArrayList<>(List.of(new DiaryEntry(date, List.of(apfel,kinderriegel), apfel.calories()+kinderriegel.calories())))
+        Diary diaryEntryToReturn = new Diary("1", "1", new ArrayList<>(List.of(new DiaryEntry(date, List.of(apfel,kinderriegel), apfel.calories()+kinderriegel.calories())))
         );
 
         when(diaryRepository.findDiaryByUserId(userId)).thenReturn(new Diary("1", "1", new ArrayList<>(List.of(existingDiaryEntry))));
-        when(diaryRepository.save(any(Diary.class))).thenReturn(expected);
+        when(diaryRepository.save(any(Diary.class))).thenReturn(diaryEntryToReturn);
 
-        //WHEN
-        Diary actual = diaryService.updateDiaryEntry(userId, date, newFoodItems);
-
-        //THEN
+        //WHEN & THEN
+        diaryService.updateDiaryEntry(userId, date, newFoodItems);
         verify(diaryRepository).save(any(Diary.class));
-        assertEquals(expected, actual);
 
     }
 

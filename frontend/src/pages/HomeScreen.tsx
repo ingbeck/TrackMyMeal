@@ -1,74 +1,65 @@
 import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import {Diary} from "../types/Diary.ts";
+import {useParams} from "react-router-dom";
+import {DiaryEntry} from "../types/Diary.ts";
 import "./HomeScreen.css"
 import {AppUser} from "../types/AppUser.ts";
-import {Backdrop, Box, SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
 import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
 import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
 import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
+import MealOverview from "../components/MealOverview.tsx";
+// @ts-ignore
+import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
     getAppUser : (id:string | undefined) => void,
-    setCurrentMeal : (mealType : string) => void,
     appUser : AppUser,
-    diary : Diary
+    currentDiaryEntry? : DiaryEntry
 }
 export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     const url = window.location.href;
     const params = useParams();
-    const navigate = useNavigate();
-
     const [progress, setProgress] = useState<number>(0)
-    const [open, setOpen] = useState<boolean>(false);
+    const [totalCalories, setTotalCalories] = useState<number>(0)
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [params.id]);
+    }, [url]);
 
     useEffect(() => {
         props.getAppUser(params.id)
-        console.log(props.appUser)
-    }, [props.appUser.bmrWithActivity === 0]);
+    }, [props.appUser.bmrWithActivity !== 0]);
 
     useEffect(() => {
-        calculateProgress(props.appUser.bmrWithActivity, 2000)
-    }, [props.appUser.bmrWithActivity !== 0]);
+        if(props.currentDiaryEntry !== undefined){
+            setTotalCalories(props.currentDiaryEntry.totalCalories)
+        }
+    }, [props.currentDiaryEntry]);
+
+    useEffect(() => {
+        if(totalCalories !== 0){
+            calculateProgress(props.appUser.bmrWithActivity, totalCalories)
+        }
+    }, [totalCalories]);
 
     function calculateProgress(whole: number, part: number) {
         setProgress(part / whole)
     }
 
-    function handleOpen(){
-        setOpen(true);
-    }
-
-    function handleClose(){
-        setOpen(false);
-    }
-
-    function onActionClick(mealType:string){
+    function getMealTypeIcon(mealType : string, iconSize:number) : ReactJSXElement{
         switch (mealType){
             case "BREAKFAST":
-                props.setCurrentMeal("BREAKFAST");
-                break;
+                return <BreakfastIcon width={iconSize} height={iconSize}/>
             case "LUNCH":
-                props.setCurrentMeal("LUNCH");
-                break;
+                return <LunchIcon width={iconSize} height={iconSize}/>
             case "DINNER":
-                props.setCurrentMeal("DINNER");
-                break;
+                return <DinnerIcon width={iconSize} height={iconSize}/>
             case "SNACK":
-                props.setCurrentMeal("SNACK");
-                break;
+                return <SnackIcon width={iconSize} height={iconSize}/>
         }
-        setOpen(false);
-        navigate("/add-food-item")
     }
-
 
     return (
         <div className={"homescreen"}>
@@ -76,48 +67,42 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
             <div className={"homescreen-dailyProgress"}>
                 <h2>Ziel</h2>
                 <div id={"progress"} className={"progressbar"}>
-                    {props.appUser.bmrWithActivity !== 0 &&
+                    {totalCalories !== 0 &&
                         <>
                             <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"}
                                  style={{flex: progress}}>
-                                {progress > 0.25 && <span>2000 kcal</span>}
+                                {progress > 0.25 && <span>{totalCalories} kcal</span>}
                             </div>
-                            {progress < 0.25 && <span>2000 kcal</span>}
+                            {progress < 0.25 && <span>{totalCalories} kcal</span>}
                         </>
                     }
-
                 </div>
                 <h3>{props.appUser.bmrWithActivity} kcal</h3>
             </div>
             <div>
                 <h2>Deine Ernährung</h2>
                 {
-                    props.diary.diaryEntries.length === 0
+                    props.currentDiaryEntry?.foodItems === undefined
                         ?
                         <p>Für heute hast du noch nichts hinzugefügt. Drücke auf das Plus, um Mahlzeiten
                             hinzuzufügen.</p>
                         :
                         <div>
-                            Food Items
+                            {props.currentDiaryEntry.foodItems.map((foodItem) => foodItem.mealType === "BREAKFAST") &&
+                               <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"BREAKFAST"} getMealTypeIcon={getMealTypeIcon}/>
+                            }
+                            {props.currentDiaryEntry?.foodItems.map((foodItem) => foodItem.mealType === "LUNCH") &&
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"LUNCH"} getMealTypeIcon={getMealTypeIcon}/>
+                            }
+                            {props.currentDiaryEntry?.foodItems.map((foodItem) => foodItem.mealType === "DINNER") &&
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"DINNER"} getMealTypeIcon={getMealTypeIcon}/>
+                            }
+                            {props.currentDiaryEntry?.foodItems.map((foodItem) => foodItem.mealType === "SNACK") &&
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"SNACK"} getMealTypeIcon={getMealTypeIcon}/>
+                            }
                         </div>
                 }
             </div>
-            <Box sx={{height: 330, transform: 'translateZ(0px)', flexGrow: 0.6}} className={"btn-add-food"}>
-                    <Backdrop open={open} sx={{background:"none"}}/>
-                    <SpeedDial
-                        ariaLabel="SpeedDial tooltip example"
-                        sx={{position: 'fixed', bottom: 16, right:1}}
-                        icon={<SpeedDialIcon/>}
-                        onClose={handleClose}
-                        onOpen={handleOpen}
-                        open={open}
-                    >
-                        <SpeedDialAction icon={<BreakfastIcon width={20} height={20}/>} tooltipTitle={"Frühstück"} tooltipOpen onClick={()=> onActionClick("BREAKFAST")}/>
-                        <SpeedDialAction icon={<LunchIcon width={20} height={20}/>} tooltipTitle={"Mittagessen"} tooltipOpen onClick={()=> onActionClick("LUNCH")}/>
-                        <SpeedDialAction icon={<DinnerIcon width={20} height={20}/>} tooltipTitle={"Abendessen"} tooltipOpen onClick={()=> onActionClick("DINNER")}/>
-                        <SpeedDialAction icon={<SnackIcon width={20} height={20}/>} tooltipTitle={"Snack"} tooltipOpen onClick={()=> onActionClick("SNACK")}/>
-                    </SpeedDial>
-            </Box>
         </div>
     );
 }

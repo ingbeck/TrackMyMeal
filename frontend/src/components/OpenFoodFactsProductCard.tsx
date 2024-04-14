@@ -3,7 +3,7 @@ import "./OpenFoodFactsProductCard.css"
 
 type OpenFoodFactsProductCardProps = {
     product : OpenFoodFactsProduct,
-    onClickAddButton : () => void
+    onClickAddButton : (product: OpenFoodFactsProduct) => void
 }
 export default function OpenFoodFactsProductCard(props: Readonly<OpenFoodFactsProductCardProps>) {
     return (
@@ -13,12 +13,12 @@ export default function OpenFoodFactsProductCard(props: Readonly<OpenFoodFactsPr
                     <label>{props.product.name}</label>
                     {props.product.servingSize !== 0
                         ?
-                        <span>{props.product.servingSize + " " + props.product.servingUnit}</span>
+                        <span>{props.product.servingSize} {props.product.servingUnit ? props.product.servingUnit : "g"}</span>
                         :
                         <span>100 g</span>
                     }
                 </div>
-                <button onClick={props.onClickAddButton}>+</button>
+                <button onClick={() => props.onClickAddButton(props.product)}>+</button>
             </div>
             <div className={"card-body"}>
                 <span>{props.product.servingSize !== 0 ? props.product.nutriments.energyKcalServing : props.product.nutriments.energyKcal100g} kcal</span>
