@@ -1,13 +1,12 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {Diary} from "../types/Diary.ts";
+import {DiaryEntry} from "../types/Diary.ts";
 import "./HomeScreen.css"
 import {AppUser} from "../types/AppUser.ts";
 import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
 import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
 import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
-import {getDateToday} from "../Utility.ts";
 import MealOverview from "../components/MealOverview.tsx";
 // @ts-ignore
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
@@ -16,15 +15,12 @@ type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
     getAppUser : (id:string | undefined) => void,
     appUser : AppUser,
-    diary : Diary
+    currentDiaryEntry? : DiaryEntry
 }
 export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     const url = window.location.href;
-    const today = getDateToday();
     const params = useParams();
-    const diaryEntryToday = props.diary.diaryEntries.find((entry) => entry.date === today);
-
     const [progress, setProgress] = useState<number>(0)
     const [totalCalories, setTotalCalories] = useState<number>(0)
 
@@ -34,20 +30,19 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     useEffect(() => {
         props.getAppUser(params.id)
-    }, [props.appUser.bmrWithActivity === 0]);
-
-    useEffect(() => {
-        calculateProgress(props.appUser.bmrWithActivity, totalCalories)
     }, [props.appUser.bmrWithActivity !== 0]);
 
     useEffect(() => {
-        if(diaryEntryToday !== undefined){
-            setTotalCalories(diaryEntryToday.totalCalories)
-        }else{
-            setTotalCalories(0)
+        if(props.currentDiaryEntry !== undefined){
+            setTotalCalories(props.currentDiaryEntry.totalCalories)
         }
-        calculateProgress(props.appUser.bmrWithActivity, totalCalories)
-    }, [diaryEntryToday]);
+    }, [props.currentDiaryEntry]);
+
+    useEffect(() => {
+        if(totalCalories !== 0){
+            calculateProgress(props.appUser.bmrWithActivity, totalCalories)
+        }
+    }, [totalCalories]);
 
     function calculateProgress(whole: number, part: number) {
         setProgress(part / whole)
@@ -72,7 +67,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
             <div className={"homescreen-dailyProgress"}>
                 <h2>Ziel</h2>
                 <div id={"progress"} className={"progressbar"}>
-                    {props.appUser.bmrWithActivity !== 0 &&
+                    {totalCalories !== 0 &&
                         <>
                             <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"}
                                  style={{flex: progress}}>
@@ -87,23 +82,23 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
             <div>
                 <h2>Deine Ernährung</h2>
                 {
-                    !diaryEntryToday?.foodItems
+                    props.currentDiaryEntry?.foodItems === undefined
                         ?
                         <p>Für heute hast du noch nichts hinzugefügt. Drücke auf das Plus, um Mahlzeiten
                             hinzuzufügen.</p>
                         :
                         <div>
-                            {diaryEntryToday?.foodItems.map((foodItem) => foodItem.mealType === "BREAKFAST") &&
-                               <MealOverview diaryEntry={diaryEntryToday} mealType={"BREAKFAST"} getMealTypeIcon={getMealTypeIcon}/>
+                            {props.currentDiaryEntry.foodItems.map((foodItem) => foodItem.mealType === "BREAKFAST") &&
+                               <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"BREAKFAST"} getMealTypeIcon={getMealTypeIcon}/>
                             }
-                            {diaryEntryToday?.foodItems.map((foodItem) => foodItem.mealType === "LUNCH") &&
-                                <MealOverview diaryEntry={diaryEntryToday} mealType={"LUNCH"} getMealTypeIcon={getMealTypeIcon}/>
+                            {props.currentDiaryEntry?.foodItems.map((foodItem) => foodItem.mealType === "LUNCH") &&
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"LUNCH"} getMealTypeIcon={getMealTypeIcon}/>
                             }
-                            {diaryEntryToday?.foodItems.map((foodItem) => foodItem.mealType === "DINNER") &&
-                                <MealOverview diaryEntry={diaryEntryToday} mealType={"DINNER"} getMealTypeIcon={getMealTypeIcon}/>
+                            {props.currentDiaryEntry?.foodItems.map((foodItem) => foodItem.mealType === "DINNER") &&
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"DINNER"} getMealTypeIcon={getMealTypeIcon}/>
                             }
-                            {diaryEntryToday?.foodItems.map((foodItem) => foodItem.mealType === "SNACK") &&
-                                <MealOverview diaryEntry={diaryEntryToday} mealType={"SNACK"} getMealTypeIcon={getMealTypeIcon}/>
+                            {props.currentDiaryEntry?.foodItems.map((foodItem) => foodItem.mealType === "SNACK") &&
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"SNACK"} getMealTypeIcon={getMealTypeIcon}/>
                             }
                         </div>
                 }

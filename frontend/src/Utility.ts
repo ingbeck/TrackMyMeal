@@ -1,6 +1,6 @@
 export function getDateToday():string{
     const today = new Date()
-    const day = today.getDay()
+    const day = today.getDate()
     const month = today.getMonth() + 1
     const yyyy = today.getFullYear()
 

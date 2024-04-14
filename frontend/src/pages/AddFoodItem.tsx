@@ -13,12 +13,12 @@ import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
 import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
-import {Diary, FoodItem} from "../types/Diary.ts";
+import {DiaryEntry, FoodItem} from "../types/Diary.ts";
 import {getDateToday} from "../Utility.ts";
 
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
-    setDiary : (diary:Diary) => void,
+    setDiaryEntry : (diaryEntry : DiaryEntry | undefined) => void,
     mealType : string,
     appUser : AppUser
 }
@@ -54,7 +54,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     function updateDiaryEntry(newFoodItems: FoodItem[]){
         axios.put("/api/diaries/"+props.appUser.id+"/"+getDateToday(), newFoodItems)
-            .then(response => props.setDiary(response.data))
+            .then(response => props.setDiaryEntry(response.data))
     }
 
 
