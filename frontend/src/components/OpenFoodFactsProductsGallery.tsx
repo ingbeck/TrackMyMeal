@@ -7,14 +7,13 @@ type OpenFoodFactsProductsGalleryProps ={
 }
 
 export default function OpenFoodFactsProductsGallery(props: Readonly<OpenFoodFactsProductsGalleryProps>) {
+
     return (
         <div>
             {props.openFoodFactsProducts !== null
                 ?
-                props.openFoodFactsProducts.products.map(product => product.name !== "" && <OpenFoodFactsProductCard
-                    key={product.name}
-                    product={product}
-                    onClickAddButton={props.onClickAddButton}/>)
+                props.openFoodFactsProducts.products.map((product, i) => product.name !== "" &&
+                    <OpenFoodFactsProductCard key={i} product={product} onClickAddButton={props.onClickAddButton}/>)
                 :
                 null
             }
