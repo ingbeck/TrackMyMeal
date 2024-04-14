@@ -18,6 +18,7 @@ import {getDateToday} from "../Utility.ts";
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
     setDiaryEntry : (diaryEntry : DiaryEntry | undefined) => void,
+    currentDiaryEntry : DiaryEntry | undefined,
     mealType : string,
     appUser : AppUser
 }
@@ -40,6 +41,15 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     useEffect(() => {
         props.setCurrentRoute(url)
     }, []);
+
+    useEffect(() => {
+        if(props.currentDiaryEntry !== undefined){
+            setFoodItems(props.currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType))
+            setBadgeCount(props.currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType).length)
+        }else{
+            setBadgeCount(0)
+        }
+    }, [props.setDiaryEntry]);
 
     function fetchOpenFoodFactsProducts(text : string){
         axios.get("/api/openfoodfacts/" + text)
@@ -93,7 +103,6 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
         if (regex.test(value) && !value.startsWith("0")) {
             setAmount(Number(value));
-            console.log(amount)
         }else{
             setAmount(0)
         }
@@ -107,14 +116,12 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             calories: (amount/100)*selectedFoodItem.nutriments.energyKcal100g,
             mealType: props.mealType
         }
-        setBadgeCount(badgeCount+1)
         setOpenModalAddFoodItem(false)
-        setFoodItems([...foodItems, foodItemToStore])
-        console.log(foodItems)
+        updateDiaryEntry([...foodItems, foodItemToStore])
+        setBadgeCount(badgeCount+1)
     }
 
     function handleSubmitNewFoodItems(){
-        updateDiaryEntry(foodItems)
         navigate("/home/"+props.appUser.id)
     }
 
