@@ -68,9 +68,7 @@ class DiaryControllerTest {
                 .andExpect(content()
                         .json("""
                                         
-                                { 
-                                            "userId": "1",
-                                            "diaryEntries": [
+                                
                                                 {
                                                     "date": "2024-04-11",
                                                     "foodItems": [
@@ -84,10 +82,8 @@ class DiaryControllerTest {
                                                     ],
                                                     "totalCalories": 54
                                                 }
-                                            ]
-                                        }
-                                        """))
-                .andExpect(jsonPath("$.id").isNotEmpty());
+                                            
+                                        """));
     }
 
     @Test
@@ -115,9 +111,7 @@ class DiaryControllerTest {
                 .andExpect(content()
                         .json("""
                                         
-                                { 
-                                            "userId": "1",
-                                            "diaryEntries": [
+                                
                                                 {
                                                     "date": "2024-04-11",
                                                     "foodItems": [
@@ -138,10 +132,8 @@ class DiaryControllerTest {
                                                     ],
                                                     "totalCalories": 194
                                                 }
-                                            ]
-                                        }
-                                        """))
-                .andExpect(jsonPath("$.id").isNotEmpty());
+                                            
+                                        """));
     }
 
 

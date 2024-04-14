@@ -30,11 +30,9 @@ public class DiaryService {
                 .orElseThrow(() -> new NoSuchElementException("Für diesen Tag gibt es keine Einträge!"));
     }
 
-
-    public Diary updateDiaryEntry(String userId, String date, List<FoodItem> newFoodItems){
+    public DiaryEntry updateDiaryEntry(String userId, String date, List<FoodItem> newFoodItems){
         Diary diaryToUpdate = getDiaryByUserId(userId);
         List<DiaryEntry> currentDiaryEntries = diaryToUpdate.diaryEntries();
-
 
         List<DiaryEntry> newDiaryEntries;
         int totalCalories;
@@ -43,17 +41,25 @@ public class DiaryService {
             DiaryEntry diaryEntryToUpdate = getDiaryEntryByDate(userId,date);
             List<FoodItem> updatedFoodItems = diaryEntryToUpdate.foodItems();
             updatedFoodItems.addAll(newFoodItems);
+
             totalCalories = updatedFoodItems.stream().map(FoodItem::calories).reduce(0, Integer::sum);
+
             DiaryEntry updatedDiaryEntry = diaryEntryToUpdate.withFoodItems(updatedFoodItems).withTotalCalories(totalCalories);
             newDiaryEntries = currentDiaryEntries.stream().map(entry -> entry.date().equals(date) ? updatedDiaryEntry : entry).toList();
 
+            diaryRepository.save(getDiaryByUserId(userId).withDiaryEntries(newDiaryEntries));
+
         }catch (NoSuchElementException e){
             totalCalories = newFoodItems.stream().map(FoodItem::calories).reduce(0, Integer::sum);
-            newDiaryEntries = List.of(new DiaryEntry(date, newFoodItems, totalCalories));
+            currentDiaryEntries.add(new DiaryEntry(date, newFoodItems, totalCalories));
+
+            diaryRepository.save(getDiaryByUserId(userId).withDiaryEntries(currentDiaryEntries));
 
         }
 
-        return diaryRepository.save(getDiaryByUserId(userId).withDiaryEntries(newDiaryEntries));
+        return getDiaryEntryByDate(userId, date);
+
+
     }
 
 }
