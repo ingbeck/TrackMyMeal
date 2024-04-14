@@ -71,6 +71,7 @@ class DiaryServiceTest {
         when(diaryRepository.save(any(Diary.class))).thenReturn(diaryEntryToReturn);
 
         //WHEN & THEN
+        diaryService.updateDiaryEntry(userId, date, newFoodItems);
         verify(diaryRepository).save(any(Diary.class));
 
     }
