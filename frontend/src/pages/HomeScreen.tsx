@@ -1,9 +1,8 @@
 import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {Diary} from "../types/Diary.ts";
 import "./HomeScreen.css"
 import {AppUser} from "../types/AppUser.ts";
-import {Backdrop, Box, SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
 import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
 import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
@@ -16,7 +15,6 @@ import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
     getAppUser : (id:string | undefined) => void,
-    setCurrentMeal : (mealType : string) => void,
     appUser : AppUser,
     diary : Diary
 }
@@ -25,11 +23,9 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
     const url = window.location.href;
     const today = getDateToday();
     const params = useParams();
-    const navigate = useNavigate();
     const diaryEntryToday = props.diary.diaryEntries.find((entry) => entry.date === today);
 
     const [progress, setProgress] = useState<number>(0)
-    const [open, setOpen] = useState<boolean>(false);
     const [totalCalories, setTotalCalories] = useState<number>(0)
 
     useEffect(() => {
@@ -57,33 +53,6 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
         setProgress(part / whole)
     }
 
-    function handleOpen(){
-        setOpen(true);
-    }
-
-    function handleClose(){
-        setOpen(false);
-    }
-
-    function onActionClick(mealType:string){
-        switch (mealType){
-            case "BREAKFAST":
-                props.setCurrentMeal("BREAKFAST");
-                break;
-            case "LUNCH":
-                props.setCurrentMeal("LUNCH");
-                break;
-            case "DINNER":
-                props.setCurrentMeal("DINNER");
-                break;
-            case "SNACK":
-                props.setCurrentMeal("SNACK");
-                break;
-        }
-        setOpen(false);
-        navigate("/add-food-item")
-    }
-
     function getMealTypeIcon(mealType : string, iconSize:number) : ReactJSXElement{
         switch (mealType){
             case "BREAKFAST":
@@ -96,7 +65,6 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                 return <SnackIcon width={iconSize} height={iconSize}/>
         }
     }
-
 
     return (
         <div className={"homescreen"}>
@@ -140,22 +108,6 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                         </div>
                 }
             </div>
-            <Box sx={{height: 330, transform: 'translateZ(0px)', flexGrow: 0.6}} className={"btn-add-food"}>
-                    <Backdrop open={open} sx={{background:"none"}}/>
-                    <SpeedDial
-                        ariaLabel="SpeedDial tooltip example"
-                        sx={{position: 'fixed', bottom: 16, right:1}}
-                        icon={<SpeedDialIcon/>}
-                        onClose={handleClose}
-                        onOpen={handleOpen}
-                        open={open}
-                    >
-                        <SpeedDialAction icon={<BreakfastIcon width={20} height={20}/>} tooltipTitle={"Frühstück"} tooltipOpen onClick={()=> onActionClick("BREAKFAST")}/>
-                        <SpeedDialAction icon={<LunchIcon width={20} height={20}/>} tooltipTitle={"Mittagessen"} tooltipOpen onClick={()=> onActionClick("LUNCH")}/>
-                        <SpeedDialAction icon={<DinnerIcon width={20} height={20}/>} tooltipTitle={"Abendessen"} tooltipOpen onClick={()=> onActionClick("DINNER")}/>
-                        <SpeedDialAction icon={<SnackIcon width={20} height={20}/>} tooltipTitle={"Snack"} tooltipOpen onClick={()=> onActionClick("SNACK")}/>
-                    </SpeedDial>
-            </Box>
         </div>
     );
 }

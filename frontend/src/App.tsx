@@ -92,14 +92,13 @@ export default function App() {
     }
 
     return (
-      <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl}>
+      <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl} setCurrentMeal={setCurrentMeal}>
           <Routes>
               <Route path={"/"} element={<StartScreen login={login} setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/login/:id"} element={<LoginProcessingScreen getUser={getAppUser}/>}/>
               <Route path={"/home/:id"} element={<HomeScreen
                   setCurrentRoute={setCurrentRoute}
                   getAppUser={getAppUser}
-                  setCurrentMeal={setCurrentMeal}
                   appUser={appUser}
                   diary={diary}/>}/>
               <Route path={"/registration/:id"} element={<RegistrationScreen
