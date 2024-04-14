@@ -13,7 +13,7 @@ export default function OpenFoodFactsProductCard(props: Readonly<OpenFoodFactsPr
                     <label>{props.product.name}</label>
                     {props.product.servingSize !== 0
                         ?
-                        <span>{props.product.servingSize + " " + props.product.servingUnit}</span>
+                        <span>{props.product.servingSize} {props.product.servingUnit !== null ? props.product.servingUnit : "g"}</span>
                         :
                         <span>100 g</span>
                     }
