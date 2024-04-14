@@ -32,7 +32,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     const [badgeCount, setBadgeCount] = useState<number>(0)
     const [amount, setAmount] = useState<number>(0)
     const [foodItems, setFoodItems] = useState<FoodItem[]>([])
-    const [selectedFoodItem, setSelectedFoodItem] = useState<OpenFoodFactsProduct>({nutriments:{energy:0, energyKcal100g:0, energyKcalServing:0}, name:"", servingSize: 0, servingUnit:""})
+    const [selectedFoodItem, setSelectedFoodItem] = useState<OpenFoodFactsProduct>({id:"",nutriments:{energy:0, energyKcal100g:0, energyKcalServing:0}, name:"", servingSize: 0, servingUnit:""})
     const [openModalAddFoodItem, setOpenModalAddFoodItem] = useState(false);
     const handleCloseModalAddFoodItem = () => setOpenModalAddFoodItem(false);
 
