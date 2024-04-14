@@ -1,12 +1,12 @@
 import "./AddFoodItem.css"
 import {useNavigate} from "react-router-dom";
 import {AppUser} from "../types/AppUser.ts";
-import {useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import SearchComponent from "../components/SearchComponent.tsx";
 import axios from "axios";
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
 import OpenFoodFactsProductsGallery from "../components/OpenFoodFactsProductsGallery.tsx";
-import {Badge, Box, Modal, Typography} from "@mui/material";
+import {Badge, Box, Modal} from "@mui/material";
 import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
 // @ts-ignore
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
@@ -15,7 +15,6 @@ import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
 import {DiaryEntry, FoodItem} from "../types/Diary.ts";
 import {getDateToday} from "../Utility.ts";
-
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
     setDiaryEntry : (diaryEntry : DiaryEntry | undefined) => void,
@@ -26,10 +25,12 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     const navigate = useNavigate()
     const url = window.location.href;
+    const regex = new RegExp(/^\d*$/)
 
     const [searchText, setSearchText] = useState<string>("")
     const [currentProducts, setCurrentProducts] = useState<OpenFoodFactsProducts | null>(null)
     const [badgeCount, setBadgeCount] = useState<number>(0)
+    const [amount, setAmount] = useState<number>(0)
     const [foodItems, setFoodItems] = useState<FoodItem[]>([])
     const [selectedFoodItem, setSelectedFoodItem] = useState<OpenFoodFactsProduct>({nutriments:{energy:0, energyKcal100g:0, energyKcalServing:0}, name:"", servingSize: 0, servingUnit:""})
     const [openModalAddFoodItem, setOpenModalAddFoodItem] = useState(false);
@@ -40,16 +41,10 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
         props.setCurrentRoute(url)
     }, []);
 
-    useEffect(() => {
-        if(searchText !== ""){
-            fetchOpenFoodFactsProducts(searchText)
-        }
-    }, [searchText]);
-
-    function fetchOpenFoodFactsProducts(searchText : string){
-        axios.get("/api/openfoodfacts/" + searchText)
+    function fetchOpenFoodFactsProducts(text : string){
+        axios.get("/api/openfoodfacts/" + text)
             .then(response => setCurrentProducts(response.data))
-        console.log(currentProducts)
+            .catch(() => setCurrentProducts(null))
     }
 
     function updateDiaryEntry(newFoodItems: FoodItem[]){
@@ -93,12 +88,23 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
         setOpenModalAddFoodItem(true)
     }
 
+    function handleChange(event: ChangeEvent<HTMLInputElement>){
+        const value = event.target.value
+
+        if (regex.test(value) && !value.startsWith("0")) {
+            setAmount(Number(value));
+            console.log(amount)
+        }else{
+            setAmount(0)
+        }
+    }
+
     function handleAddFoodItem(){
         const foodItemToStore:FoodItem = {
             name: selectedFoodItem.name,
-            amount: 100,
+            amount: amount,
             unit: "g",
-            calories: 100,
+            calories: (amount/100)*selectedFoodItem.nutriments.energyKcal100g,
             mealType: props.mealType
         }
         setBadgeCount(badgeCount+1)
@@ -121,11 +127,15 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                     {setBadgeIcon(props.mealType)}
                 </Badge>
             </div>
-            <SearchComponent handleSearchText={setSearchText}/>
+            <div>
+                <SearchComponent handleSearchText={setSearchText}/>
+                <button onClick={() => fetchOpenFoodFactsProducts(searchText)}>Suchen</button>
+            </div>
             <div className={"addfooditem-search-output"}>
-                {searchText !== "" && <OpenFoodFactsProductsGallery
+                {currentProducts && <OpenFoodFactsProductsGallery
                     openFoodFactsProducts={currentProducts}
                     onClickAddButton={onClickAddButton}/>}
+                {currentProducts === null || searchText !== "" && <h2>keine Produkte gefunden</h2>}
             </div>
             <Modal
                 open={openModalAddFoodItem}
@@ -133,7 +143,8 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={{position: 'absolute',
+                <Box sx={{
+                    position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
@@ -141,10 +152,23 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                     bgcolor: 'background.paper',
                     border: '2px solid #000',
                     boxShadow: 24,
-                    p: 4,}}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Text in a modal
-                    </Typography>
+                    p: 4,
+                }}>
+                    <h2>{selectedFoodItem.name}</h2>
+                    <div>
+                        <div>
+                            <label htmlFor={"amount"}>Menge: </label>
+                            <input id={"amount"} onChange={handleChange} type={"number"} min={1} max={9999} pattern="\d*"/>
+                            {
+                                selectedFoodItem.servingUnit === null ?
+                                    <span>g</span>
+                                    :
+                                    <span>{selectedFoodItem.servingUnit}</span>
+                            }
+                        </div>
+                        <div>
+                        </div>
+                    </div>
                     <button onClick={handleAddFoodItem}>hinzufügen</button>
                 </Box>
             </Modal>
