@@ -135,7 +135,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 {currentProducts && <OpenFoodFactsProductsGallery
                     openFoodFactsProducts={currentProducts}
                     onClickAddButton={onClickAddButton}/>}
-                {currentProducts === null || searchText !== "" && <h2>keine Produkte gefunden</h2>}
+                {currentProducts === null && searchText !== "" && <h2>keine Produkte gefunden</h2>}
             </div>
             <Modal
                 open={openModalAddFoodItem}
