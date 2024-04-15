@@ -88,21 +88,22 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                             hinzuzufügen.</p>
                         :
                         <div>
-                            {props.currentDiaryEntry.foodItems.map((foodItem) => foodItem.mealType === "BREAKFAST") &&
+                            {props.currentDiaryEntry.foodItems.find((foodItem) => foodItem.mealType === "BREAKFAST") &&
                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"BREAKFAST"} getMealTypeIcon={getMealTypeIcon}/>
                             }
-                            {props.currentDiaryEntry?.foodItems.map((foodItem) => foodItem.mealType === "LUNCH") &&
+                            {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "LUNCH") &&
                                 <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"LUNCH"} getMealTypeIcon={getMealTypeIcon}/>
                             }
-                            {props.currentDiaryEntry?.foodItems.map((foodItem) => foodItem.mealType === "DINNER") &&
+                            {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "DINNER") &&
                                 <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"DINNER"} getMealTypeIcon={getMealTypeIcon}/>
                             }
-                            {props.currentDiaryEntry?.foodItems.map((foodItem) => foodItem.mealType === "SNACK") &&
+                            {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "SNACK") &&
                                 <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"SNACK"} getMealTypeIcon={getMealTypeIcon}/>
                             }
                         </div>
                 }
             </div>
+
         </div>
     );
 }
