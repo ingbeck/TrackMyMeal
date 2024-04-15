@@ -18,3 +18,17 @@ export function getDateToday():string{
     return yyyy+"-"+mm+"-"+dd;
 }
 
+export function translateMealType(mealType : string) : string{
+    switch (mealType){
+        case "BREAKFAST":
+            return "Frühstück"
+        case "LUNCH":
+            return "Mittagessen"
+        case "DINNER":
+            return "Abendessen"
+        case "SNACK":
+            return "Snack"
+        default:
+            return ""
+    }
+}

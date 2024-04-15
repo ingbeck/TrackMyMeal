@@ -1,12 +1,12 @@
 import "./AddFoodItem.css"
 import {useNavigate} from "react-router-dom";
 import {AppUser} from "../types/AppUser.ts";
-import {ChangeEvent, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import SearchComponent from "../components/SearchComponent.tsx";
 import axios from "axios";
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
 import OpenFoodFactsProductsGallery from "../components/OpenFoodFactsProductsGallery.tsx";
-import {Badge, Box, Modal} from "@mui/material";
+import {Badge} from "@mui/material";
 import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
 // @ts-ignore
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
@@ -14,10 +14,15 @@ import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
 import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
 import {DiaryEntry, FoodItem} from "../types/Diary.ts";
-import {getDateToday} from "../Utility.ts";
+import {getDateToday, translateMealType} from "../Utility.ts";
+import ModalAddFoodItem from "../components/ModalAddFoodItem.tsx";
+import ModalFoodItems from "../components/ModalFoodItems.tsx";
+import {v4 as uuidv4} from 'uuid';
+
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
     setDiaryEntry : (diaryEntry : DiaryEntry | undefined) => void,
+    currentDiaryEntry : DiaryEntry | undefined,
     mealType : string,
     appUser : AppUser
 }
@@ -25,7 +30,6 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     const navigate = useNavigate()
     const url = window.location.href;
-    const regex = new RegExp(/^\d*$/)
 
     const [searchText, setSearchText] = useState<string>("")
     const [currentProducts, setCurrentProducts] = useState<OpenFoodFactsProducts | null>(null)
@@ -33,13 +37,21 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     const [amount, setAmount] = useState<number>(0)
     const [foodItems, setFoodItems] = useState<FoodItem[]>([])
     const [selectedFoodItem, setSelectedFoodItem] = useState<OpenFoodFactsProduct>({id:"",nutriments:{energy:0, energyKcal100g:0, energyKcalServing:0}, name:"", servingSize: 0, servingUnit:""})
-    const [openModalAddFoodItem, setOpenModalAddFoodItem] = useState(false);
-    const handleCloseModalAddFoodItem = () => setOpenModalAddFoodItem(false);
-
+    const [openModalAddFoodItem, setOpenModalAddFoodItem] = useState<boolean>(false);
+    const [openModalFoodItems, setOpenModalFoodItems] = useState<boolean>(false)
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, []);
+    }, [url]);
+
+    useEffect(() => {
+        if(props.currentDiaryEntry !== undefined){
+            setFoodItems(props.currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType))
+            setBadgeCount(props.currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType).length)
+        }else{
+            setBadgeCount(0)
+        }
+    }, [props.setDiaryEntry, handleAddFoodItem]);
 
     function fetchOpenFoodFactsProducts(text : string){
         axios.get("/api/openfoodfacts/" + text)
@@ -47,25 +59,9 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             .catch(() => setCurrentProducts(null))
     }
 
-    function updateDiaryEntry(newFoodItems: FoodItem[]){
-        axios.put("/api/diaries/"+props.appUser.id+"/"+getDateToday(), newFoodItems)
+    function updateDiaryEntry(newFoodItem: FoodItem){
+        axios.put("/api/diaries/"+props.appUser.id+"/"+getDateToday(), newFoodItem)
             .then(response => props.setDiaryEntry(response.data))
-    }
-
-
-    function translateMealType(mealType : string) : string{
-        switch (mealType){
-            case "BREAKFAST":
-                return "Frühstück"
-            case "LUNCH":
-                return "Mittagessen"
-            case "DINNER":
-                return "Abendessen"
-            case "SNACK":
-                return "Snack"
-            default:
-                return ""
-        }
     }
 
     function setBadgeIcon(mealType : string) : ReactJSXElement{
@@ -88,33 +84,20 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
         setOpenModalAddFoodItem(true)
     }
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>){
-        const value = event.target.value
-
-        if (regex.test(value) && !value.startsWith("0")) {
-            setAmount(Number(value));
-            console.log(amount)
-        }else{
-            setAmount(0)
-        }
-    }
-
     function handleAddFoodItem(){
-        const foodItemToStore:FoodItem = {
+        const foodItemToSave:FoodItem = {
+            id:uuidv4(),
             name: selectedFoodItem.name,
             amount: amount,
             unit: "g",
             calories: (amount/100)*selectedFoodItem.nutriments.energyKcal100g,
             mealType: props.mealType
         }
-        setBadgeCount(badgeCount+1)
         setOpenModalAddFoodItem(false)
-        setFoodItems([...foodItems, foodItemToStore])
-        console.log(foodItems)
+        updateDiaryEntry(foodItemToSave)
     }
 
     function handleSubmitNewFoodItems(){
-        updateDiaryEntry(foodItems)
         navigate("/home/"+props.appUser.id)
     }
 
@@ -123,7 +106,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             <div className={"addfooditem-header-wrapper"}>
                 <button onClick={handleSubmitNewFoodItems}>Zurück</button>
                 <h1>{translateMealType(props.mealType)}</h1>
-                <Badge badgeContent={badgeCount} color="primary">
+                <Badge badgeContent={badgeCount} color="primary" onClick={() => setOpenModalFoodItems(true)}>
                     {setBadgeIcon(props.mealType)}
                 </Badge>
             </div>
@@ -135,43 +118,18 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 {currentProducts && <OpenFoodFactsProductsGallery
                     openFoodFactsProducts={currentProducts}
                     onClickAddButton={onClickAddButton}/>}
-                {currentProducts === null && searchText !== "" && <h2>keine Produkte gefunden</h2>}
             </div>
-            <Modal
+            <ModalAddFoodItem
                 open={openModalAddFoodItem}
-                onClose={handleCloseModalAddFoodItem}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: 400,
-                    bgcolor: 'background.paper',
-                    border: '2px solid #000',
-                    boxShadow: 24,
-                    p: 4,
-                }}>
-                    <h2>{selectedFoodItem.name}</h2>
-                    <div>
-                        <div>
-                            <label htmlFor={"amount"}>Menge: </label>
-                            <input id={"amount"} onChange={handleChange} type={"number"} min={1} max={9999} pattern="\d*"/>
-                            {
-                                selectedFoodItem.servingUnit === null ?
-                                    <span>g</span>
-                                    :
-                                    <span>{selectedFoodItem.servingUnit}</span>
-                            }
-                        </div>
-                        <div>
-                        </div>
-                    </div>
-                    <button onClick={handleAddFoodItem}>hinzufügen</button>
-                </Box>
-            </Modal>
+                handleClose={() => setOpenModalAddFoodItem(false)}
+                setAmount={setAmount}
+                selectedFoodItem={selectedFoodItem}
+                addFoodItem={handleAddFoodItem}/>
+            <ModalFoodItems
+                open={openModalFoodItems}
+                foodItems={foodItems}
+                onClose={() => setOpenModalFoodItems(false)}
+                mealType={props.mealType}/>
         </div>
     );
 }

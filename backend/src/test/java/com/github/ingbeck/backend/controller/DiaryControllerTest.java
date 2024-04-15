@@ -54,7 +54,6 @@ class DiaryControllerTest {
         mvc.perform(put("/api/diaries/1/2024-04-11")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
-                        [
                               {
                                 "name": "Kinderriegel",
                                 "amount": 1,
@@ -62,7 +61,6 @@ class DiaryControllerTest {
                                 "calories": 54,
                                 "mealType": "DINNER"
                               }
-                         ]
                          """))
                 .andExpect(status().isOk())
                 .andExpect(content()
@@ -89,7 +87,7 @@ class DiaryControllerTest {
     @Test
     void updateDiaryEntry_whenCalledWithExistingDiaryEntry_addNewDiaryEntry() throws Exception{
         //GIVEN
-        FoodItem apfel = new FoodItem("Apfel", 50, "g", 140, MealType.SNACK);
+        FoodItem apfel = new FoodItem("1","Apfel", 50, "g", 140, MealType.SNACK);
         DiaryEntry existingDiaryEntry = new DiaryEntry("2024-04-11", List.of(apfel), 140);
         repository.save(new Diary("1", "1", List.of(existingDiaryEntry)));
 
@@ -97,15 +95,14 @@ class DiaryControllerTest {
         mvc.perform(put("/api/diaries/1/2024-04-11")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                        [
                               {
+                                "id": "2",
                                 "name": "Kinderriegel",
                                 "amount": 1,
                                 "unit": "",
                                 "calories": 54,
                                 "mealType": "DINNER"
                               }
-                         ]
                          """))
                 .andExpect(status().isOk())
                 .andExpect(content()
@@ -116,6 +113,7 @@ class DiaryControllerTest {
                                                     "date": "2024-04-11",
                                                     "foodItems": [
                                                         {
+                                                            "id": "1",
                                                             "name": "Apfel",
                                                             "amount": 50,
                                                             "unit": "g",
@@ -123,6 +121,7 @@ class DiaryControllerTest {
                                                             "mealType": "SNACK"
                                                         },
                                                         {
+                                                            "id": "2",
                                                             "name": "Kinderriegel",
                                                             "amount": 1,
                                                             "unit": "",

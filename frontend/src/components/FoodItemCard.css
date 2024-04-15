@@ -1,0 +1,24 @@
+.foodItemCard{
+    display: flex;
+    flex-direction: column;
+    border: solid 1px black;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 16px;
+}
+
+.FoodItemCard-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.FoodItemCard-stats-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.FoodItemCard-btn-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

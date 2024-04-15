@@ -5,9 +5,6 @@ import com.github.ingbeck.backend.model.diary.FoodItem;
 import com.github.ingbeck.backend.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/diaries")
@@ -26,7 +23,7 @@ public class DiaryController {
     }
 
     @PutMapping("/{id}/{date}")
-    public DiaryEntry updateDiaryEntry(@PathVariable String id, @PathVariable String date, @RequestBody List<FoodItem> foodItems){
+    public DiaryEntry updateDiaryEntry(@PathVariable String id, @PathVariable String date, @RequestBody FoodItem foodItems){
         return diaryService.updateDiaryEntry(id, date, foodItems);
     }
 }

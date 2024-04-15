@@ -110,13 +110,15 @@ export default function App() {
                   setCurrentRoute={setCurrentRoute}
                   getAppUser={getAppUser}
                   appUser={appUser}
-                  currentDiaryEntry={currentDiaryEntry}/>}/>
+                  currentDiaryEntry={currentDiaryEntry}/>
+              }/>
               <Route path={"/registration/:id"} element={<RegistrationScreen
                   getUser={getAppUser}
                   createUser={createUser}
                   createDiary={createDiary}
                   appUser={appUser}
-                  setCurrentRoute={setCurrentRoute}/>}/>
+                  setCurrentRoute={setCurrentRoute}/>
+              }/>
               <Route path={"/calendar"} element={<CalendarScreen setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/profile/:id"} element={<ProfileScreen
@@ -127,7 +129,13 @@ export default function App() {
                   logout={logout}
                   updateUser={createUser}/>
               }/>
-              <Route path={"/add-food-item"} element={<AddFoodItem mealType={currentMeal} appUser={appUser} setCurrentRoute={setCurrentRoute} setDiaryEntry={setCurrentDiaryEntry}/>}/>
+              <Route path={"/add-food-item"} element={<AddFoodItem
+                  mealType={currentMeal}
+                  appUser={appUser}
+                  setCurrentRoute={setCurrentRoute}
+                  setDiaryEntry={setCurrentDiaryEntry}
+                  currentDiaryEntry={currentDiaryEntry}/>
+              }/>
           </Routes>
       </Layout>
   )
