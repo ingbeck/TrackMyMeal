@@ -1,4 +1,4 @@
-package com.github.ingbeck.backend.model;
+package com.github.ingbeck.backend.model.openfoodfactsresponse;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;

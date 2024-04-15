@@ -1,4 +1,4 @@
-import {OpenFoodFactsProduct} from "../types/OpenFoodFactsProducts.ts";
+import {OpenFoodFactsProduct} from "../../types/OpenFoodFactsProducts.ts";
 import "./OpenFoodFactsProductCard.css"
 
 type OpenFoodFactsProductCardProps = {

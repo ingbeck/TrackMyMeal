@@ -1,6 +1,6 @@
 package com.github.ingbeck.backend.service;
 
-import com.github.ingbeck.backend.model.OpenFoodFactsProducts;
+import com.github.ingbeck.backend.model.openfoodfactsresponse.OpenFoodFactsProducts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;

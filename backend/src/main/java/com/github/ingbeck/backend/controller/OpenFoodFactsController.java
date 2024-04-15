@@ -1,6 +1,6 @@
 package com.github.ingbeck.backend.controller;
 
-import com.github.ingbeck.backend.model.OpenFoodFactsProducts;
+import com.github.ingbeck.backend.model.openfoodfactsresponse.OpenFoodFactsProducts;
 import com.github.ingbeck.backend.service.OpenFoodFactsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

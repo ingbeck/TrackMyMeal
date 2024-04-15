@@ -1,6 +1,6 @@
 package com.github.ingbeck.backend.security;
 
-import com.github.ingbeck.backend.model.AppUser;
+import com.github.ingbeck.backend.model.appuser.AppUser;
 import com.github.ingbeck.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

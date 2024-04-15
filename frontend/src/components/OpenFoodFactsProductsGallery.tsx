@@ -1,5 +1,5 @@
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
-import OpenFoodFactsProductCard from "./OpenFoodFactsProductCard.tsx";
+import OpenFoodFactsProductCard from "./cards/OpenFoodFactsProductCard.tsx";
 
 type OpenFoodFactsProductsGalleryProps ={
     openFoodFactsProducts : OpenFoodFactsProducts | null,

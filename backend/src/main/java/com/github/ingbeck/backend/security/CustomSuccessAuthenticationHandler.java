@@ -1,6 +1,6 @@
 package com.github.ingbeck.backend.security;
 
-import com.github.ingbeck.backend.model.AppUser;
+import com.github.ingbeck.backend.model.appuser.AppUser;
 import com.github.ingbeck.backend.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,7 +1,7 @@
 package com.github.ingbeck.backend.controller;
 
-import com.github.ingbeck.backend.model.AppUser;
-import com.github.ingbeck.backend.model.AppUserCreateDto;
+import com.github.ingbeck.backend.model.appuser.AppUser;
+import com.github.ingbeck.backend.model.appuser.AppUserCreateDto;
 import com.github.ingbeck.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

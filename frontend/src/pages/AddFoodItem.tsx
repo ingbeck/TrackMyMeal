@@ -14,8 +14,8 @@ import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
 import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
 import {DiaryEntry, FoodItem} from "../types/Diary.ts";
-import ModalAddFoodItem from "../components/ModalAddFoodItem.tsx";
-import ModalFoodItems from "../components/ModalFoodItems.tsx";
+import ModalAddFoodItem from "../components/modals/ModalAddFoodItem.tsx";
+import ModalFoodItems from "../components/modals/ModalFoodItems.tsx";
 import {v4 as uuidv4} from 'uuid';
 import {translateMealType} from "../Utility.ts";
 

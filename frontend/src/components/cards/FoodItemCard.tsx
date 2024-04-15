@@ -1,4 +1,4 @@
-import {FoodItem} from "../types/Diary.ts";
+import {FoodItem} from "../../types/Diary.ts";
 import "./FoodItemCard.css"
 
 type FoodItemCardProps = {

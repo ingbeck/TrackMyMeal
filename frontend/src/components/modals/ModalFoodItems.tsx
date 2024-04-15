@@ -1,7 +1,7 @@
 import {Box, Modal} from "@mui/material";
-import FoodItemCard from "./FoodItemCard.tsx";
-import {FoodItem} from "../types/Diary.ts";
-import {translateMealType} from "../Utility.ts";
+import FoodItemCard from "../cards/FoodItemCard.tsx";
+import {FoodItem} from "../../types/Diary.ts";
+import {translateMealType} from "../../Utility.ts";
 
 type ModalFoodItemsProps = {
     deleteFoodItem : (foodItemToDelete : FoodItem) => void,
