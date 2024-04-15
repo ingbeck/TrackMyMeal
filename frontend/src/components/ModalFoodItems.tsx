@@ -30,7 +30,7 @@ export default function ModalFoodItems(props: Readonly<ModalFoodItemsProps>) {
                     p: 4,
                 }}>
                     <h2>{translateMealType(props.mealType)}</h2>
-                    {props.foodItems.map((foodItem) => <FoodItemCard foodItem={foodItem}/>)}
+                    {props.foodItems.map((foodItem) => <FoodItemCard key={foodItem.id} foodItem={foodItem}/>)}
                 </Box>
             </Modal>
     );

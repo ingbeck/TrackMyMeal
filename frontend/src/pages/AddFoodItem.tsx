@@ -17,6 +17,8 @@ import {DiaryEntry, FoodItem} from "../types/Diary.ts";
 import {getDateToday, translateMealType} from "../Utility.ts";
 import ModalAddFoodItem from "../components/ModalAddFoodItem.tsx";
 import ModalFoodItems from "../components/ModalFoodItems.tsx";
+import {v4 as uuidv4} from 'uuid';
+
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
     setDiaryEntry : (diaryEntry : DiaryEntry | undefined) => void,
@@ -84,6 +86,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     function handleAddFoodItem(){
         const foodItemToSave:FoodItem = {
+            id:uuidv4(),
             name: selectedFoodItem.name,
             amount: amount,
             unit: "g",
