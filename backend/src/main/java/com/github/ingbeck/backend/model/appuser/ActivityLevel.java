@@ -1,4 +1,4 @@
-package com.github.ingbeck.backend.model;
+package com.github.ingbeck.backend.model.appuser;
 
 public enum ActivityLevel
 {

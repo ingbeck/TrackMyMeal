@@ -1,11 +1,10 @@
 package com.github.ingbeck.backend.service;
 
-import com.github.ingbeck.backend.model.ActivityLevel;
-import com.github.ingbeck.backend.model.AppUser;
-import com.github.ingbeck.backend.model.AppUserCreateDto;
-import com.github.ingbeck.backend.model.AppUserGender;
+import com.github.ingbeck.backend.model.appuser.ActivityLevel;
+import com.github.ingbeck.backend.model.appuser.AppUser;
+import com.github.ingbeck.backend.model.appuser.AppUserCreateDto;
+import com.github.ingbeck.backend.model.appuser.AppUserGender;
 import com.github.ingbeck.backend.repository.UserRepository;
-import com.nimbusds.openid.connect.sdk.claims.Gender;
 import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;

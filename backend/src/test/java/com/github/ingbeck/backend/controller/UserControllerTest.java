@@ -1,8 +1,8 @@
 package com.github.ingbeck.backend.controller;
 
-import com.github.ingbeck.backend.model.ActivityLevel;
-import com.github.ingbeck.backend.model.AppUser;
-import com.github.ingbeck.backend.model.AppUserGender;
+import com.github.ingbeck.backend.model.appuser.ActivityLevel;
+import com.github.ingbeck.backend.model.appuser.AppUser;
+import com.github.ingbeck.backend.model.appuser.AppUserGender;
 import com.github.ingbeck.backend.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

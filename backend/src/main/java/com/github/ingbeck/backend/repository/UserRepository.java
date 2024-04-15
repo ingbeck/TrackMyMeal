@@ -1,6 +1,6 @@
 package com.github.ingbeck.backend.repository;
 
-import com.github.ingbeck.backend.model.AppUser;
+import com.github.ingbeck.backend.model.appuser.AppUser;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
