@@ -38,15 +38,15 @@ class DiaryServiceTest {
         //GIVEN
         String userId = "1";
         String date = "2024-04-11";
-        List<FoodItem> newFoodItems = new ArrayList<>(List.of(new FoodItem("Kinderriegel", 1, "", 54, MealType.SNACK)));
-        DiaryEntry expected = new DiaryEntry(date, newFoodItems, 54);
+        FoodItem newFoodItem = new FoodItem("Kinderriegel", 1, "", 54, MealType.SNACK);
+        DiaryEntry expected = new DiaryEntry(date, new ArrayList<>(List.of(newFoodItem)), 54);
         Diary diaryToReturn = new Diary("1", "1", new ArrayList<>(List.of(expected)));
 
         when(diaryRepository.findDiaryByUserId(userId)).thenReturn(new Diary("1", "1", new ArrayList<>(List.of())));
         when(diaryRepository.save(any(Diary.class))).thenReturn(diaryToReturn);
 
         //WHEN
-        DiaryEntry actual = diaryService.updateDiaryEntry(userId, date, newFoodItems);
+        DiaryEntry actual = diaryService.updateDiaryEntry(userId, date, newFoodItem);
 
         //THEN
         verify(diaryRepository).save(any(Diary.class));
@@ -61,7 +61,6 @@ class DiaryServiceTest {
         String date = "2024-04-11";
         FoodItem kinderriegel = new FoodItem("Kinderriegel", 1, "", 54, MealType.SNACK);
         FoodItem apfel = new FoodItem("Apfel", 50, "g", 140, MealType.SNACK);
-        List<FoodItem> newFoodItems = new ArrayList<>(List.of(kinderriegel));
 
         DiaryEntry existingDiaryEntry = new DiaryEntry(date, new ArrayList<>(List.of(apfel)), 140);
         Diary diaryEntryToReturn = new Diary("1", "1", new ArrayList<>(List.of(new DiaryEntry(date, List.of(apfel,kinderriegel), apfel.calories()+kinderriegel.calories())))
@@ -71,7 +70,7 @@ class DiaryServiceTest {
         when(diaryRepository.save(any(Diary.class))).thenReturn(diaryEntryToReturn);
 
         //WHEN & THEN
-        diaryService.updateDiaryEntry(userId, date, newFoodItems);
+        diaryService.updateDiaryEntry(userId, date, kinderriegel);
         verify(diaryRepository).save(any(Diary.class));
 
     }

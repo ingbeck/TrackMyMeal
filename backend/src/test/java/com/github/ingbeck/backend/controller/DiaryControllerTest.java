@@ -54,7 +54,6 @@ class DiaryControllerTest {
         mvc.perform(put("/api/diaries/1/2024-04-11")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
-                        [
                               {
                                 "name": "Kinderriegel",
                                 "amount": 1,
@@ -62,7 +61,6 @@ class DiaryControllerTest {
                                 "calories": 54,
                                 "mealType": "DINNER"
                               }
-                         ]
                          """))
                 .andExpect(status().isOk())
                 .andExpect(content()
@@ -97,7 +95,6 @@ class DiaryControllerTest {
         mvc.perform(put("/api/diaries/1/2024-04-11")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                        [
                               {
                                 "name": "Kinderriegel",
                                 "amount": 1,
@@ -105,7 +102,6 @@ class DiaryControllerTest {
                                 "calories": 54,
                                 "mealType": "DINNER"
                               }
-                         ]
                          """))
                 .andExpect(status().isOk())
                 .andExpect(content()
