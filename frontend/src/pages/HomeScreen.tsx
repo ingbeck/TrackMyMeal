@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {DiaryEntry} from "../types/Diary.ts";
+import {DiaryEntry, FoodItem} from "../types/Diary.ts";
 import "./HomeScreen.css"
 import {AppUser} from "../types/AppUser.ts";
 import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
@@ -14,6 +14,7 @@ import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
     getAppUser : (id:string | undefined) => void,
+    deleteFoodItem: (foodItem: FoodItem) => void,
     appUser : AppUser,
     currentDiaryEntry? : DiaryEntry
 }
@@ -35,6 +36,8 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
     useEffect(() => {
         if(props.currentDiaryEntry !== undefined){
             setTotalCalories(props.currentDiaryEntry.totalCalories)
+        }else{
+            setTotalCalories(0)
         }
     }, [props.currentDiaryEntry]);
 
@@ -89,16 +92,16 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                         :
                         <div>
                             {props.currentDiaryEntry.foodItems.find((foodItem) => foodItem.mealType === "BREAKFAST") &&
-                               <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"BREAKFAST"} getMealTypeIcon={getMealTypeIcon}/>
+                               <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"BREAKFAST"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
                             }
                             {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "LUNCH") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"LUNCH"} getMealTypeIcon={getMealTypeIcon}/>
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"LUNCH"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
                             }
                             {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "DINNER") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"DINNER"} getMealTypeIcon={getMealTypeIcon}/>
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"DINNER"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
                             }
                             {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "SNACK") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"SNACK"} getMealTypeIcon={getMealTypeIcon}/>
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"SNACK"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
                             }
                         </div>
                 }

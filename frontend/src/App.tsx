@@ -11,7 +11,7 @@ import RecipesScreen from "./pages/RecipesScreen.tsx";
 import ProfileScreen from "./pages/ProfileScreen.tsx";
 import LoginProcessingScreen from "./pages/LoginProcessingScreen.tsx";
 import axios from "axios";
-import {Diary, DiaryEntry} from "./types/Diary.ts";
+import {Diary, DiaryEntry, FoodItem} from "./types/Diary.ts";
 import AddFoodItem from "./pages/AddFoodItem.tsx";
 import {getDateToday} from "./Utility.ts";
 
@@ -94,6 +94,22 @@ export default function App() {
             .then(response => setDiary(response.data))
     }
 
+    function updateDiaryEntry(newFoodItem: FoodItem){
+        axios.put("/api/diaries/"+appUser.id+"/"+getDateToday(), newFoodItem)
+            .then(response => setCurrentDiaryEntry(response.data))
+    }
+
+    function deleteFoodItem(foodItemToDelete: FoodItem){
+        axios.put("/api/diaries/removeFoodItem/"+appUser.id+"/"+getDateToday(), foodItemToDelete)
+            .then(response => {
+                if(response.data === ""){
+                    setCurrentDiaryEntry(undefined)
+                }else{
+                    setCurrentDiaryEntry(response.data)
+                }
+            })
+    }
+
     function deleteUser(id: string | undefined){
         axios.delete("/api/users/"+ id)
             .then(() => {
@@ -110,7 +126,8 @@ export default function App() {
                   setCurrentRoute={setCurrentRoute}
                   getAppUser={getAppUser}
                   appUser={appUser}
-                  currentDiaryEntry={currentDiaryEntry}/>
+                  currentDiaryEntry={currentDiaryEntry}
+                  deleteFoodItem={deleteFoodItem}/>
               }/>
               <Route path={"/registration/:id"} element={<RegistrationScreen
                   getUser={getAppUser}
@@ -133,7 +150,8 @@ export default function App() {
                   mealType={currentMeal}
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}
-                  setDiaryEntry={setCurrentDiaryEntry}
+                  updateDiaryEntry={updateDiaryEntry}
+                  deleteFoodItem={deleteFoodItem}
                   currentDiaryEntry={currentDiaryEntry}/>
               }/>
           </Routes>

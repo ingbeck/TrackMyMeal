@@ -7,6 +7,7 @@ import ModalFoodItems from "./ModalFoodItems.tsx";
 
 type MealOverviewProps = {
     getMealTypeIcon: (mealType:string, iconSize:number) => ReactJSXElement,
+    deleteFoodItem: (foodItem: FoodItem) => void,
     diaryEntry : DiaryEntry,
     mealType : string
 }
@@ -14,6 +15,8 @@ export default function MealOverview(props: Readonly<MealOverviewProps>) {
 
         const [foodItems, setFoodItems] = useState<FoodItem[]>([])
         const [openModalFoodItems, setOpenModalFoodItems] = useState<boolean>(false)
+
+
 
     useEffect(() => {
         setFoodItems(props.diaryEntry.foodItems.filter(foodItem => foodItem.mealType === props.mealType))
@@ -29,6 +32,7 @@ export default function MealOverview(props: Readonly<MealOverviewProps>) {
                     open={openModalFoodItems}
                     foodItems={foodItems}
                     onClose={() => setOpenModalFoodItems(false)}
+                    deleteFoodItem={props.deleteFoodItem}
                     mealType={props.mealType}
                 />
             </>

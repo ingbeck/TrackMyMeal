@@ -14,15 +14,16 @@ import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
 import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
 import {DiaryEntry, FoodItem} from "../types/Diary.ts";
-import {getDateToday, translateMealType} from "../Utility.ts";
 import ModalAddFoodItem from "../components/ModalAddFoodItem.tsx";
 import ModalFoodItems from "../components/ModalFoodItems.tsx";
 import {v4 as uuidv4} from 'uuid';
+import {translateMealType} from "../Utility.ts";
 
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
-    setDiaryEntry : (diaryEntry : DiaryEntry | undefined) => void,
     currentDiaryEntry : DiaryEntry | undefined,
+    updateDiaryEntry : (newFoodItem : FoodItem) => void,
+    deleteFoodItem : (foodItemToDelete : FoodItem) => void,
     mealType : string,
     appUser : AppUser
 }
@@ -50,18 +51,15 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             setBadgeCount(props.currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType).length)
         }else{
             setBadgeCount(0)
+            setOpenModalFoodItems(false)
+            setFoodItems([])
         }
-    }, [props.setDiaryEntry, handleAddFoodItem]);
+    }, [props.currentDiaryEntry]);
 
     function fetchOpenFoodFactsProducts(text : string){
         axios.get("/api/openfoodfacts/" + text)
             .then(response => setCurrentProducts(response.data))
             .catch(() => setCurrentProducts(null))
-    }
-
-    function updateDiaryEntry(newFoodItem: FoodItem){
-        axios.put("/api/diaries/"+props.appUser.id+"/"+getDateToday(), newFoodItem)
-            .then(response => props.setDiaryEntry(response.data))
     }
 
     function setBadgeIcon(mealType : string) : ReactJSXElement{
@@ -94,11 +92,17 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             mealType: props.mealType
         }
         setOpenModalAddFoodItem(false)
-        updateDiaryEntry(foodItemToSave)
+        props.updateDiaryEntry(foodItemToSave)
     }
 
     function handleSubmitNewFoodItems(){
         navigate("/home/"+props.appUser.id)
+    }
+
+    function onClickBadgeIcon(){
+        if(foodItems.length > 0){
+            setOpenModalFoodItems(true)
+        }
     }
 
     return (
@@ -106,7 +110,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             <div className={"addfooditem-header-wrapper"}>
                 <button onClick={handleSubmitNewFoodItems}>Zurück</button>
                 <h1>{translateMealType(props.mealType)}</h1>
-                <Badge badgeContent={badgeCount} color="primary" onClick={() => setOpenModalFoodItems(true)}>
+                <Badge badgeContent={badgeCount} color="primary" onClick={onClickBadgeIcon}>
                     {setBadgeIcon(props.mealType)}
                 </Badge>
             </div>
@@ -129,6 +133,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 open={openModalFoodItems}
                 foodItems={foodItems}
                 onClose={() => setOpenModalFoodItems(false)}
+                deleteFoodItem={props.deleteFoodItem}
                 mealType={props.mealType}/>
         </div>
     );
