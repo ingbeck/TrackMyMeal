@@ -4,13 +4,16 @@ import {FoodItem} from "../types/Diary.ts";
 import {translateMealType} from "../Utility.ts";
 
 type ModalFoodItemsProps = {
+    deleteFoodItem : (foodItemToDelete : FoodItem) => void,
     open : boolean,
     foodItems : FoodItem[],
     onClose : () => void,
     mealType: string
 }
 
+
 export default function ModalFoodItems(props: Readonly<ModalFoodItemsProps>) {
+
     return (
             <Modal
                 open={props.open}
@@ -30,7 +33,7 @@ export default function ModalFoodItems(props: Readonly<ModalFoodItemsProps>) {
                     p: 4,
                 }}>
                     <h2>{translateMealType(props.mealType)}</h2>
-                    {props.foodItems.map((foodItem) => <FoodItemCard key={foodItem.id} foodItem={foodItem}/>)}
+                    {props.foodItems.map((foodItem) => <FoodItemCard key={foodItem.id} foodItem={foodItem} deleteFoodItem={props.deleteFoodItem}/>)}
                 </Box>
             </Modal>
     );

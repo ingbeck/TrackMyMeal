@@ -26,4 +26,9 @@ public class DiaryController {
     public DiaryEntry updateDiaryEntry(@PathVariable String id, @PathVariable String date, @RequestBody FoodItem foodItems){
         return diaryService.updateDiaryEntry(id, date, foodItems);
     }
+
+    @PutMapping("/removeFoodItem/{id}/{date}")
+    public DiaryEntry deleteFoodItem(@PathVariable String id, @PathVariable String date, @RequestBody FoodItem fooditem){
+        return diaryService.deleteFoodItem(id, date, fooditem);
+    }
 }

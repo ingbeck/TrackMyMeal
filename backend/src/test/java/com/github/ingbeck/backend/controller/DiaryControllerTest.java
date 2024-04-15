@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -135,5 +134,69 @@ class DiaryControllerTest {
                                         """));
     }
 
+    @Test
+    void deleteFoodItem_whenCalledWithLastFoodItemInEntry_thenReturnNull() throws Exception{
+        //GIVEN
+        FoodItem apfel = new FoodItem("1","Apfel", 50, "g", 140, MealType.SNACK);
+        DiaryEntry existingDiaryEntry = new DiaryEntry("2024-04-11", List.of(apfel), 140);
+        repository.save(new Diary("1", "1", List.of(existingDiaryEntry)));
+
+        //WHEN & THEN
+        mvc.perform(put("/api/diaries/removeFoodItem/1/2024-04-11")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                              {
+                                "id": "1",
+                                "name": "Apfel",
+                                "amount": 50,
+                                "unit": "g",
+                                "calories": 140,
+                                "mealType": "SNACK"
+                              }
+                         """))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
+    }
+
+    @Test
+    void deleteFoodItem_whenCalledMoreThen2FoodItemInEntryLeft_thenReturnUpdatedDiaryEntry() throws Exception{
+        //GIVEN
+        FoodItem apfel = new FoodItem("1","Apfel", 50, "g", 140, MealType.SNACK);
+        FoodItem kinderriegel = new FoodItem("2","Kinderriegel", 1, "", 54, MealType.SNACK);
+        DiaryEntry existingDiaryEntry = new DiaryEntry("2024-04-11", List.of(apfel, kinderriegel), 194);
+        repository.save(new Diary("1", "1", List.of(existingDiaryEntry)));
+
+        //WHEN & THEN
+        mvc.perform(put("/api/diaries/removeFoodItem/1/2024-04-11")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                              {
+                                "id": "2",
+                                "name": "Kinderriegel",
+                                "amount": 1,
+                                "unit": "",
+                                "calories": 54,
+                                "mealType": "SNACK"
+                              }
+                         """))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .json("""
+                                                {
+                                                    "date": "2024-04-11",
+                                                    "foodItems": [
+                                                        {
+                                                            "id": "1",
+                                                            "name": "Apfel",
+                                                            "amount": 50,
+                                                            "unit": "g",
+                                                            "calories": 140,
+                                                            "mealType": "SNACK"
+                                                        }
+                                                    ],
+                                                    "totalCalories": 140
+                                                }
+                                        """));
+    }
 
 }
