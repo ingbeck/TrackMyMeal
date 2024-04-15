@@ -6,7 +6,7 @@ import SearchComponent from "../components/SearchComponent.tsx";
 import axios from "axios";
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
 import OpenFoodFactsProductsGallery from "../components/OpenFoodFactsProductsGallery.tsx";
-import {Badge, Box, Modal} from "@mui/material";
+import {Badge} from "@mui/material";
 import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
 // @ts-ignore
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
@@ -14,9 +14,9 @@ import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
 import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
 import {DiaryEntry, FoodItem} from "../types/Diary.ts";
-import {getDateToday} from "../Utility.ts";
+import {getDateToday, translateMealType} from "../Utility.ts";
 import ModalAddFoodItem from "../components/ModalAddFoodItem.tsx";
-import FoodItemCard from "../components/FoodItemCard.tsx";
+import ModalFoodItems from "../components/ModalFoodItems.tsx";
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
     setDiaryEntry : (diaryEntry : DiaryEntry | undefined) => void,
@@ -60,22 +60,6 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     function updateDiaryEntry(newFoodItem: FoodItem){
         axios.put("/api/diaries/"+props.appUser.id+"/"+getDateToday(), newFoodItem)
             .then(response => props.setDiaryEntry(response.data))
-    }
-
-
-    function translateMealType(mealType : string) : string{
-        switch (mealType){
-            case "BREAKFAST":
-                return "Frühstück"
-            case "LUNCH":
-                return "Mittagessen"
-            case "DINNER":
-                return "Abendessen"
-            case "SNACK":
-                return "Snack"
-            default:
-                return ""
-        }
     }
 
     function setBadgeIcon(mealType : string) : ReactJSXElement{
@@ -138,27 +122,11 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 setAmount={setAmount}
                 selectedFoodItem={selectedFoodItem}
                 addFoodItem={handleAddFoodItem}/>
-            <Modal
+            <ModalFoodItems
                 open={openModalFoodItems}
+                foodItems={foodItems}
                 onClose={() => setOpenModalFoodItems(false)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: 300,
-                    bgcolor: 'background.paper',
-                    border: '2px solid #000',
-                    boxShadow: 24,
-                    p: 4,
-                }}>
-                    <h2>{translateMealType(props.mealType)}</h2>
-                    {foodItems.map((foodItem) => <FoodItemCard foodItem={foodItem}/>)}
-                </Box>
-            </Modal>
+                mealType={props.mealType}/>
         </div>
     );
 }
