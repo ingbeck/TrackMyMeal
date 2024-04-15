@@ -1,7 +1,7 @@
 import "./AddFoodItem.css"
 import {useNavigate} from "react-router-dom";
 import {AppUser} from "../types/AppUser.ts";
-import {ChangeEvent, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import SearchComponent from "../components/SearchComponent.tsx";
 import axios from "axios";
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
@@ -15,6 +15,8 @@ import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
 import {DiaryEntry, FoodItem} from "../types/Diary.ts";
 import {getDateToday} from "../Utility.ts";
+import ModalAddFoodItem from "../components/ModalAddFoodItem.tsx";
+import FoodItemCard from "../components/FoodItemCard.tsx";
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
     setDiaryEntry : (diaryEntry : DiaryEntry | undefined) => void,
@@ -26,7 +28,6 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     const navigate = useNavigate()
     const url = window.location.href;
-    const regex = new RegExp(/^\d*$/)
 
     const [searchText, setSearchText] = useState<string>("")
     const [currentProducts, setCurrentProducts] = useState<OpenFoodFactsProducts | null>(null)
@@ -34,13 +35,12 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     const [amount, setAmount] = useState<number>(0)
     const [foodItems, setFoodItems] = useState<FoodItem[]>([])
     const [selectedFoodItem, setSelectedFoodItem] = useState<OpenFoodFactsProduct>({id:"",nutriments:{energy:0, energyKcal100g:0, energyKcalServing:0}, name:"", servingSize: 0, servingUnit:""})
-    const [openModalAddFoodItem, setOpenModalAddFoodItem] = useState(false);
-    const handleCloseModalAddFoodItem = () => setOpenModalAddFoodItem(false);
-
+    const [openModalAddFoodItem, setOpenModalAddFoodItem] = useState<boolean>(false);
+    const [openModalFoodItems, setOpenModalFoodItems] = useState<boolean>(false)
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, []);
+    }, [url]);
 
     useEffect(() => {
         if(props.currentDiaryEntry !== undefined){
@@ -49,7 +49,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
         }else{
             setBadgeCount(0)
         }
-    }, [props.setDiaryEntry]);
+    }, [props.setDiaryEntry, handleAddFoodItem]);
 
     function fetchOpenFoodFactsProducts(text : string){
         axios.get("/api/openfoodfacts/" + text)
@@ -57,8 +57,8 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             .catch(() => setCurrentProducts(null))
     }
 
-    function updateDiaryEntry(newFoodItems: FoodItem[]){
-        axios.put("/api/diaries/"+props.appUser.id+"/"+getDateToday(), newFoodItems)
+    function updateDiaryEntry(newFoodItem: FoodItem){
+        axios.put("/api/diaries/"+props.appUser.id+"/"+getDateToday(), newFoodItem)
             .then(response => props.setDiaryEntry(response.data))
     }
 
@@ -98,18 +98,8 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
         setOpenModalAddFoodItem(true)
     }
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>){
-        const value = event.target.value
-
-        if (regex.test(value) && !value.startsWith("0")) {
-            setAmount(Number(value));
-        }else{
-            setAmount(0)
-        }
-    }
-
     function handleAddFoodItem(){
-        const foodItemToStore:FoodItem = {
+        const foodItemToSave:FoodItem = {
             name: selectedFoodItem.name,
             amount: amount,
             unit: "g",
@@ -117,8 +107,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             mealType: props.mealType
         }
         setOpenModalAddFoodItem(false)
-        updateDiaryEntry([...foodItems, foodItemToStore])
-        setBadgeCount(badgeCount+1)
+        updateDiaryEntry(foodItemToSave)
     }
 
     function handleSubmitNewFoodItems(){
@@ -130,7 +119,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             <div className={"addfooditem-header-wrapper"}>
                 <button onClick={handleSubmitNewFoodItems}>Zurück</button>
                 <h1>{translateMealType(props.mealType)}</h1>
-                <Badge badgeContent={badgeCount} color="primary">
+                <Badge badgeContent={badgeCount} color="primary" onClick={() => setOpenModalFoodItems(true)}>
                     {setBadgeIcon(props.mealType)}
                 </Badge>
             </div>
@@ -142,11 +131,16 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 {currentProducts && <OpenFoodFactsProductsGallery
                     openFoodFactsProducts={currentProducts}
                     onClickAddButton={onClickAddButton}/>}
-                {currentProducts === null && searchText !== "" && <h2>keine Produkte gefunden</h2>}
             </div>
-            <Modal
+            <ModalAddFoodItem
                 open={openModalAddFoodItem}
-                onClose={handleCloseModalAddFoodItem}
+                handleClose={() => setOpenModalAddFoodItem(false)}
+                setAmount={setAmount}
+                selectedFoodItem={selectedFoodItem}
+                addFoodItem={handleAddFoodItem}/>
+            <Modal
+                open={openModalFoodItems}
+                onClose={() => setOpenModalFoodItems(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
@@ -155,28 +149,14 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: 400,
+                    width: 300,
                     bgcolor: 'background.paper',
                     border: '2px solid #000',
                     boxShadow: 24,
                     p: 4,
                 }}>
-                    <h2>{selectedFoodItem.name}</h2>
-                    <div>
-                        <div>
-                            <label htmlFor={"amount"}>Menge: </label>
-                            <input id={"amount"} onChange={handleChange} type={"number"} min={1} max={9999} pattern="\d*"/>
-                            {
-                                selectedFoodItem.servingUnit === null ?
-                                    <span>g</span>
-                                    :
-                                    <span>{selectedFoodItem.servingUnit}</span>
-                            }
-                        </div>
-                        <div>
-                        </div>
-                    </div>
-                    <button onClick={handleAddFoodItem}>hinzufügen</button>
+                    <h2>{translateMealType(props.mealType)}</h2>
+                    {foodItems.map((foodItem) => <FoodItemCard foodItem={foodItem}/>)}
                 </Box>
             </Modal>
         </div>
