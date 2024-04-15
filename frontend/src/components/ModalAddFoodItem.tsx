@@ -1,7 +1,6 @@
 import {Box, Modal} from "@mui/material";
 import {OpenFoodFactsProduct} from "../types/OpenFoodFactsProducts.ts";
 import {ChangeEvent} from "react";
-import "./ModalAddFoodItem.css"
 
 type ModalAddFoodItemProps = {
     open : boolean,
