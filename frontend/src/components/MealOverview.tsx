@@ -3,7 +3,7 @@ import {DiaryEntry, FoodItem} from "../types/Diary.ts";
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 import "./MealOverview.css"
 import {useEffect, useState} from "react";
-import ModalFoodItems from "./ModalFoodItems.tsx";
+import ModalFoodItems from "./modals/ModalFoodItems.tsx";
 
 type MealOverviewProps = {
     getMealTypeIcon: (mealType:string, iconSize:number) => ReactJSXElement,

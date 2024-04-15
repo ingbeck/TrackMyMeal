@@ -1,5 +1,5 @@
 import {Box, Modal} from "@mui/material";
-import {OpenFoodFactsProduct} from "../types/OpenFoodFactsProducts.ts";
+import {OpenFoodFactsProduct} from "../../types/OpenFoodFactsProducts.ts";
 import {ChangeEvent} from "react";
 
 type ModalAddFoodItemProps = {
