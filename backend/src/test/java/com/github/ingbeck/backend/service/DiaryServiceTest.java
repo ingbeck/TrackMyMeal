@@ -75,4 +75,35 @@ class DiaryServiceTest {
 
     }
 
+    @Test
+    void deleteFoodItem_whenCalledWithLastFoodItemInEntry_thenReturnNull(){
+        //GIVEN
+        String userId = "1";
+        String date = "2024-04-11";
+        FoodItem kinderriegel = new FoodItem("2","Kinderriegel", 1, "", 54, MealType.SNACK);
+        DiaryEntry existingDiaryEntry = new DiaryEntry(date, new ArrayList<>(List.of(kinderriegel)), 54);
+
+        when(diaryRepository.findDiaryByUserId(userId)).thenReturn(new Diary("1", "1", new ArrayList<>(List.of(existingDiaryEntry))));
+
+        //WHEN & THEN
+        diaryService.updateDiaryEntry(userId, date, kinderriegel);
+        verify(diaryRepository).save(any(Diary.class));
+    }
+
+    @Test
+    void deleteFoodItem_whenCalledMoreThen2FoodItemInEntryLeft_thenReturnUpdatedDiaryEntry(){
+        //GIVEN
+        String userId = "1";
+        String date = "2024-04-11";
+        FoodItem apfel = new FoodItem("1","Apfel", 50, "g", 140, MealType.SNACK);
+        FoodItem kinderriegel = new FoodItem("2","Kinderriegel", 1, "", 54, MealType.SNACK);
+        DiaryEntry existingDiaryEntry = new DiaryEntry(date, new ArrayList<>(List.of(apfel,kinderriegel)), 54);
+
+        when(diaryRepository.findDiaryByUserId(userId)).thenReturn(new Diary("1", "1", new ArrayList<>(List.of(existingDiaryEntry))));
+
+        //WHEN & THEN
+        diaryService.updateDiaryEntry(userId, date, kinderriegel);
+        verify(diaryRepository).save(any(Diary.class));
+    }
+
 }

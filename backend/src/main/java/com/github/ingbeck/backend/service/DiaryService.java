@@ -59,7 +59,31 @@ public class DiaryService {
 
         return getDiaryEntryByDate(userId, date);
 
-
     }
 
+    public DiaryEntry deleteFoodItem(String userId, String date, FoodItem foodItemToDelete){
+        Diary diaryToUpdate = getDiaryByUserId(userId);
+        List<DiaryEntry> currentDiaryEntries = diaryToUpdate.diaryEntries();
+        List<DiaryEntry> newDiaryEntries;
+
+        DiaryEntry diaryEntryToUpdate = getDiaryEntryByDate(userId, date);
+        List<FoodItem> updatedFoodItems = diaryEntryToUpdate.foodItems();
+        updatedFoodItems.remove(foodItemToDelete);
+
+        if(updatedFoodItems.isEmpty()){
+            newDiaryEntries = currentDiaryEntries.stream().filter(entry -> !entry.date().equals(date)).toList();
+            diaryRepository.save(getDiaryByUserId(userId).withDiaryEntries(newDiaryEntries));
+            return null;
+        }else{
+            int totalCalories = updatedFoodItems.stream().map(FoodItem::calories).reduce(0, Integer::sum);
+            DiaryEntry updatedDiaryEntry = diaryEntryToUpdate.withFoodItems(updatedFoodItems).withTotalCalories(totalCalories);
+            newDiaryEntries = currentDiaryEntries.stream().map(entry -> entry.date().equals(date) ? updatedDiaryEntry : entry).toList();
+
+            diaryRepository.save(getDiaryByUserId(userId).withDiaryEntries(newDiaryEntries));
+
+            return getDiaryEntryByDate(userId, date);
+        }
+
+
+    }
 }
