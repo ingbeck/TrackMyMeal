@@ -21,10 +21,10 @@ export default function MealOverview(props: Readonly<MealOverviewProps>) {
 
         return (
             <>
-                <div className={"mealoverview"} onClick={() => setOpenModalFoodItems(true)}>
+                <button className={"mealoverview"} onClick={() => setOpenModalFoodItems(true)}>
                     {props.getMealTypeIcon(props.mealType, 32)}
                     <span>{foodItems.reduce((sum, currentFoodItem) => sum + currentFoodItem.calories, 0)} kcal</span>
-                </div>
+                </button>
                 <ModalFoodItems
                     open={openModalFoodItems}
                     foodItems={foodItems}

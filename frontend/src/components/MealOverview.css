@@ -4,8 +4,10 @@
     align-items: center;
     border-radius: 4px;
     border: solid 1px black;
+    background: none;
     padding: 8px;
     margin-bottom: 8px;
+    width: 100%;
 }
 
 .mealoverview span{
