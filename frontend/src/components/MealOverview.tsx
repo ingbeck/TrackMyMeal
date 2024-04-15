@@ -20,7 +20,7 @@ export default function MealOverview(props: Readonly<MealOverviewProps>) {
 
     useEffect(() => {
         setFoodItems(props.diaryEntry.foodItems.filter(foodItem => foodItem.mealType === props.mealType))
-    }, []);
+    }, [props.diaryEntry]);
 
         return (
             <>
