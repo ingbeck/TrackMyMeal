@@ -38,7 +38,7 @@ class DiaryServiceTest {
         //GIVEN
         String userId = "1";
         String date = "2024-04-11";
-        FoodItem newFoodItem = new FoodItem("Kinderriegel", 1, "", 54, MealType.SNACK);
+        FoodItem newFoodItem = new FoodItem("1","Kinderriegel", 1, "", 54, MealType.SNACK);
         DiaryEntry expected = new DiaryEntry(date, new ArrayList<>(List.of(newFoodItem)), 54);
         Diary diaryToReturn = new Diary("1", "1", new ArrayList<>(List.of(expected)));
 
@@ -59,8 +59,8 @@ class DiaryServiceTest {
         //GIVEN
         String userId = "1";
         String date = "2024-04-11";
-        FoodItem kinderriegel = new FoodItem("Kinderriegel", 1, "", 54, MealType.SNACK);
-        FoodItem apfel = new FoodItem("Apfel", 50, "g", 140, MealType.SNACK);
+        FoodItem kinderriegel = new FoodItem("2","Kinderriegel", 1, "", 54, MealType.SNACK);
+        FoodItem apfel = new FoodItem("2","Apfel", 50, "g", 140, MealType.SNACK);
 
         DiaryEntry existingDiaryEntry = new DiaryEntry(date, new ArrayList<>(List.of(apfel)), 140);
         Diary diaryEntryToReturn = new Diary("1", "1", new ArrayList<>(List.of(new DiaryEntry(date, List.of(apfel,kinderriegel), apfel.calories()+kinderriegel.calories())))
