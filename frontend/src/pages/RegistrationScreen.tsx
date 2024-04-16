@@ -5,8 +5,6 @@ import {ChangeEvent, useEffect, useState} from "react";
 import "./RegistrationScreen.css"
 import {AppUserCreateDto} from "../types/AppUserCreateDto.ts";
 import FloatingNumberInput from "../components/registration/FloatingNumberInput.tsx";
-import OptionGroup from "../components/registration/OptionGroup.tsx";
-import {Button} from "@mui/material";
 import FloatingDatePicker from "../components/registration/FloatingDatePicker.tsx";
 import * as Yup from 'yup';
 import CustomRadioGroup from "../components/registration/CustomRadioGroup.tsx";
@@ -89,13 +87,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
         })
     }
 
-    function handleGenderOption(value:string){
-        setFormData({
-            ...formData,
-            gender: value
-        })
-    }
-
     function handleOnSubmit(e: { preventDefault: () => void; }) {
         e.preventDefault()
         validationSchema.validate(formData,{abortEarly: false})
@@ -130,19 +121,29 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
 
     // @ts-ignore
     return (
-        <div>
-            <div className={"regscreen-caption-wrapper"}>
-                <h1>Willkommen {props.appUser.name}!</h1>
-                <p>Bevor du loslegen kannst, benötigen wir noch ein paar Information über dich:</p>
+        <div className={"regscreen"}>
+            <div className={"regscreen-form-wrapper"}>
+                <div className={"regscreen-caption-wrapper"}>
+                    <h1>Hallo {props.appUser.name.split(" ", 1)}!</h1>
+                    <p>Damit du loslegen kannst, brauchen wir noch ein paar Angaben von dir:</p>
+                </div>
+                <form>
+                    <FloatingDatePicker label={"Geburtsdatum"} name={"birthday"} handleChange={handleChange}
+                                        error={errors.birthday}/>
+                    <FloatingNumberInput label={"Körpergröße (cm)"} name={"height"} maxLength={3}
+                                         handleChange={handleChange} unit={"cm"} error={errors.height}/>
+                    <FloatingNumberInput label={"Gewicht (kg)"} name={"weight"} maxLength={3}
+                                         handleChange={handleChange} unit={"kg"} error={errors.weight}/>
+                    <div className={"optiongroup-wrapper"}>
+                        <CustomRadioGroup label={"Wie aktiv bist du?"} name={"activityLevel"}
+                                          choices={choicesActivityLevel} handleChange={handleChange}
+                                          error={errors.activityLevel}/>
+                        <CustomRadioGroup label={"Körperbau"} name={"gender"} choices={optionsGender}
+                                          handleChange={handleChange} error={errors.gender}/>
+                    </div>
+                </form>
             </div>
-            <form onSubmit={handleOnSubmit}>
-                <OptionGroup options={optionsGender} handleOption={handleGenderOption} error={errors.gender}/>
-                <FloatingDatePicker label={"Geburtsdatum"} name={"birthday"} handleChange={handleChange} error={errors.birthday}/>
-                <FloatingNumberInput label={"Größe"} name={"height"} maxLength={3} handleChange={handleChange} unit={"cm"} error={errors.height}/>
-                <FloatingNumberInput label={"Gewicht"} name={"weight"} maxLength={3} handleChange={handleChange} unit={"kg"} error={errors.weight}/>
-                <CustomRadioGroup label={"Wie aktiv bist du?"} choices={choicesActivityLevel} handleChange={handleChange} error={errors.activityLevel}/>
-                <Button fullWidth variant={"contained"} type={"submit"}>Fertig</Button>
-            </form>
+            <button onClick={handleOnSubmit}>Los gehts!</button>
         </div>
     );
 }

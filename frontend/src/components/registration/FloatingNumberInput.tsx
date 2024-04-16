@@ -37,10 +37,8 @@ export default function FloatingNumberInput(props: Readonly<FloatingNumberInputP
                    name={props.name}
                    pattern="\d*"
                    inputMode={"numeric"}
-                   onChange={handleChange}/>
-            <label className={value && 'filled'} htmlFor={"input"}>
-                {hasError ? props.error : props.label}
-            </label>
+                   onChange={handleChange}
+            placeholder={props.error ? props.error : props.label}/>
         </div>
     );
 }

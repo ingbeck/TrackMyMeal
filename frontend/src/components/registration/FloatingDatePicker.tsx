@@ -1,4 +1,4 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import "./FloatingInput.css"
 import {getDateToday} from "../../Utility.ts";
 
@@ -14,6 +14,10 @@ export default function FloatingDatePicker(props: Readonly<FloatingDatePickerPro
     const [isClicked, setIsClicked] = useState<boolean>(false)
     const hasError = props.error !== "" && props.error !== undefined
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+
+    useEffect(() => {
+        setIsClicked(false)
+    }, []);
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const value = e.target.value
@@ -35,10 +39,8 @@ export default function FloatingDatePicker(props: Readonly<FloatingDatePickerPro
                       if(value === ''){
                           setIsClicked(false)
                   }}}
-                  onChange={handleChange}/>
-           <label className={value && 'filled'} htmlFor={"input"}>
-               {hasError ? props.error : props.label}
-           </label>
+                  onChange={handleChange}
+                  placeholder={props.error ? props.error : props.label}/>
        </div>
     );
 }

@@ -1,13 +1,40 @@
-/* Input style */
 .input-container,
 .input-container-error{
-    position: relative;
     display: flex;
     flex-direction: column;
-    height: 60px;
-    border-radius: 4px;
-    background: #ffffff;
+    height: 100%;
 }
+
+.input-container-datepicker{
+    -webkit-appearance: none;
+    color: black;
+    align-self: stretch;
+    flex-basis: 100%;
+    cursor: pointer;
+}
+
+.input-container-datepicker:focus{
+    cursor: text;
+}
+
+.input-container input {
+    border-radius: 16px;
+    border: 1px solid #666;
+    font-size: 16px;
+    padding: 16px;
+}
+
+.input-container-error input{
+    border-radius: 16px;
+    border: 1px solid #F30000;
+    font-size: 16px;
+    padding: 16px;
+}
+
+.input-container-error input::placeholder{
+    color: #F30000;
+}
+
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -20,82 +47,3 @@ input[type="number"]{
     -moz-appearance: textfield;
 }
 
-.input-container-datepicker{
-    -webkit-appearance: none;
-    background: white;
-    color: black;
-    align-self: stretch;
-    flex-basis: 100%;
-    cursor: pointer;
-}
-
-.input-container-datepicker:focus{
-    cursor: text;
-}
-
-.input-container:focus-within label {
-    transform: translate(0, 12px) scale(0.8);
-    color: #0a53e4;
-}
-
-.input-container-error:focus-within label {
-    transform: translate(0, 12px) scale(0.8);
-    color: #da1818;
-}
-
-.input-container .filled,
-.input-container-error .filled{
-    transform: translate(0, 12px) scale(0.8);
-}
-
-.input-container label {
-    position: absolute;
-    pointer-events: none;
-    transform: translate(0, 23px) scale(1);
-    transform-origin: top left;
-    transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-    color: #6f81a5;
-    font-size: 16px;
-    line-height: 1;
-    left: 16px;
-}
-
-.input-container-error label {
-    position: absolute;
-    pointer-events: none;
-    transform: translate(0, 23px) scale(1);
-    transform-origin: top left;
-    transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-    color: #da1818;
-    font-size: 16px;
-    line-height: 1;
-    left: 16px;
-}
-
-.input-container input {
-    height: 64px;
-    border-radius: 4px;
-    border: none;
-    padding: 24px 16px 4px 16px;
-    font-size: 16px;
-    line-height: 1;
-    outline: none;
-    box-shadow: none;
-    transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-}
-
-.input-container-error input {
-    height: 64px;
-    border-radius: 4px;
-    border: solid #da1818;
-    padding: 24px 16px 4px 16px;
-    font-size: 16px;
-    line-height: 1;
-    outline: none;
-    box-shadow: none;
-    transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-}
-
-.input-container input:focus {
-    box-shadow: 0 0 0 2px #79b1ff;
-}
