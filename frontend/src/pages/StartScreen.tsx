@@ -34,7 +34,7 @@ export default function StartScreen(props: Readonly<StartScreenProps>) {
                     <img src={GoogleLogo} alt={"Logo von Google"}/>
                     <span>Mit Google anmelden</span>
                 </button>
-                <span>© 2024 Ingo Becker</span>
+                <span className={"copyright"}>© 2024 Ingo Becker</span>
             </div>
         </div>
     );

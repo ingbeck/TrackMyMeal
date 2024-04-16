@@ -97,4 +97,12 @@
     vertical-align: middle;
 }
 
+.copyright{
+    color: #666;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 14px */
+}
 
