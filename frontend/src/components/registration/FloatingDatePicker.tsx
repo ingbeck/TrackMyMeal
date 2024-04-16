@@ -29,7 +29,7 @@ export default function FloatingDatePicker(props: Readonly<FloatingDatePickerPro
     return (
        <div className={hasError ? "input-container-error" : "input-container"}>
            <input className={"input-container-datepicker"}
-                  type={isClicked || isIOS ? "date" : "text"}
+                  type={isClicked && isIOS ? "date" : "text"}
                   value={value}
                   id="dateInput"
                   name={props.name}
