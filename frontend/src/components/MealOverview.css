@@ -2,14 +2,68 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 4px;
-    border: solid 1px black;
-    background: none;
-    padding: 8px;
-    margin-bottom: 8px;
+    align-self: stretch;
+    border-radius: 16px;
+    background: #fff;
+    border: none;
+    padding: 16px 24px;
+    margin-bottom: 12px;
     width: 100%;
+    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.12);
+}
+
+.gradient{
+    background: linear-gradient(90deg, #4A30FF 0%, #9018FE 31.5%, #C009FC 68.5%, #D161E2 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.isFull{
+    color:#666;
+}
+
+.label{
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.icon-background{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
 }
 
 .mealoverview span{
-    font-size: 24px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.wrapper{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.wrapper span{
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+#kcal{
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }

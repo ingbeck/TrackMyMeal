@@ -51,16 +51,16 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
         setProgress(part / whole)
     }
 
-    function getMealTypeIcon(mealType : string, iconSize:number) : ReactJSXElement{
+    function getMealTypeIcon(mealType : string, iconSize:number, fill:string) : ReactJSXElement{
         switch (mealType){
             case "BREAKFAST":
-                return <BreakfastIcon width={iconSize} height={iconSize}/>
+                return <BreakfastIcon width={iconSize} height={iconSize} fill={fill}/>
             case "LUNCH":
-                return <LunchIcon width={iconSize} height={iconSize}/>
+                return <LunchIcon width={iconSize} height={iconSize} fill={fill}/>
             case "DINNER":
-                return <DinnerIcon width={iconSize} height={iconSize}/>
+                return <DinnerIcon width={iconSize} height={iconSize} fill={fill}/>
             case "SNACK":
-                return <SnackIcon width={iconSize} height={iconSize}/>
+                return <SnackIcon width={iconSize} height={iconSize} fill={fill}/>
         }
     }
 
@@ -84,30 +84,54 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                     <span>0 kcal</span>
                     <span>{props.appUser.bmrWithActivity} kcal</span>
                 </div>
-            </div>
-                <h2>Deine Mahlzeiten</h2>
                 {
-                    props.currentDiaryEntry?.foodItems === undefined
-                        ?
+                    (totalCalories > 0 && totalCalories <= props.appUser.bmrWithActivity) &&
+                    <div className={"calorie-description"}>
+                        <p>Um dein Gewicht zu halten, kannst du täglich etwa {props.appUser.bmrWithActivity} kcal essen.
+                            Für heute sind noch {props.appUser.bmrWithActivity - totalCalories} kcal übrig. </p>
+                    </div>
+                }
+                {
+                    totalCalories > props.appUser.bmrWithActivity &&
+                    <div className={"calorie-description-warning"}>
+                        <p>Dein heutiger Kalorienbedarf wurde überschritten. Insgesamt hat du {totalCalories - props.appUser.bmrWithActivity } kcal zu viel zu dir genommen.</p>
+                    </div>
+                }
+            </div>
+            {
+                props.currentDiaryEntry?.foodItems === undefined
+                    ?
+                    <>
+                        <h2>Deine Mahlzeiten</h2>
                         <div className={"homescreen-meals"}>
-                            <div className={"homescreen-meals-empty"}>
-                                <span>Keine Mahlzeiten vorhanden</span>
-                                <p>Drücke auf den runden Plus-Button,&nbsp;um eine Mahlzeit hinzuzufügen..</p>
+                        <div className={"homescreen-meals-empty"}>
+                                    <span>Keine Mahlzeiten vorhanden</span>
+                                    <p>Drücke auf den runden Plus-Button, um eine Mahlzeit&nbsp;hinzuzufügen.</p>
+                                </div>
                             </div>
-                        </div>
+                        </>
                         :
                         <div>
+                            <h2>Deine Mahlzeiten</h2>
                             {props.currentDiaryEntry.foodItems.find((foodItem) => foodItem.mealType === "BREAKFAST") &&
-                               <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"BREAKFAST"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"BREAKFAST"}
+                                              getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
+                                              isFull={totalCalories > props.appUser.bmrWithActivity}/>
                             }
                             {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "LUNCH") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"LUNCH"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"LUNCH"}
+                                              getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
+                                              isFull={totalCalories > props.appUser.bmrWithActivity}/>
                             }
                             {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "DINNER") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"DINNER"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"DINNER"}
+                                              getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
+                                              isFull={totalCalories > props.appUser.bmrWithActivity}/>
                             }
                             {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "SNACK") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"SNACK"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
+                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"SNACK"}
+                                              getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
+                                              isFull={totalCalories > props.appUser.bmrWithActivity}/>
                             }
                         </div>
                 }

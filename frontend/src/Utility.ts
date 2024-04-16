@@ -32,3 +32,18 @@ export function translateMealType(mealType : string) : string{
             return ""
     }
 }
+
+export function getBackgroundColor(mealType : string) : string {
+    switch (mealType){
+        case "BREAKFAST":
+            return "#4A30FF"
+        case "LUNCH":
+            return "#9018FE"
+        case "DINNER":
+            return "#C009FC"
+        case "SNACK":
+            return "#E33EFB"
+        default:
+            return ""
+    }
+}
