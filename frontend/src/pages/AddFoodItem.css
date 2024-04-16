@@ -1,5 +1,5 @@
 .addfooditem{
-    padding: 0 24px 0 24px;
+    padding: 24px 24px 25px 24px;
 }
 
 .addfooditem-header-wrapper{
@@ -8,10 +8,40 @@
     align-items: center;
 }
 
+.addfooditem button{
+    border: none;
+    background: none;
+    color: #333;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    padding: 0;
+}
+
+.search{
+    display: flex;
+    gap: 12px;
+}
+
+.search button{
+    justify-self: flex-end;
+    display: flex;
+    padding: 16px;
+    border-radius: 16px;
+    background: linear-gradient(90deg, #562AFF 0%, #841CFE 100%);
+    border: none;
+    color: #FFF;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+}
+
 .addfooditem-search-output{
     margin-top: 24px;
     padding: 8px 0 0 0;
     display: flex;
     flex-direction: column;
-    border-top: solid black 1px;
 }

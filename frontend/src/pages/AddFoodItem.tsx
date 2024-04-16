@@ -67,13 +67,13 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
         switch (mealType){
             case "BREAKFAST":
-                return <BreakfastIcon width={iconSize} height={iconSize}/>
+                return <BreakfastIcon width={iconSize} height={iconSize} fill={"black"}/>
             case "LUNCH":
-                return <LunchIcon width={iconSize} height={iconSize}/>
+                return <LunchIcon width={iconSize} height={iconSize} fill={"black"}/>
             case "DINNER":
-                return <DinnerIcon width={iconSize} height={iconSize}/>
+                return <DinnerIcon width={iconSize} height={iconSize} fill={"black"}/>
             case "SNACK":
-                return <SnackIcon width={iconSize} height={iconSize}/>
+                return <SnackIcon width={iconSize} height={iconSize} fill={"black"}/>
         }
     }
 
@@ -107,14 +107,14 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     return (
         <div className={"addfooditem"}>
+            <button onClick={handleSubmitNewFoodItems}>←</button>
             <div className={"addfooditem-header-wrapper"}>
-                <button onClick={handleSubmitNewFoodItems}>Zurück</button>
                 <h1>{translateMealType(props.mealType)}</h1>
                 <Badge badgeContent={badgeCount} color="primary" onClick={onClickBadgeIcon}>
                     {setBadgeIcon(props.mealType)}
                 </Badge>
             </div>
-            <div>
+            <div className={"search"}>
                 <SearchComponent handleSearchText={setSearchText}/>
                 <button onClick={() => fetchOpenFoodFactsProducts(searchText)}>Suchen</button>
             </div>

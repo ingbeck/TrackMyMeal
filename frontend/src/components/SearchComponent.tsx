@@ -1,4 +1,5 @@
 import {ChangeEvent} from "react";
+import "./SearchComponent.css"
 
 type SearchComponentProps = {
     handleSearchText: (searchText: string) => void,
@@ -12,6 +13,6 @@ export default function SearchComponent(props: Readonly<SearchComponentProps>) {
     }
 
     return (
-            <input onChange={handleInputOnChange}/>
+            <input className={"searchbar"} onChange={handleInputOnChange} placeholder={"Suche..."}/>
     )
 }

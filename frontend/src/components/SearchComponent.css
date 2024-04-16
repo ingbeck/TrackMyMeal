@@ -1,0 +1,14 @@
+.searchbar{
+    display: flex;
+    padding: 16px;
+    align-items: flex-start;
+    flex: 1 0 0;
+    border-radius: 16px;
+    border: 1px solid #666;
+    background: #FFF;
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
