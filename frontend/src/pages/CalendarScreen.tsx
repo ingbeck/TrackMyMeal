@@ -13,8 +13,12 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
     }, [props, url]);
 
     return (
-        <div>
-            <h1>Kalender</h1>
+        <div className={"homescreen"} style={{paddingTop: 100}}>
+            <div className={"homescreen-meals"}>
+                <div className={"homescreen-meals-empty"}>
+                    <span>Coming soon</span>
+                </div>
+            </div>
         </div>
     );
 }
