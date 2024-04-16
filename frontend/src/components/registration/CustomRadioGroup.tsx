@@ -13,7 +13,6 @@ export default function CustomRadioGroup(props: Readonly<CustomRadioGroupProps>)
     const hasError = props.error !== "" && props.error !== undefined
 
     return (
-        <>
             <div className={"container"}>
                 <div className={hasError ? "radio-container-error" : "radio-container"}>
                     <label id={"radio-label"}>{props.label}</label>
@@ -32,8 +31,5 @@ export default function CustomRadioGroup(props: Readonly<CustomRadioGroupProps>)
                     }
                 </div>
             </div>
-        </>
-
-
     );
 }
