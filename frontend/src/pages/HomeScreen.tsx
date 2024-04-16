@@ -68,27 +68,33 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
         <div className={"homescreen"}>
             <h1>Heute</h1>
             <div className={"homescreen-dailyProgress"}>
-                <h2>Ziel</h2>
+                <span id={"dailyProgress-caption"}>Ziel</span>
                 <div id={"progress"} className={"progressbar"}>
                     {totalCalories !== 0 &&
                         <>
                             <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"}
                                  style={{flex: progress}}>
-                                {progress > 0.25 && <span>{totalCalories} kcal</span>}
+                                {progress > 0.33 && <span>{totalCalories} kcal</span>}
                             </div>
-                            {progress < 0.25 && <span>{totalCalories} kcal</span>}
+                            {progress < 0.33 && <span>{totalCalories} kcal</span>}
                         </>
                     }
                 </div>
-                <h3>{props.appUser.bmrWithActivity} kcal</h3>
+                <div className={"dailyProgress-calories"}>
+                    <span>0 kcal</span>
+                    <span>{props.appUser.bmrWithActivity} kcal</span>
+                </div>
             </div>
-            <div>
-                <h2>Deine Ernährung</h2>
+                <h2>Deine Mahlzeiten</h2>
                 {
                     props.currentDiaryEntry?.foodItems === undefined
                         ?
-                        <p>Für heute hast du noch nichts hinzugefügt. Drücke auf das Plus, um Mahlzeiten
-                            hinzuzufügen.</p>
+                        <div className={"homescreen-meals"}>
+                            <div className={"homescreen-meals-empty"}>
+                                <span>Keine Mahlzeiten vorhanden</span>
+                                <p>Drücke auf den runden Plus-Button,&nbsp;um eine Mahlzeit hinzuzufügen..</p>
+                            </div>
+                        </div>
                         :
                         <div>
                             {props.currentDiaryEntry.foodItems.find((foodItem) => foodItem.mealType === "BREAKFAST") &&
@@ -105,8 +111,6 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                             }
                         </div>
                 }
-            </div>
-
         </div>
     );
 }
