@@ -1,0 +1,14 @@
+.modalFoodItem-header-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modalFoodItem-title{
+    color: #333;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 36px;
+}

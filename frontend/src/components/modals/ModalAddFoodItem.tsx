@@ -68,7 +68,7 @@ export default function ModalAddFoodItem(props: Readonly<ModalAddFoodItemProps>)
                     </div>
                     <div className={"modalAddFoodItem-btn-wrapper"}>
                         <button onClick={props.addFoodItem} className={"add"}>Hinzufügen</button>
-                        <button onClick={props.addFoodItem} className={"cancel"}>Abbrechen</button>
+                        <button onClick={props.handleClose} className={"cancel"}>Abbrechen</button>
                     </div>
                 </Box>
             </Modal>
