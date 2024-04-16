@@ -1,15 +1,69 @@
+.regscreen{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 24px 32px 24px;
+    gap: 40px;
+    height: 96vh;
+}
+
+.regscreen button{
+    justify-self: flex-end;
+    display: flex;
+    padding: 16px 0;
+    justify-content: center;
+    align-self: stretch;
+    border-radius: 16px;
+    background: linear-gradient(90deg, #562AFF 0%, #841CFE 100%);
+    border: none;
+    color: #FFF;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+}
+
 .regscreen-caption-wrapper{
+    align-self: stretch;
     margin: 0 auto;
     max-width: 340px;
 }
 
+.regscreen-caption-wrapper p{
+    color: #666;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+}
+
+.regscreen-form-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 40px;
+}
+
+.regscreen-caption-wrapper h1{
+    color: #333;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 36px;
+}
+
 form {
-    padding: 15px 0 40px 0;
-    max-width: 340px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
     gap: 16px;
+}
+
+.optiongroup-wrapper{
+    display: flex;
+    align-items: flex-start;
+    gap: 24px
 }
 
 .btn-submit {
