@@ -1,0 +1,68 @@
+.modalAddFoodItem-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:8px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: solid 1px #DDD;
+}
+
+.modalAddFoodItem-header h2{
+    color: #333;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.select-amount-wrapper{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: solid 1px #DDD;
+    color: #666;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.modalAddFoodItem-btn-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modalAddFoodItem-btn-wrapper button{
+    justify-self: flex-end;
+    display: flex;
+    padding: 16px 0;
+    justify-content: center;
+    align-self: stretch;
+    border-radius: 16px;
+    border: none;
+    color: #FFF;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+}
+
+.modalAddFoodItem-btn-wrapper button.add{
+    background: linear-gradient(90deg, #562AFF 0%, #841CFE 100%);
+}
+
+.modalAddFoodItem-btn-wrapper button.cancel{
+    border-radius: 16px;
+    border: 1px solid #000;
+    background: linear-gradient(90deg, #562AFF 0%, #841CFE 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
