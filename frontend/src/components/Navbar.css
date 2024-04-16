@@ -52,11 +52,11 @@
 .navbar-item-active img{
     height: 25px;
     width: 25px;
-    filter: invert(18%) sepia(87%) saturate(3636%) hue-rotate(220deg) brightness(95%) contrast(94%);
+    filter: invert(19%) sepia(97%) saturate(6796%) hue-rotate(270deg) brightness(106%) contrast(108%);
     margin-bottom: 2px;
 
 }
 
-.navbar-item-active span{
-    color: #0a53e4;
+.navbar-item-active span {
+    color: #9018FE
 }
