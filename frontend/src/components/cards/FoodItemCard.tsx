@@ -1,5 +1,4 @@
 import {FoodItem} from "../../types/Diary.ts";
-import "./FoodItemCard.css"
 import DeleteButton from "../svg/DeleteButton.tsx";
 
 type FoodItemCardProps = {
