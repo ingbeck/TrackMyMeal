@@ -1,6 +1,7 @@
 import {Box, Modal} from "@mui/material";
 import {OpenFoodFactsProduct} from "../../types/OpenFoodFactsProducts.ts";
 import {ChangeEvent} from "react";
+import "./ModalAddFoodItem.css"
 
 type ModalAddFoodItemProps = {
     open : boolean,
@@ -39,26 +40,36 @@ export default function ModalAddFoodItem(props: Readonly<ModalAddFoodItemProps>)
                     transform: 'translate(-50%, -50%)',
                     width: 300,
                     bgcolor: 'background.paper',
-                    border: '2px solid #000',
+                    borderRadius: "16px",
                     boxShadow: 24,
                     p: 4,
                 }}>
-                    <h2>{props.selectedFoodItem.name}</h2>
+                    <div className={"modalAddFoodItem-header"}>
+                        <h2>{props.selectedFoodItem.name}</h2>
+                        {props.selectedFoodItem.servingSize !== 0
+                            ?
+                            <div>
+                                <span className={"gradient"}><span className={"serving"}>{props.selectedFoodItem.servingSize !== 0 ? props.selectedFoodItem.nutriments.energyKcalServing : props.selectedFoodItem.nutriments.energyKcal100g}</span> kcal</span>
+                                <span id={"servingsize"}>{" / "+ props.selectedFoodItem.servingSize} {props.selectedFoodItem.servingUnit ? props.selectedFoodItem.servingUnit : "g"}</span>
+                            </div>
+                            :
+                            <span>100 g</span>
+                        }
+                    </div>
                     <div>
-                        <div>
-                            <label htmlFor={"amount"}>Menge: </label>
-                            <input id={"amount"} onChange={handleChange} type={"number"} min={1} max={9999} pattern="\d*"/>
-                            {
-                                props.selectedFoodItem.servingUnit === null ?
-                                    <span>g</span>
-                                    :
-                                    <span>{props.selectedFoodItem.servingUnit}</span>
-                            }
+                        <div className={"select-amount-wrapper"}>
+                            <input id={"amount"} className={"searchbar"} onChange={handleChange} type={"number"} min={1} max={9999}
+                                   placeholder={props.selectedFoodItem.servingSize.toString()}
+                                   pattern="\d*"/>
+                            <span>Gramm</span>
                         </div>
                         <div>
                         </div>
                     </div>
-                    <button onClick={props.addFoodItem}>hinzufügen</button>
+                    <div className={"modalAddFoodItem-btn-wrapper"}>
+                        <button onClick={props.addFoodItem} className={"add"}>Hinzufügen</button>
+                        <button onClick={props.handleClose} className={"cancel"}>Abbrechen</button>
+                    </div>
                 </Box>
             </Modal>
         </div>

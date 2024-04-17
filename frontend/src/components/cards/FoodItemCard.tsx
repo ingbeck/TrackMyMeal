@@ -1,5 +1,5 @@
 import {FoodItem} from "../../types/Diary.ts";
-import "./FoodItemCard.css"
+import DeleteButton from "../svg/DeleteButton.tsx";
 
 type FoodItemCardProps = {
     deleteFoodItem : (foodItemToDelete : FoodItem) => void,
@@ -12,18 +12,18 @@ export default  function FoodItemCard(props: Readonly<FoodItemCardProps>) {
 
     }
     return (
-        <div className={"foodItemCard"}>
-            <div className={"FoodItemCard-wrapper"}>
-                <div className={"FoodItemCard-stats-wrapper"}>
-                    <span>{props.foodItem.name}</span>
+        <div className={"card"}>
+            <div className={"card-header"}>
+                <div className={"card-header-wrapper"}>
+                    <label>{props.foodItem.name}</label>
                     <div>
-                        <p>{props.foodItem.amount} {props.foodItem.unit}</p>
+                        <span className={"gradient"}><span
+                            className={"serving"}>{props.foodItem.calories}</span> kcal</span>
+                        <span
+                            id={"servingsize"}>{" (" + props.foodItem.amount + " g)"}</span>
                     </div>
-                    <span>{props.foodItem.calories} kcal</span>
                 </div>
-                <div className={"FoodItemCard-btn-wrapper"}>
-                    <button onClick={onClick}>Löschen</button>
-                </div>
+                <button onClick={onClick}><DeleteButton/></button>
             </div>
         </div>
     );

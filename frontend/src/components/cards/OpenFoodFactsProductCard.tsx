@@ -1,5 +1,6 @@
 import {OpenFoodFactsProduct} from "../../types/OpenFoodFactsProducts.ts";
 import "./OpenFoodFactsProductCard.css"
+import AddButton from "../svg/AddButton.tsx";
 
 type OpenFoodFactsProductCardProps = {
     product : OpenFoodFactsProduct,
@@ -13,15 +14,15 @@ export default function OpenFoodFactsProductCard(props: Readonly<OpenFoodFactsPr
                     <label>{props.product.name}</label>
                     {props.product.servingSize !== 0
                         ?
-                        <span>{props.product.servingSize} {props.product.servingUnit ? props.product.servingUnit : "g"}</span>
+                        <div>
+                            <span className={"gradient"}><span className={"serving"}>{props.product.servingSize !== 0 ? props.product.nutriments.energyKcalServing : props.product.nutriments.energyKcal100g}</span> kcal</span>
+                            <span id={"servingsize"}>{" / "+ props.product.servingSize} {props.product.servingUnit ? props.product.servingUnit : "g"}</span>
+                        </div>
                         :
                         <span>100 g</span>
                     }
                 </div>
-                <button onClick={() => props.onClickAddButton(props.product)}>+</button>
-            </div>
-            <div className={"card-body"}>
-                <span>{props.product.servingSize !== 0 ? props.product.nutriments.energyKcalServing : props.product.nutriments.energyKcal100g} kcal</span>
+                <button onClick={() => props.onClickAddButton(props.product)}><AddButton width={40} height={40}/></button>
             </div>
         </div>
     );

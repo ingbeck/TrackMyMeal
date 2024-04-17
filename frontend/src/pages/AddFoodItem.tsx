@@ -107,14 +107,14 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     return (
         <div className={"addfooditem"}>
+            <button onClick={handleSubmitNewFoodItems}>←</button>
             <div className={"addfooditem-header-wrapper"}>
-                <button onClick={handleSubmitNewFoodItems}>Zurück</button>
                 <h1>{translateMealType(props.mealType)}</h1>
                 <Badge badgeContent={badgeCount} color="primary" onClick={onClickBadgeIcon}>
                     {setBadgeIcon(props.mealType)}
                 </Badge>
             </div>
-            <div>
+            <div className={"search"}>
                 <SearchComponent handleSearchText={setSearchText}/>
                 <button onClick={() => fetchOpenFoodFactsProducts(searchText)}>Suchen</button>
             </div>
