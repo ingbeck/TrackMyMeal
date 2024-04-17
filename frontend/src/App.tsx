@@ -17,6 +17,7 @@ import {getDateToday} from "./Utility.ts";
 
 export default function App() {
 
+
     const today = getDateToday()
     const[appUrl, setAppUrl] = useState<string>("")
     const[appUser, setAppUser] = useState<AppUser>({
@@ -50,10 +51,9 @@ export default function App() {
     }, [appUser.id === ""]);
 
     useEffect(() => {
-        if(diary.id === ""){
             setCurrentDiaryEntry(diary.diaryEntries.find(entry => entry.date === today))
-        }
-    }, [diary.userId === ""]);
+    }, [diary.userId === appUser.id]);
+
 
     function login(){
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -129,7 +129,9 @@ export default function App() {
                   getAppUser={getAppUser}
                   appUser={appUser}
                   currentDiaryEntry={currentDiaryEntry}
-                  deleteFoodItem={deleteFoodItem}/>
+                  deleteFoodItem={deleteFoodItem}
+                  setCurrentDiaryEntry={setCurrentDiaryEntry}
+                  diary={diary}/>
               }/>
               <Route path={"/registration/:id"} element={<RegistrationScreen
                   getUser={getAppUser}
