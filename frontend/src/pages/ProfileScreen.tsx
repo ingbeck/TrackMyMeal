@@ -125,6 +125,19 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
         return day+"."+month+"."+year
     }
 
+    function renderRadioOption(id : string, name:string, value : string) {
+        return <div className={"radio-container-choices"}>
+                <input type={"radio"}
+                   id={id}
+                   name={name}
+                   value={value}
+                   onChange={handleChange}
+                   defaultChecked={props.appUser.activityLevel === value}
+                />
+                <label htmlFor={id}>{id}</label>
+        </div>
+    }
+
     return (
         <div className={"profilescreen"}>
             <div className={"profilescreen-wrapper"}>
@@ -136,7 +149,8 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                     isEditable
                         ?
                         <div className={"profilescreen-stats-wrapper"}>
-                            {errors.weight !== "" && <div className={"profilescreen-stats-item-error-message"}>{errors.weight}</div>}
+                            {errors.weight !== "" &&
+                                <div className={"profilescreen-stats-item-error-message"}>{errors.weight}</div>}
                             <div className={errors.weight !== "" ? "profilescreen-stats-item-error" :"profilescreen-stats-item"}>
                                 <span>Gewicht (in kg)</span>
                                 <input name={"weight"} value={formData.weight} onChange={handleChange} type={"number"}/>
@@ -160,46 +174,10 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                                 <div className={"activity-radio-wrapper"}>
                                     <span>Aktivitätslevel</span>
                                     <div className={"radio-container-profile"} style={{justifyContent: "flex-start"}}>
-                                        <div className={"radio-container-choices"}>
-                                            <input type={"radio"}
-                                                   id={"Leistungssportler"}
-                                                   name={"activityLevel"}
-                                                   value={"ATHLETE"}
-                                                   onChange={handleChange}
-                                                   defaultChecked={props.appUser.activityLevel === "ATHLETE"}
-                                            />
-                                            <label htmlFor={"Leistungssportler"}>{"Leistungssportler"}</label>
-                                        </div>
-                                        <div className={"radio-container-choices"}>
-                                            <input type={"radio"}
-                                                   id={"Discopumper"}
-                                                   name={"activityLevel"}
-                                                   value={"PUMPER"}
-                                                   onChange={handleChange}
-                                                   defaultChecked={props.appUser.activityLevel === "PUMPER"}
-                                            />
-                                            <label htmlFor={"Discopumper"}>{"Discopumper"}</label>
-                                        </div>
-                                        <div className={"radio-container-choices"}>
-                                            <input type={"radio"}
-                                                   id={"Spaziergänger"}
-                                                   name={"activityLevel"}
-                                                   value={"PEDESTRIAN"}
-                                                   onChange={handleChange}
-                                                   defaultChecked={props.appUser.activityLevel === "PEDESTRIAN"}
-                                            />
-                                            <label htmlFor={"Spaziergänger"}>{"Spaziergänger"}</label>
-                                        </div>
-                                        <div className={"radio-container-choices"}>
-                                            <input type={"radio"}
-                                                   id={"Couchpotato"}
-                                                   name={"activityLevel"}
-                                                   value={"COUCHPOTATO"}
-                                                   onChange={handleChange}
-                                                   defaultChecked={props.appUser.activityLevel === "COUCHPOTATO"}
-                                            />
-                                            <label htmlFor={"Couchpotato"}>{"Couchpotato"}</label>
-                                        </div>
+                                        {renderRadioOption("Leistungssportler", "activityLevel", "ATHLETE")}
+                                        {renderRadioOption("Discopumper", "activityLevel", "PUMPER")}
+                                        {renderRadioOption("Spaziergänger", "activityLevel", "PEDESTRIAN")}
+                                        {renderRadioOption("Couchpotato", "activityLevel", "COUCHPOTATO")}
                                     </div>
                                 </div>
                             </div>
