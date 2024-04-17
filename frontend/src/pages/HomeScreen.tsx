@@ -25,6 +25,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
     const [progress, setProgress] = useState<number>(0)
     const [totalCalories, setTotalCalories] = useState<number>(0)
 
+
     useEffect(() => {
         props.setCurrentRoute(url)
     }, [url]);
@@ -63,6 +64,18 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                 return <SnackIcon width={iconSize} height={iconSize} fill={fill}/>
         }
     }
+
+    function renderMealOverview(mealType : string) : ReactJSXElement{
+
+        if(props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === mealType)){
+            return  <MealOverview diaryEntry={props.currentDiaryEntry} mealType={mealType}
+                                  getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
+                                  isFull={totalCalories > props.appUser.bmrWithActivity}/>
+        }else{
+            return null
+        }
+    }
+
 
     return (
         <div className={"homescreen"}>
@@ -113,26 +126,10 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                         :
                         <div>
                             <h2>Deine Mahlzeiten</h2>
-                            {props.currentDiaryEntry.foodItems.find((foodItem) => foodItem.mealType === "BREAKFAST") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"BREAKFAST"}
-                                              getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
-                                              isFull={totalCalories > props.appUser.bmrWithActivity}/>
-                            }
-                            {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "LUNCH") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"LUNCH"}
-                                              getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
-                                              isFull={totalCalories > props.appUser.bmrWithActivity}/>
-                            }
-                            {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "DINNER") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"DINNER"}
-                                              getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
-                                              isFull={totalCalories > props.appUser.bmrWithActivity}/>
-                            }
-                            {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "SNACK") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"SNACK"}
-                                              getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
-                                              isFull={totalCalories > props.appUser.bmrWithActivity}/>
-                            }
+                            {renderMealOverview("BREAKFAST")}
+                            {renderMealOverview("LUNCH")}
+                            {renderMealOverview("DINNER")}
+                            {renderMealOverview("SNACK")}
                         </div>
                 }
         </div>
