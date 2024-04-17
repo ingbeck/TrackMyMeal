@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {DiaryEntry, FoodItem} from "../types/Diary.ts";
+import {Diary, DiaryEntry, FoodItem} from "../types/Diary.ts";
 import "./HomeScreen.css"
 import {AppUser} from "../types/AppUser.ts";
 import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
@@ -15,6 +15,8 @@ type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
     getAppUser : (id:string | undefined) => void,
     deleteFoodItem: (foodItem: FoodItem) => void,
+    setCurrentDiaryEntry : (entry: DiaryEntry | undefined) => void,
+    diary : Diary,
     appUser : AppUser,
     currentDiaryEntry? : DiaryEntry
 }
@@ -33,6 +35,9 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
     useEffect(() => {
         props.getAppUser(params.id)
     }, [props.appUser.bmrWithActivity !== 0]);
+
+
+
 
     useEffect(() => {
         if(props.currentDiaryEntry !== undefined){
