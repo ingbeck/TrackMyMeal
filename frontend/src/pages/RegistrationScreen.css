@@ -29,9 +29,6 @@
     margin: 0 auto;
 }
 
-.regscreen-caption-wrapper h1{
-    margin: 0;
-}
 
 .regscreen-caption-wrapper p{
     color: #666;
@@ -54,6 +51,7 @@
     font-style: normal;
     font-weight: 800;
     line-height: 36px;
+    margin: 0;
 }
 
 form {
