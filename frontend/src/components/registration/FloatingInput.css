@@ -9,8 +9,9 @@
     -webkit-appearance: none;
     color: black;
     align-self: stretch;
-    flex-basis: 100%;
     cursor: pointer;
+    padding: 16px;
+    height: 24px;
 }
 
 .input-container-datepicker:focus{
@@ -22,6 +23,7 @@
     border: 1px solid #666;
     font-size: 16px;
     padding: 16px;
+    height: 24px;
 }
 
 .input-container-error input{
@@ -29,6 +31,7 @@
     border: 1px solid #F30000;
     font-size: 16px;
     padding: 16px;
+    height: 24px;
 }
 
 .input-container-error input::placeholder{

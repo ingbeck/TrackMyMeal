@@ -1,27 +1,89 @@
 .homescreen{
-    padding: 0 24px 0 24px;
+    padding: 32px 24px 24px 24px;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    gap: 32px;
+    height: 77vh;
+}
+
+.homescreen h1{
+    color: #333;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 36px;
+    margin: 0;
+}
+
+.homescreen h2{
+    color: #333;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 24px;
 }
 
 .homescreen-dailyProgress{
     display: flex;
     flex-direction: column;
-    border-radius: 8px;
-    background: #ffffff;
-    padding: 0 24px 0 24px;
+    border-radius: 16px;
+    gap: 16px;
+    background: #fff;
+    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.12);
+    padding: 24px 24px 20px 24px;
 }
 
-.homescreen-dailyProgress h3{
-    align-self: flex-end;
+#dailyProgress-caption{
+    color: #333;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.dailyProgress-calories{
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.calorie-description{
+    color: #666;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    background:linear-gradient(90deg, rgba(74, 48, 255, 0.10) 0.1%, rgba(144, 24, 254, 0.10) 53.98%, rgba(192, 9, 252, 0.10) 99.89%);
+    margin: 0 -24px -20px -24px;
+    padding: 12px 24px 12px 24px;
+    border-radius: 0 0 16px 16px;
+}
+
+.calorie-description-warning{
+    color: #666;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    background: rgba(243, 0, 0, 0.10);
+    margin: 0 -24px -20px -24px;
+    padding: 12px 24px 12px 24px;
+    border-radius: 0 0 16px 16px;
+}
+.calorie-description p{
+    margin: 0;
 }
 
 .progressbar{
     display: flex;
     border-radius: 8px;
-    background: #c5cfe7;
-    height: 60px;
+    background: linear-gradient(90deg, rgba(77, 47, 255, 0.25) 0%, rgba(143, 25, 254, 0.25) 100%);
+    height: 64px;
 }
 
 .progressbar span{
@@ -33,22 +95,52 @@
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
-    background: #6f81a5;
+    background: linear-gradient(90deg, #4D2FFF 0%, #8F19FE 100%);
     border-radius: 8px;
-    height: 60px;
+    height: 64px;
 }
 
 .progressbar-fill-overflow{
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
-    background: #da0762;
+    background: linear-gradient(90deg, #E52121 0%, #BD1212 100%);
     border-radius: 8px;
-    height: 60px;
+    height: 64px;
 }
 
 .progressbar-fill span,
 .progressbar-fill-overflow span{
     color: #ffffff;
     margin: 0 8px 8px 0;
+}
+
+.homescreen-meals{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.homescreen-meals-empty{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 0;color: #AAA;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 0 32px 0 32px;
+}
+
+
+.homescreen-meals-empty p{
+    color: #AAA;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px;
 }

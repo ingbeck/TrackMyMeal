@@ -5,3 +5,7 @@
     margin: 0 24px 80px 0;
     z-index: 1;
 }
+
+.MuiSpeedDial-fab {
+    background: linear-gradient(90deg, #562AFF 0%, #841CFE 100%);
+}

@@ -128,6 +128,7 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                     <p>Damit du loslegen kannst, brauchen wir noch ein paar Angaben von dir:</p>
                 </div>
                 <form>
+                    <span>Allgemein</span>
                     <FloatingDatePicker label={"Geburtsdatum"} name={"birthday"} handleChange={handleChange}
                                         error={errors.birthday}/>
                     <FloatingNumberInput label={"Körpergröße (cm)"} name={"height"} maxLength={3}

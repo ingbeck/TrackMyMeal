@@ -25,6 +25,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
     const [progress, setProgress] = useState<number>(0)
     const [totalCalories, setTotalCalories] = useState<number>(0)
 
+
     useEffect(() => {
         props.setCurrentRoute(url)
     }, [url]);
@@ -51,62 +52,86 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
         setProgress(part / whole)
     }
 
-    function getMealTypeIcon(mealType : string, iconSize:number) : ReactJSXElement{
+    function getMealTypeIcon(mealType : string, iconSize:number, fill:string) : ReactJSXElement{
         switch (mealType){
             case "BREAKFAST":
-                return <BreakfastIcon width={iconSize} height={iconSize}/>
+                return <BreakfastIcon width={iconSize} height={iconSize} fill={fill}/>
             case "LUNCH":
-                return <LunchIcon width={iconSize} height={iconSize}/>
+                return <LunchIcon width={iconSize} height={iconSize} fill={fill}/>
             case "DINNER":
-                return <DinnerIcon width={iconSize} height={iconSize}/>
+                return <DinnerIcon width={iconSize} height={iconSize} fill={fill}/>
             case "SNACK":
-                return <SnackIcon width={iconSize} height={iconSize}/>
+                return <SnackIcon width={iconSize} height={iconSize} fill={fill}/>
         }
     }
+
+    function renderMealOverview(mealType : string) : ReactJSXElement{
+
+        if(props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === mealType)){
+            return  <MealOverview diaryEntry={props.currentDiaryEntry} mealType={mealType}
+                                  getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
+                                  isFull={totalCalories > props.appUser.bmrWithActivity}/>
+        }else{
+            return null
+        }
+    }
+
 
     return (
         <div className={"homescreen"}>
             <h1>Heute</h1>
             <div className={"homescreen-dailyProgress"}>
-                <h2>Ziel</h2>
+                <span id={"dailyProgress-caption"}>Ziel</span>
                 <div id={"progress"} className={"progressbar"}>
                     {totalCalories !== 0 &&
                         <>
                             <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"}
                                  style={{flex: progress}}>
-                                {progress > 0.25 && <span>{totalCalories} kcal</span>}
+                                {progress > 0.33 && <span>{totalCalories} kcal</span>}
                             </div>
-                            {progress < 0.25 && <span>{totalCalories} kcal</span>}
+                            {progress < 0.33 && <span>{totalCalories} kcal</span>}
                         </>
                     }
                 </div>
-                <h3>{props.appUser.bmrWithActivity} kcal</h3>
-            </div>
-            <div>
-                <h2>Deine Ernährung</h2>
+                <div className={"dailyProgress-calories"}>
+                    <span>0 kcal</span>
+                    <span>{props.appUser.bmrWithActivity} kcal</span>
+                </div>
                 {
-                    props.currentDiaryEntry?.foodItems === undefined
-                        ?
-                        <p>Für heute hast du noch nichts hinzugefügt. Drücke auf das Plus, um Mahlzeiten
-                            hinzuzufügen.</p>
-                        :
-                        <div>
-                            {props.currentDiaryEntry.foodItems.find((foodItem) => foodItem.mealType === "BREAKFAST") &&
-                               <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"BREAKFAST"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
-                            }
-                            {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "LUNCH") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"LUNCH"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
-                            }
-                            {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "DINNER") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"DINNER"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
-                            }
-                            {props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === "SNACK") &&
-                                <MealOverview diaryEntry={props.currentDiaryEntry} mealType={"SNACK"} getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}/>
-                            }
-                        </div>
+                    (totalCalories > 0 && totalCalories <= props.appUser.bmrWithActivity) &&
+                    <div className={"calorie-description"}>
+                        <p>Um dein Gewicht zu halten, kannst du täglich etwa {props.appUser.bmrWithActivity} kcal essen.
+                            Für heute sind noch {props.appUser.bmrWithActivity - totalCalories} kcal übrig. </p>
+                    </div>
+                }
+                {
+                    totalCalories > props.appUser.bmrWithActivity &&
+                    <div className={"calorie-description-warning"}>
+                        <p>Dein heutiger Kalorienbedarf wurde überschritten. Insgesamt hat du {totalCalories - props.appUser.bmrWithActivity } kcal zu viel zu dir genommen.</p>
+                    </div>
                 }
             </div>
-
+            {
+                props.currentDiaryEntry?.foodItems === undefined
+                    ?
+                    <>
+                        <h2>Deine Mahlzeiten</h2>
+                        <div className={"homescreen-meals"}>
+                        <div className={"homescreen-meals-empty"}>
+                                    <span>Keine Mahlzeiten vorhanden</span>
+                                    <p>Drücke auf den runden Plus-Button, um eine Mahlzeit&nbsp;hinzuzufügen.</p>
+                                </div>
+                            </div>
+                        </>
+                        :
+                        <div>
+                            <h2>Deine Mahlzeiten</h2>
+                            {renderMealOverview("BREAKFAST")}
+                            {renderMealOverview("LUNCH")}
+                            {renderMealOverview("DINNER")}
+                            {renderMealOverview("SNACK")}
+                        </div>
+                }
         </div>
     );
 }

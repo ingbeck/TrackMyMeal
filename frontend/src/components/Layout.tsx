@@ -2,12 +2,12 @@ import {ReactNode, useState} from "react";
 import Navbar from "./Navbar.tsx";
 import {AppUser} from "../types/AppUser.ts";
 import {Backdrop, Box, SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
-import BreakfastIcon from "./svg/meal-icons/BreakfastIcon.tsx";
-import LunchIcon from "./svg/meal-icons/LunchIcon.tsx";
-import DinnerIcon from "./svg/meal-icons/DinnerIcon.tsx";
-import SnackIcon from "./svg/meal-icons/SnackIcon.tsx";
 import {useNavigate} from "react-router-dom";
 import "./Layout.css"
+import BreakfastButton from "./svg/meal-icons/BreakfastButton.tsx";
+import LunchButton from "./svg/meal-icons/LunchButton.tsx";
+import DinnerButton from "./svg/meal-icons/DinnerButton.tsx";
+import SnackButton from "./svg/meal-icons/SnackButton.tsx";
 
 type LayoutProps = {
     setCurrentMeal : (mealType : string) => void,
@@ -59,18 +59,18 @@ export default function Layout(props: Readonly<LayoutProps>) {
                 {
                     props.currentRoute === homeScreen &&
                     <Box sx={{height: 330, transform: 'translateZ(0px)', flexGrow: 0.6}} className={"btn-add-food"}>
-                        <Backdrop open={open} sx={{background:"none"}}/>
+                        <Backdrop open={open} sx={{background:"none"}} />
                         <SpeedDial
                             ariaLabel="SpeedDial tooltip example"
                             sx={{}}
-                            icon={<SpeedDialIcon/>}
+                            icon={<SpeedDialIcon />}
                             onClick={handleClick}
                             open={open}
                         >
-                            <SpeedDialAction icon={<BreakfastIcon width={20} height={20}/>} tooltipTitle={"Frühstück"} tooltipOpen onClick={()=> onActionClick("BREAKFAST")}/>
-                            <SpeedDialAction icon={<LunchIcon width={20} height={20}/>} tooltipTitle={"Mittagessen"} tooltipOpen onClick={()=> onActionClick("LUNCH")}/>
-                            <SpeedDialAction icon={<DinnerIcon width={20} height={20}/>} tooltipTitle={"Abendessen"} tooltipOpen onClick={()=> onActionClick("DINNER")}/>
-                            <SpeedDialAction icon={<SnackIcon width={20} height={20}/>} tooltipTitle={"Snack"} tooltipOpen onClick={()=> onActionClick("SNACK")}/>
+                            <SpeedDialAction icon={<BreakfastButton width={40} height={40}/>} tooltipTitle={"Frühstück"} tooltipOpen onClick={()=> onActionClick("BREAKFAST")}/>
+                            <SpeedDialAction icon={<LunchButton width={40} height={40}/>} tooltipTitle={"Mittagessen"} tooltipOpen onClick={()=> onActionClick("LUNCH")}/>
+                            <SpeedDialAction icon={<DinnerButton width={40} height={40}/>} tooltipTitle={"Abendessen"} tooltipOpen onClick={()=> onActionClick("DINNER")}/>
+                            <SpeedDialAction icon={<SnackButton width={40} height={40}/>} tooltipTitle={"Snack"} tooltipOpen onClick={()=> onActionClick("SNACK")}/>
                         </SpeedDial>
                     </Box>
                 }

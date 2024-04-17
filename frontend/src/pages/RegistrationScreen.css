@@ -2,9 +2,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0 24px 32px 24px;
+    padding: 32px 24px 32px 24px;
     gap: 40px;
-    height: 96vh;
+    height: 92vh;
 }
 
 .regscreen button{
@@ -27,8 +27,8 @@
 .regscreen-caption-wrapper{
     align-self: stretch;
     margin: 0 auto;
-    max-width: 340px;
 }
+
 
 .regscreen-caption-wrapper p{
     color: #666;
@@ -42,7 +42,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 40px;
+    gap: 16px;
 }
 
 .regscreen-caption-wrapper h1{
@@ -51,6 +51,7 @@
     font-style: normal;
     font-weight: 800;
     line-height: 36px;
+    margin: 0;
 }
 
 form {
@@ -60,10 +61,19 @@ form {
     gap: 16px;
 }
 
+form span{
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
 .optiongroup-wrapper{
     display: flex;
     align-items: flex-start;
-    gap: 24px
+    gap: 24px;
+    margin-top: 16px;
 }
 
 .btn-submit {
