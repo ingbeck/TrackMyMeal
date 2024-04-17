@@ -50,8 +50,10 @@ export default function App() {
     }, [appUser.id === ""]);
 
     useEffect(() => {
-        setCurrentDiaryEntry(diary.diaryEntries.find(entry => entry.date === today))
-    }, [diary]);
+        if(diary.id === ""){
+            setCurrentDiaryEntry(diary.diaryEntries.find(entry => entry.date === today))
+        }
+    }, [diary.userId === ""]);
 
     function login(){
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin

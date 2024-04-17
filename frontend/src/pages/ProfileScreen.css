@@ -1,60 +1,124 @@
 .profilescreen{
-    padding: 0 24px 0 24px;
+    padding: 24px 24px 0 24px;
     display: flex;
     flex-direction: column;
+}
+
+.modalAddFoodItem-btn-wrapper button.delete{
+    background: #F30000;
 }
 
 .profilescreen-wrapper{
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    gap: 24px;
 }
 
 .profilescreen-title-wrapper{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    border-bottom: solid 1px #DDD;
+    padding-bottom: 32px;
+}
+
+.profilescreen-title-wrapper h1{
+    color: #333;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 36px;
+    padding: 0;
+    margin: 0;
+}
+
+.profilescreen-stats-wrapper{
+    margin-top: -24px;
 }
 
 .profilescreen-stats-item{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: solid 1px;
+    border-bottom: solid 1px #DDD;
     background: transparent;
     width: 100%;
-    height: 66px;
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 24px 0 24px 0;
 }
+.profilescreen-stats-item span,
+.profilescreen-stats-item-error span{
+    flex: 1;
+}
+
+.activity-radio-wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.radio-container-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-right: 8px;
+}
+
+.radio-container-choices{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
 
 .profilescreen-stats-item-error{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: solid 1px;
+    border-bottom: solid 1px #DDD;
     background: transparent;
     width: 100%;
-    height: 66px;
-    color: red;
+    color: #F30000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 24px 0 24px 0;
 }
 
 
 .profilescreen-stats-item-error-message{
-   color: red;
+   color: #F30000;
    margin-top: 20px;
 }
 
 .profilescreen-stats-item input{
-    border: none;
-    text-align: right;
-    background: none;
-    font-size: 16px;
+    display: flex;
+    padding: 16px;
+    align-items: flex-start;
+    border-radius: 16px;
+    border: 1px solid #666;
+    flex: 1;
 }
 
 .profilescreen-stats-item-error input{
-    border: none;
-    text-align: right;
-    background: none;
-    font-size: 16px;
+    display: flex;
+    padding: 16px;
+    align-items: flex-start;
+    border-radius: 16px;
+    border: 1px solid #F30000;
+    flex: 1;
 }
 
 .profilescreen-btn-wrapper{

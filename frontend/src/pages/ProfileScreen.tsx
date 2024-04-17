@@ -125,19 +125,32 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
         return day+"."+month+"."+year
     }
 
+    function renderRadioOption(id : string, name:string, value : string) {
+        return <div className={"radio-container-choices"}>
+                <input type={"radio"}
+                   id={id}
+                   name={name}
+                   value={value}
+                   onChange={handleChange}
+                   defaultChecked={props.appUser.activityLevel === value}
+                />
+                <label htmlFor={id}>{id}</label>
+        </div>
+    }
+
     return (
         <div className={"profilescreen"}>
             <div className={"profilescreen-wrapper"}>
                 <div className={"profilescreen-title-wrapper"}>
-                    <img src={props.appUser.avatarUrl} className={"profilescreen-avatar"} alt={" "}/>
                     <h1>{props.appUser.name}</h1>
-                    <button onClick={props.logout}>Logout</button>
+                    <img src={props.appUser.avatarUrl} className={"profilescreen-avatar"} alt={" "}/>
                 </div>
                 {
                     isEditable
                         ?
                         <div className={"profilescreen-stats-wrapper"}>
-                            {errors.weight !== "" && <div className={"profilescreen-stats-item-error-message"}>{errors.weight}</div>}
+                            {errors.weight !== "" &&
+                                <div className={"profilescreen-stats-item-error-message"}>{errors.weight}</div>}
                             <div className={errors.weight !== "" ? "profilescreen-stats-item-error" :"profilescreen-stats-item"}>
                                 <span>Gewicht (in kg)</span>
                                 <input name={"weight"} value={formData.weight} onChange={handleChange} type={"number"}/>
@@ -158,13 +171,15 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                                 />
                             </div>
                             <div className={"profilescreen-stats-item"}>
-                                <span>Aktivitätslevel</span>
-                                <select name={"activityLevel"} value={formData.activityLevel} onChange={handleChange}>
-                                    <option value={"ATHLETE"}>Leistungssportler</option>
-                                    <option value={"PUMPER"}>Discopumper</option>
-                                    <option value={"PEDESTRIAN"}>Spaziergänger</option>
-                                    <option value={"COUCHPOTATO"}>Couchpotato</option>
-                                </select>
+                                <div className={"activity-radio-wrapper"}>
+                                    <span>Aktivitätslevel</span>
+                                    <div className={"radio-container-profile"} style={{justifyContent: "flex-start"}}>
+                                        {renderRadioOption("Leistungssportler", "activityLevel", "ATHLETE")}
+                                        {renderRadioOption("Discopumper", "activityLevel", "PUMPER")}
+                                        {renderRadioOption("Spaziergänger", "activityLevel", "PEDESTRIAN")}
+                                        {renderRadioOption("Couchpotato", "activityLevel", "COUCHPOTATO")}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         :
@@ -187,12 +202,17 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                             </div>
                         </div>
                 }
-                <div className={"profilescreen-btn-wrapper"}>
-                    {isEditable && <button onClick={update} className={"profilescreen-btn-edit"}>Speichern</button>}
-                    <button onClick={cancel} className={"profilescreen-btn-edit"}>
+                <div className={"modalAddFoodItem-btn-wrapper"}>
+                    <button onClick={cancel} className={"add"}>
                         {isEditable ? "Abbrechen" : "Profil bearbeiten"}
                     </button>
-                    {isEditable && <button onClick={deleteUser} className={"profilescreen-btn-delete"}>Profil löschen</button>}
+                    {!isEditable && <button onClick={props.logout} className={"cancel"}>Logout</button>}
+                    {isEditable &&
+                        <>
+                            <button onClick={update} className={"cancel"}>Speichern</button>
+                            <button onClick={deleteUser} className={"delete"}>Profil löschen</button>
+                        </>
+                    }
                 </div>
 
             </div>
