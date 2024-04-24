@@ -1,6 +1,6 @@
 body, :root{
   margin: 0;
-  padding: 0;
+  padding: 0 0 60px 0;
   font-family: Inter, sans-serif;
 }
 :root{
