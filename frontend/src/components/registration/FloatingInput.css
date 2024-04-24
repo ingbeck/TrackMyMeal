@@ -6,16 +6,17 @@
 }
 
 .input-container-datepicker{
-    -webkit-appearance: none;
     color: black;
     align-self: stretch;
     cursor: pointer;
     padding: 16px;
     height: 24px;
+    background: none;
 }
 
 .input-container-datepicker:focus{
     cursor: text;
+    background: none;
 }
 
 .input-container input {
