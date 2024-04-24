@@ -70,6 +70,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: trackmymeal.jar
+          path: backend/target
+
       - name: Build, Tag and push Image to Amazon ECR
         id: build-image
         env:
@@ -77,5 +82,6 @@ jobs:
           ECR_REPOSITORY: track-my-meal
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          ocker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REPOSITORY .
+          docker tag $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
