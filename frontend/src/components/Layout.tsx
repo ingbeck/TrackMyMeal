@@ -1,4 +1,4 @@
-import {ReactNode, useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import Navbar from "./Navbar.tsx";
 import {AppUser} from "../types/AppUser.ts";
 import {Backdrop, Box, SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
@@ -26,9 +26,19 @@ export default function Layout(props: Readonly<LayoutProps>) {
     const isInApp = props.currentRoute != startScreen && props.currentRoute != regScreen  && props.currentRoute != addFoodItemScreen
     const navigate = useNavigate();
     const [open, setOpen] = useState<boolean>(false);
+    const [isFirstLoaded, setIsFirstLoaded] = useState<boolean>(false);
+
+    useEffect(() => {
+        setIsFirstLoaded(false);
+    }, [props.currentRoute]);
 
     function handleClick(){
+        setIsFirstLoaded(true)
         setOpen(!open);
+    }
+
+    function handleBlur(){
+        setOpen(false);
     }
 
     function onActionClick(mealType:string){
@@ -52,19 +62,25 @@ export default function Layout(props: Readonly<LayoutProps>) {
 
     return (
         <div>
+            {
+                (props.currentRoute === homeScreen && isFirstLoaded) &&
+                <>
+                    {open ? <div className={"transparent"}></div> : <div className={"transparent-fadeout"}></div>}
+                </>
+            }
             <main>
                 {props.children}
             </main>
             <div>
-                {
+            {
                     props.currentRoute === homeScreen &&
                     <Box sx={{height: 330, transform: 'translateZ(0px)', flexGrow: 0.6}} className={"btn-add-food"}>
                         <Backdrop open={open} sx={{background:"none"}} />
                         <SpeedDial
                             ariaLabel="SpeedDial tooltip example"
-                            sx={{}}
                             icon={<SpeedDialIcon />}
                             onClick={handleClick}
+                            onBlur={handleBlur}
                             open={open}
                         >
                             <SpeedDialAction icon={<BreakfastButton width={40} height={40}/>} tooltipTitle={"Frühstück"} tooltipOpen onClick={()=> onActionClick("BREAKFAST")}/>
@@ -76,7 +92,6 @@ export default function Layout(props: Readonly<LayoutProps>) {
                 }
                 {isInApp && <Navbar currentRoute={props.currentRoute} appUrl={props.appUrl} appUser={props.appUser}/>}
             </div>
-
         </div>
     );
 }
