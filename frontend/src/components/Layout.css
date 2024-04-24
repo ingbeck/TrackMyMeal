@@ -11,12 +11,8 @@
 }
 
 @keyframes fade-in {
-   0% {
-       opacity: 0;
-   }
-    100% {
-        opacity: 1;
-    }
+   0% {opacity: 0;}
+    100% {opacity: 1;}
 }
 @keyframes fade-out {
     0% {
@@ -24,9 +20,7 @@
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
     }
-    100% {
-        opacity: 0;
-    }
+    100% {opacity: 0;}
 }
 
 
