@@ -41,7 +41,7 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, []);
+    }, [url]);
 
     useEffect(() => {
         props.getAppUser(params.id)
@@ -186,19 +186,19 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                         <div className={"profilescreen-stats-wrapper"}>
                             <div className={"profilescreen-stats-item"}>
                                 <span>Gewicht</span>
-                                <span>{formData.weight} kg</span>
+                                <span>{props.appUser.weight} kg</span>
                             </div>
                             <div className={"profilescreen-stats-item"}>
                                 <span>Größe</span>
-                                <span>{formData.height} cm</span>
+                                <span>{props.appUser.height} cm</span>
                             </div>
                             <div className={"profilescreen-stats-item"}>
                                 <span>Geburtstag</span>
-                                <span>{formattedDate(formData.birthday)}</span>
+                                <span>{formattedDate(props.appUser.birthdate)}</span>
                             </div>
                             <div className={"profilescreen-stats-item"}>
                                 <span>Aktivitätslevel</span>
-                                <span>{displayActivityLevel(formData.activityLevel)}</span>
+                                <span>{displayActivityLevel(props.appUser.activityLevel)}</span>
                             </div>
                         </div>
                 }

@@ -36,9 +36,6 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
         props.getAppUser(params.id)
     }, [props.appUser.bmrWithActivity !== 0]);
 
-
-
-
     useEffect(() => {
         if(props.currentDiaryEntry !== undefined){
             setTotalCalories(props.currentDiaryEntry.totalCalories)
