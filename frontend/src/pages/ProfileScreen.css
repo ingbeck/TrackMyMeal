@@ -11,7 +11,6 @@
 .profilescreen-wrapper{
     display: flex;
     flex-direction: column;
-    height: 120vh;
     gap: 24px;
 }
 
