@@ -11,7 +11,7 @@
 .profilescreen-wrapper{
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 120vh;
     gap: 24px;
 }
 
@@ -44,11 +44,6 @@
     border-bottom: solid 1px #DDD;
     background: transparent;
     width: 100%;
-    color: #333;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
     padding: 24px 0 24px 0;
 }
 .profilescreen-stats-item span,
@@ -58,7 +53,6 @@
 
 .activity-radio-wrapper{
     display: flex;
-    justify-content: space-between;
     width: 100%;
 }
 
@@ -77,7 +71,7 @@
 
 .radio-container-choices{
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
 }
 
@@ -89,12 +83,6 @@
     border-bottom: solid 1px #DDD;
     background: transparent;
     width: 100%;
-    color: #F30000;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    padding: 24px 0 24px 0;
 }
 
 
@@ -110,7 +98,27 @@
     border-radius: 16px;
     border: 1px solid #666;
     flex: 1;
+    background: none;
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-right: 8px;
 }
+
+.profilescreen-stats-item input:not(
+#Couchpotato,
+#Leistungssportler,
+#Spaziergänger,
+#Discopumper){
+    width: 100%;
+}
+
+input::-webkit-date-and-time-value {
+    text-align: left;
+}
+
 
 .profilescreen-stats-item-error input{
     display: flex;
@@ -119,6 +127,13 @@
     border-radius: 16px;
     border: 1px solid #F30000;
     flex: 1;
+    -webkit-appearance: none;
+    background: none;
+    color: #F30000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
 .profilescreen-btn-wrapper{

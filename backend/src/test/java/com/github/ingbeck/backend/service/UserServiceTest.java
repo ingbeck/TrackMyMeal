@@ -15,7 +15,8 @@ import static org.mockito.Mockito.*;
 
 class UserServiceTest {
     private final UserRepository repo = mock(UserRepository.class);
-    private final UserService service = new UserService(repo);
+    private final DiaryService diaryService = mock(DiaryService.class);
+    private final UserService service = new UserService(repo, diaryService);
 
     @Test
     void createUser_whenUserExistsAndCalledWithValidAppUserCreateDto_thenReturnAppUserWithDtosValue(){
@@ -51,7 +52,7 @@ class UserServiceTest {
                 ActivityLevel.ATHLETE
         );
 
-        assertThrows(NoSuchElementException.class, () -> {service.createUser("2", appUserCreateDto);});
+        assertThrows(NoSuchElementException.class, () -> service.createUser("2", appUserCreateDto));
     }
 
     private static AppUser getAppUser(AppUserCreateDto appUserCreateDto) {
