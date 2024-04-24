@@ -84,6 +84,9 @@ public class DiaryService {
             return getDiaryEntryByDate(userId, date);
         }
 
+    }
 
+    public void deleteDiaryByUserId(String userId){
+        diaryRepository.delete(diaryRepository.findDiaryByUserId(userId));
     }
 }

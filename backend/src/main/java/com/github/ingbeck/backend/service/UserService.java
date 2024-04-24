@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final DiaryService diaryService;
 
     public AppUser getUser(String id){
         return userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Element with id: " + id + " not in database!"));
@@ -43,6 +44,7 @@ public class UserService {
     }
 
     public void deleteUserById(String id){
+        diaryService.deleteDiaryByUserId(id);
         userRepository.deleteById(id);
     }
 
