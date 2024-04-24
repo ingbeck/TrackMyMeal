@@ -70,6 +70,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: trackmymeal.jar
+          path: backend/target
+
       - name: Build, Tag and push Image to Amazon ECR
         id: build-image
         env:
