@@ -23,6 +23,7 @@
         opacity: 1;
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
+        z-index: 1;
     }
     100% {
         opacity: 0;
@@ -44,6 +45,6 @@
     position: fixed;
     height: 100vh;
     width: 100%;
-    z-index: 1;
+    z-index: -1;
     animation: fade-out 0.5s;
 }
