@@ -37,7 +37,7 @@ export default function Layout(props: Readonly<LayoutProps>) {
         setOpen(!open);
     }
 
-    function handleBlur(){
+    function handleClose(){
         setOpen(false);
     }
 
@@ -80,7 +80,7 @@ export default function Layout(props: Readonly<LayoutProps>) {
                             ariaLabel="SpeedDial tooltip example"
                             icon={<SpeedDialIcon />}
                             onClick={handleClick}
-                            onBlur={handleBlur}
+                            onClose={handleClose}
                             open={open}
                         >
                             <SpeedDialAction icon={<BreakfastButton width={40} height={40}/>} tooltipTitle={"Frühstück"} tooltipOpen onClick={()=> onActionClick("BREAKFAST")}/>
