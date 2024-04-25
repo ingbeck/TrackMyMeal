@@ -17,7 +17,19 @@
         }
       ],
       "essential": true,
-      "environment": [
+      "environment": [],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "secrets": [
+        {
+          "name": "APP_URL",
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:APP_URL"
+        },
+        {
+          "name": "GOOGLE_CLIENT_ID",
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:GOOGLE_CLIENT_ID"
+        },
         {
           "name": "GOOGLE_CLIENT_SECRET",
           "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:GOOGLE_CLIENT_SECRET"
@@ -27,20 +39,11 @@
           "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:MONGODB_URI"
         },
         {
-          "name": "APP_URL",
-          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:APP_URL"
-        },
-        {
           "name": "OPEN-FOOD-FACTS-API-URL",
           "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:OPEN-FOOD-FACTS-API-URL"
-        },
-        {
-          "name": "GOOGLE_CLIENT_ID",
-          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:GOOGLE_CLIENT_ID"
         }
       ],
-      "mountPoints": [],
-      "volumesFrom": [],
+      "ulimits": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -48,7 +51,8 @@
           "awslogs-group": "/ecs/trackmymeal-container-final",
           "awslogs-region": "eu-central-1",
           "awslogs-stream-prefix": "ecs"
-        }
+        },
+        "secretOptions": []
       },
       "systemControls": []
     }
