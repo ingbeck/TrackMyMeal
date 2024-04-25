@@ -20,23 +20,23 @@
       "environment": [
         {
           "name": "GOOGLE_CLIENT_SECRET",
-          "value": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:GOOGLE_CLIENT_SECRET"
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:GOOGLE_CLIENT_SECRET"
         },
         {
           "name": "MONGODB_URI",
-          "value": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:MONGODB_URI"
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:MONGODB_URI"
         },
         {
           "name": "APP_URL",
-          "value": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:APP_URL"
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:APP_URL"
         },
         {
           "name": "OPEN-FOOD-FACTS-API-URL",
-          "value": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:OPEN-FOOD-FACTS-API-URL"
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:OPEN-FOOD-FACTS-API-URL"
         },
         {
           "name": "GOOGLE_CLIENT_ID",
-          "value": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:GOOGLE_CLIENT_ID"
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:GOOGLE_CLIENT_ID"
         }
       ],
       "mountPoints": [],
