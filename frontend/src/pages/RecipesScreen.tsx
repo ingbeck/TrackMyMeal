@@ -15,7 +15,7 @@ export default function RecipesScreen(props: Readonly<RecipesScreenProps>) {
         <div className={"homescreen"} style={{paddingTop: 100}}>
             <div className={"homescreen-meals"}>
                 <div className={"homescreen-meals-empty"}>
-                    <span>Coming soon</span>
+                    <span>Coming soon and will be super awesome!</span>
                 </div>
             </div>
         </div>
