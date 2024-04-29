@@ -57,7 +57,7 @@
       "systemControls": []
     }
   ],
-  "executionRoleArn": "arn:aws:iam::979466753238:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::979466753238:role/ecsTaskExecutionRole-TrackMyMeal",
   "requiresCompatibilities": [
     "EC2"
   ],
