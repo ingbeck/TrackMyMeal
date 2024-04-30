@@ -20,7 +20,7 @@
           "containerPort": 8443,
           "hostPort": 443,
           "protocol": "tcp",
-          "appProtocol": "https"
+          "appProtocol": "http"
         }
       ],
       "essential": true,
