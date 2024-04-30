@@ -16,7 +16,7 @@
           "appProtocol": "http"
         },
         {
-          "name": "trackmymealcontainer-8080-tcp",
+          "name": "trackmymealcontainer-8443-tcp",
           "containerPort": 8443,
           "hostPort": 443,
           "protocol": "tcp",
