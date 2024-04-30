@@ -14,6 +14,13 @@
           "hostPort": 80,
           "protocol": "tcp",
           "appProtocol": "http"
+        },
+        {
+          "name": "trackmymealcontainer-8080-tcp",
+          "containerPort": 8443,
+          "hostPort": 443,
+          "protocol": "tcp",
+          "appProtocol": "https"
         }
       ],
       "essential": true,
@@ -41,6 +48,14 @@
         {
           "name": "OPEN-FOOD-FACTS-API-URL",
           "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:OPEN-FOOD-FACTS-API-URL::"
+        },
+        {
+          "name": "CERT",
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:CERT::"
+        },
+        {
+          "name": "CERT_KEY",
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:CERT_KEY::"
         }
       ],
       "ulimits": [],
