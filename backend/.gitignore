@@ -34,3 +34,5 @@ build/
 /mvnw
 /mvnw.cmd
 /.mvn/
+/src/main/resources/domain.cert.pem
+/src/main/resources/private.key.pem
