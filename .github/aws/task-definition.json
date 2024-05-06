@@ -48,14 +48,6 @@
         {
           "name": "OPEN-FOOD-FACTS-API-URL",
           "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:OPEN-FOOD-FACTS-API-URL::"
-        },
-        {
-          "name": "CERT",
-          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:CERT::"
-        },
-        {
-          "name": "CERT_KEY",
-          "valueFrom": "arn:aws:secretsmanager:eu-central-1:979466753238:secret:container/trackmymeal/environmentvariables-d4py9C:CERT_KEY::"
         }
       ],
       "ulimits": [],
