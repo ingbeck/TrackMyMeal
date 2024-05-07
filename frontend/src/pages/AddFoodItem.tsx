@@ -6,7 +6,7 @@ import SearchComponent from "../components/SearchComponent.tsx";
 import axios from "axios";
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
 import OpenFoodFactsProductsGallery from "../components/OpenFoodFactsProductsGallery.tsx";
-import {Badge} from "@mui/material";
+import {Badge, Box, CircularProgress} from "@mui/material";
 import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
 // @ts-ignore
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
@@ -39,7 +39,8 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     const [foodItems, setFoodItems] = useState<FoodItem[]>([])
     const [selectedFoodItem, setSelectedFoodItem] = useState<OpenFoodFactsProduct>({id:"",nutriments:{energy:0, energyKcal100g:0, energyKcalServing:0}, name:"", servingSize: 0, servingUnit:""})
     const [openModalAddFoodItem, setOpenModalAddFoodItem] = useState<boolean>(false);
-    const [openModalFoodItems, setOpenModalFoodItems] = useState<boolean>(false)
+    const [openModalFoodItems, setOpenModalFoodItems] = useState<boolean>(false);
+    const [startSearch, setStartSearch] = useState<boolean>(false);
 
     useEffect(() => {
         props.setCurrentRoute(url)
@@ -58,7 +59,10 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     function fetchOpenFoodFactsProducts(text : string){
         axios.get("/api/openfoodfacts/" + text)
-            .then(response => setCurrentProducts(response.data))
+            .then((response) => {
+                setCurrentProducts(response.data);
+                setStartSearch(false);
+            })
             .catch(() => setCurrentProducts(null))
     }
 
@@ -101,7 +105,16 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     function onClickBadgeIcon(){
         if(foodItems.length > 0){
-            setOpenModalFoodItems(true)
+            setOpenModalFoodItems(true);
+            setStartSearch(true);
+        }
+    }
+
+    function onSearchClick() {
+        if(searchText !== ""){
+            fetchOpenFoodFactsProducts(searchText);
+            setStartSearch(true);
+            setCurrentProducts(null);
         }
     }
 
@@ -116,12 +129,20 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             </div>
             <div className={"search"}>
                 <SearchComponent handleSearchText={setSearchText}/>
-                <button onClick={() => fetchOpenFoodFactsProducts(searchText)}>Suchen</button>
+                <button onClick={onSearchClick} disabled={startSearch}>Suchen</button>
             </div>
             <div className={"addfooditem-search-output"}>
-                {currentProducts && <OpenFoodFactsProductsGallery
-                    openFoodFactsProducts={currentProducts}
-                    onClickAddButton={onClickAddButton}/>}
+                {startSearch &&
+                    <Box sx={{ display: 'flex', alignSelf: "center", marginTop: 4}}>
+                        <CircularProgress />
+                    </Box>}
+                {currentProducts &&
+                    currentProducts.products.length === 0
+                    ?
+                    <span className={"homescreen-meals-empty"}>Keine Produkte gefunden</span>
+                    :
+                    <OpenFoodFactsProductsGallery openFoodFactsProducts={currentProducts} onClickAddButton={onClickAddButton}/>
+                }
             </div>
             <ModalAddFoodItem
                 open={openModalAddFoodItem}
