@@ -106,7 +106,6 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     function onClickBadgeIcon(){
         if(foodItems.length > 0){
             setOpenModalFoodItems(true);
-            setStartSearch(true);
         }
     }
 
