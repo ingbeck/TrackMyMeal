@@ -14,13 +14,6 @@
           "hostPort": 80,
           "protocol": "tcp",
           "appProtocol": "http"
-        },
-        {
-          "name": "trackmymealcontainer-8443-tcp",
-          "containerPort": 8443,
-          "hostPort": 443,
-          "protocol": "tcp",
-          "appProtocol": "http"
         }
       ],
       "essential": true,
