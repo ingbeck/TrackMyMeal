@@ -11,14 +11,14 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
     const month = getCalendarMonth(props.date.getFullYear(), props.date.getMonth());
 
     function getDaysInMonth(year: number, month: number): number {
-        const nextMonth = new Date(year, month, 1);
-        nextMonth.setDate(nextMonth.getDate() - 1);
-        return nextMonth.getDate();
+        const nextMonth = new Date(year, month + 1, 1);
+        const lastDayOfMonth = new Date(nextMonth.getTime() - 1);
+        return lastDayOfMonth.getDate();
     }
 
     function getWeekday(year: number, month: number, day: number): number {
         const date = new Date(year, month, day);
-        return date.getDay()
+        return date.getDay();
     }
 
     function getCalendarMonth(year: number, month: number): CalendarMonth {
@@ -42,19 +42,19 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
 
     function fillWithBlankDays(weekday: number){
         const spans = [];
-        let blanks: number;
 
-        if(weekday === 0){
-            blanks = 6;
-        }else{
-            blanks = weekday;
-        }
-
-        for (let i = 0; i < blanks; i++) {
+        for (let i = 0; i < weekday; i++) {
             spans.push(<span key={i}> </span>);
         }
 
-        return spans
+        return spans;
+    }
+
+    function isToday(day:number): boolean{
+        const today = new Date();
+        return today.getDate() === day
+            && today.getMonth() === props.date.getMonth()
+            && today.getFullYear() === props.date.getFullYear();
     }
 
     return (
@@ -70,7 +70,7 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
                 month.calendarDays[0].weekday != 1 && fillWithBlankDays(month.calendarDays[0].weekday)
             }
             {
-                month.calendarDays.map(day => <CalendarDayCard key={day.day} calendarDay={day}/>)
+                month.calendarDays.map(day => <CalendarDayCard key={day.day} calendarDay={day} isToday={isToday}/>)
             }
         </div>
     );
