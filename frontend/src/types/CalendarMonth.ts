@@ -6,5 +6,5 @@ export type CalendarMonth = {
 
 export type CalendarDay = {
     day: number,
-    weekday: string
+    weekday: number
 }

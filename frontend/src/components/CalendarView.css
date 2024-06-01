@@ -1,0 +1,18 @@
+.calendar{
+    max-width: 350px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+    gap: 8px;
+}
+
+.calendar span{
+    display: flex;
+    place-content: center;
+}
+
+.day {
+    display: flex;
+    place-content: center;
+    border: solid 1px #000;
+    padding: 10px 0 10px 0;
+}
