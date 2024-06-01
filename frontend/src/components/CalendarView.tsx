@@ -40,13 +40,32 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
         return currentCalendarMonth;
     }
 
-    function fillWithBlankDays(weekday: number){
+    function fillWithNextDays(weekday: number){
         const spans = [];
+        let nextDay : number;
+        const dayToFill = 6-weekday;
 
-        for (let i = 0; i < weekday; i++) {
-            spans.push(<span key={i}> </span>);
+        const calendarDaysOfNextMonth = getDaysInMonth(month.year, month.month+1)
+        for (let i = 0; i < dayToFill; i++) {
+            nextDay = calendarDaysOfNextMonth - (calendarDaysOfNextMonth - i);
+            spans.push(<span key={i} className={"calendar_inactive-day"}>{nextDay+1}</span>);
         }
 
+        console.log(dayToFill)
+        return spans;
+    }
+
+    function fillWithPreviousDays(weekday: number){
+        const spans = [];
+        let previousDay : number;
+        let j = weekday-1;
+
+        const calendarDaysOfPreviousMonth = getDaysInMonth(month.year, month.month-1)
+        for (let i = 0; i < weekday; i++) {
+            previousDay = calendarDaysOfPreviousMonth - j;
+            spans.push(<span key={i} className={"calendar_inactive-day"}>{previousDay}</span>);
+            j--;
+        }
         return spans;
     }
 
@@ -67,10 +86,13 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
             <span>Sa</span>
             <span>So</span>
             {
-                month.calendarDays[0].weekday != 1 && fillWithBlankDays(month.calendarDays[0].weekday)
+                month.calendarDays[0].weekday != 0 && fillWithPreviousDays(month.calendarDays[0].weekday)
             }
             {
                 month.calendarDays.map(day => <CalendarDayCard key={day.day} calendarDay={day} isToday={isToday}/>)
+            }
+            {
+                month.calendarDays[month.calendarDays.length - 1].weekday != 6 && fillWithNextDays(month.calendarDays[month.calendarDays.length - 1].weekday)
             }
         </div>
     );

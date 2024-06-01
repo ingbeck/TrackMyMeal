@@ -9,6 +9,13 @@
     place-content: center;
 }
 
+.calendar_inactive-day{
+    display: flex;
+    place-content: center;
+    padding: 10px 0 10px 0;
+    color: lightgray;
+}
+
 .day {
     display: flex;
     place-content: center;
