@@ -61,9 +61,10 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
             <h1>Kalender</h1>
             <h2>{formattedDateCaption()}</h2>
             <div>
-                <button onClick={buttonBackClick}>zurück</button>
+                <button onClick={buttonBackClick}>{"<"}</button>
+                <button onClick={() => setDate(new Date())}>Heute</button>
                 {
-                    isCurrentMonth(date) && <button onClick={buttonNextClick}>vor</button>
+                    isCurrentMonth(date) && <button onClick={buttonNextClick}>{">"}</button>
                 }
             </div>
             <CalendarView date={date}/>
