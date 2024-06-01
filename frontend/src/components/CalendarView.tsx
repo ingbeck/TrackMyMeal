@@ -50,21 +50,19 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
             nextDay = calendarDaysOfNextMonth - (calendarDaysOfNextMonth - i);
             spans.push(<span key={i} className={"calendar_inactive-day"}>{nextDay+1}</span>);
         }
-
-        console.log(dayToFill)
         return spans;
     }
 
     function fillWithPreviousDays(weekday: number){
         const spans = [];
         let previousDay : number;
-        let j = weekday-1;
+        let dayToFill = weekday-1;
 
         const calendarDaysOfPreviousMonth = getDaysInMonth(month.year, month.month-1)
         for (let i = 0; i < weekday; i++) {
-            previousDay = calendarDaysOfPreviousMonth - j;
+            previousDay = calendarDaysOfPreviousMonth - dayToFill;
             spans.push(<span key={i} className={"calendar_inactive-day"}>{previousDay}</span>);
-            j--;
+            dayToFill--;
         }
         return spans;
     }
