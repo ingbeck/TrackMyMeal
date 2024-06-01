@@ -42,7 +42,7 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
 
     function fillWithBlankDays(weekday: number){
         const spans = [];
-        let blanks: number = 0;
+        let blanks: number;
 
         if(weekday === 0){
             blanks = 6;
