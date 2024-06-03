@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import CalendarView from "../components/CalendarView.tsx";
+import {useParams} from "react-router-dom";
 
 type CalendarScreenProps = {
-    setCurrentRoute : (url:string) => void
+    setCurrentRoute : (url:string) => void,
+    getAppUser : (id:string | undefined) => void
 }
 
 export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
@@ -10,6 +12,7 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
     const[date, setDate] = useState<Date>(new Date())
 
     const url = window.location.href;
+    const params = useParams();
 
     function formattedDateCaption(): string {
         const formatter = new Intl.DateTimeFormat('de-DE', { month: 'long' });

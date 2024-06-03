@@ -140,7 +140,7 @@ export default function App() {
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}/>
               }/>
-              <Route path={"/calendar"} element={<CalendarScreen setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/calendar/:id"} element={<CalendarScreen getAppUser={getAppUser} setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/profile/:id"} element={<ProfileScreen
                   setCurrentRoute={setCurrentRoute}

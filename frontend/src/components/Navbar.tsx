@@ -16,7 +16,7 @@ export default function Navbar(props: Readonly<NavbarProps>) {
     const navigate = useNavigate()
     const appUrl = props.appUrl
     const homeRoute = "/home/" + props.appUser.id
-    const calendarRoute = "/calendar"
+    const calendarRoute = "/calendar/" + props.appUser.id
     const recipesRoute = "/recipes"
     const profileRoute = "/profile/" + props.appUser.id
 
