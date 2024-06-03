@@ -13,7 +13,7 @@ import LoginProcessingScreen from "./pages/LoginProcessingScreen.tsx";
 import axios from "axios";
 import {Diary, DiaryEntry, FoodItem} from "./types/Diary.ts";
 import AddFoodItem from "./pages/AddFoodItem.tsx";
-import {getDateToday} from "./Utility.ts";
+import {getDateToday} from "./Utility/Utility.ts";
 
 export default function App() {
 

@@ -8,7 +8,7 @@ import BreakfastButton from "./svg/meal-icons/BreakfastButton.tsx";
 import LunchButton from "./svg/meal-icons/LunchButton.tsx";
 import DinnerButton from "./svg/meal-icons/DinnerButton.tsx";
 import SnackButton from "./svg/meal-icons/SnackButton.tsx";
-import {translateMealType} from "../Utility.ts";
+import {translateMealType} from "../Utility/Utility.ts";
 
 type MealOverviewProps = {
     getMealTypeIcon: (mealType:string, iconSize:number, fill:string) => ReactJSXElement,

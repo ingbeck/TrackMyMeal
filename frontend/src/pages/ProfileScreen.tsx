@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import "./ProfileScreen.css"
 import {ErrorState, FormInput} from "./RegistrationScreen.tsx";
 import {AppUserCreateDto} from "../types/AppUserCreateDto.ts";
-import {getDateToday} from "../Utility.ts";
+import {getDateToday} from "../Utility/Utility.ts";
 import * as Yup from "yup";
 import {validationSchema} from "../YupValidationSchema.ts";
 
