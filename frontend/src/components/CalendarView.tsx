@@ -1,8 +1,11 @@
 import "./CalendarView.css"
 import {CalendarMonth} from "../types/CalendarMonth.ts";
 import CalendarDayCard from "./CalendarDayCard.tsx";
+import {DiaryEntry} from "../types/Diary.ts";
 
 type CalendarViewProps = {
+    diaryEntries: DiaryEntry[],
+    appUserCalories: number,
     date : Date
 }
 
@@ -74,6 +77,46 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
             && today.getFullYear() === props.date.getFullYear();
     }
 
+    function percentageCaloriesOfDiaryEntry(diaryEntryTotalCalories?: number): number{
+        let percentage: number = 0;
+
+        if(!diaryEntryTotalCalories){
+            return percentage;
+        }else{
+            percentage = diaryEntryTotalCalories/props.appUserCalories * 100;
+
+            switch (true){
+                case percentage <= 20: return 20;
+                case percentage <= 40: return 40;
+                case percentage <= 60: return 60;
+                case percentage <= 80: return 80;
+                case percentage <= 100: return 100;
+                default: return percentage;
+            }
+        }
+    }
+
+    function getDiaryEntryCaloriesByDate(year: number, month: number, day:number): number{
+        let dateMonth: string;
+        let dateDay: string;
+
+        if(month > 9){
+            dateMonth = ""+month+1;
+        }else{
+            dateMonth = "0"+(month+1)
+        }
+
+        if(day < 10){
+            dateDay = "0"+day;
+        }else{
+            dateDay = ""+day;
+        }
+
+        const date = year+"-"+dateMonth+"-"+dateDay;
+
+        return percentageCaloriesOfDiaryEntry(props.diaryEntries.find(diaryEntry => diaryEntry.date === date)?.totalCalories)
+    }
+
     return (
         <div className={"calendar"}>
             <span>Mo</span>
@@ -87,7 +130,7 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
                 month.calendarDays[0].weekday != 0 && fillWithPreviousDays(month.calendarDays[0].weekday)
             }
             {
-                month.calendarDays.map(day => <CalendarDayCard key={day.day} calendarDay={day} isToday={isToday}/>)
+                month.calendarDays.map(day => <CalendarDayCard key={day.day} calendarDay={day} isToday={isToday} percentage={getDiaryEntryCaloriesByDate(month.year, month.month, day.day)}/>)
             }
             {
                 month.calendarDays[month.calendarDays.length - 1].weekday != 6 && fillWithNextDays(month.calendarDays[month.calendarDays.length - 1].weekday)

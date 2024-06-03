@@ -1,10 +1,15 @@
 import {useEffect, useState} from "react";
 import CalendarView from "../components/CalendarView.tsx";
 import {useParams} from "react-router-dom";
+import {Diary} from "../types/Diary.ts";
+import {AppUser} from "../types/AppUser.ts";
 
 type CalendarScreenProps = {
     setCurrentRoute : (url:string) => void,
-    getAppUser : (id:string | undefined) => void
+    getAppUser : (id:string | undefined) => void,
+    appUser: AppUser,
+    getDiaryByUserId : (id: string | undefined) => void,
+    diary: Diary
 }
 
 export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
@@ -22,6 +27,11 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
     useEffect(() => {
         props.setCurrentRoute(url)
     }, [props, url]);
+
+    useEffect(() => {
+        props.getAppUser(params.id)
+        props.getDiaryByUserId(params.id)
+    }, [params.id]);
 
     function isCurrentMonth(date : Date): boolean{
         const now : Date = new Date();
@@ -68,7 +78,7 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
                     isCurrentMonth(date) && <button onClick={buttonNextClick}>{">"}</button>
                 }
             </div>
-            <CalendarView date={date}/>
+            <CalendarView appUserCalories={props.appUser.bmrWithActivity} diaryEntries={props.diary.diaryEntries} date={date}/>
         </div>
     );
 }
