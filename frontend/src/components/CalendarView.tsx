@@ -1,8 +1,7 @@
-import "./CalendarView.css"
 import {CalendarMonth} from "../types/CalendarMonth.ts";
 import CalendarDayCard from "./CalendarDayCard.tsx";
 import {DiaryEntry} from "../types/Diary.ts";
-
+import "./CalendarView.css"
 type CalendarViewProps = {
     diaryEntries: DiaryEntry[],
     appUserCalories: number,

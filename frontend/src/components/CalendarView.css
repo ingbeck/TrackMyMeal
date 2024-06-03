@@ -40,4 +40,19 @@
     background: none;
     align-self: center;
     justify-self: center;
+    z-index: 1;
+}
+
+#backgroundCircle {
+    color: lightgray;
+}
+
+#backgroundCircle,
+#foregroundCircle {
+    position: absolute;
+}
+
+.day_selected #backgroundCircle {
+    background: #f1e9e9;
+    border-radius: 100%;
 }
