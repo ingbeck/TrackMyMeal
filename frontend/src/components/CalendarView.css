@@ -56,3 +56,27 @@
     background: #f1e9e9;
     border-radius: 100%;
 }
+
+
+.testmodal {
+    position: fixed;
+    background: white;
+    width: 100vW;
+    bottom: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 16px 16px 0 0;
+    animation: modal-open 0.5s ease forwards;
+}
+
+@keyframes modal-open {
+    to {
+        bottom: 0;
+    }
+}
+
+@keyframes modal-close {
+    to{
+        bottom: -100%;
+    }
+}

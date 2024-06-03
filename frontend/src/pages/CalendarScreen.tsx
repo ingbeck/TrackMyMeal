@@ -3,6 +3,7 @@ import CalendarView from "../components/CalendarView.tsx";
 import {useParams} from "react-router-dom";
 import {Diary} from "../types/Diary.ts";
 import {AppUser} from "../types/AppUser.ts";
+import {formattedDateCaption, isCurrentMonth} from "../Utility/DateTime.ts";
 
 type CalendarScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -19,11 +20,6 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
     const url = window.location.href;
     const params = useParams();
 
-    function formattedDateCaption(): string {
-        const formatter = new Intl.DateTimeFormat('de-DE', { month: 'long' });
-        return formatter.format(date)+" "+date.getFullYear();
-    }
-
     useEffect(() => {
         props.setCurrentRoute(url)
     }, [props, url]);
@@ -32,11 +28,6 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
         props.getAppUser(params.id)
         props.getDiaryByUserId(params.id)
     }, [params.id]);
-
-    function isCurrentMonth(date : Date): boolean{
-        const now : Date = new Date();
-        return ((date.getFullYear()) != now.getFullYear() || (date.getMonth() != now.getMonth()));
-    }
 
     function buttonBackClick(){
         let year = date.getFullYear();
@@ -65,12 +56,10 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
         setDate(new Date(year, month));
     }
 
-
-
     return (
         <div className={"homescreen"}>
             <h1>Kalender</h1>
-            <h2>{formattedDateCaption()}</h2>
+            <h2>{formattedDateCaption(date)}</h2>
             <div>
                 <button onClick={buttonBackClick}>{"<"}</button>
                 <button onClick={() => setDate(new Date())}>Heute</button>

@@ -5,11 +5,12 @@ import {translateMealType} from "../../Utility/Utility.ts";
 import "./ModalFoodItem.css"
 
 type ModalFoodItemsProps = {
-    deleteFoodItem : (foodItemToDelete : FoodItem) => void,
+    deleteFoodItem? : (foodItemToDelete : FoodItem) => void,
     open : boolean,
     foodItems : FoodItem[],
     onClose : () => void,
-    mealType: string
+    mealType: string,
+    isHomescreen: boolean
 }
 
 
@@ -37,7 +38,7 @@ export default function ModalFoodItems(props: Readonly<ModalFoodItemsProps>) {
                         <label className={"modalFoodItem-title"}>{translateMealType(props.mealType)}</label>
                         <span>{props.foodItems.length} Einträge</span>
                     </div>
-                    {props.foodItems.map((foodItem) => <FoodItemCard key={foodItem.id} foodItem={foodItem} deleteFoodItem={props.deleteFoodItem}/>)}
+                    {props.foodItems.map((foodItem) => <FoodItemCard key={foodItem.id} foodItem={foodItem} isHomescreen={true} deleteFoodItem={props.deleteFoodItem}/>)}
                     <div className={"modalAddFoodItem-btn-wrapper"}>
                         <button className={"cancel"} style={{marginTop:8}} onClick={props.onClose}>Zurück</button>
                     </div>

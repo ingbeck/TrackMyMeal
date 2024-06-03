@@ -11,11 +11,11 @@ import SnackButton from "./svg/meal-icons/SnackButton.tsx";
 import {translateMealType} from "../Utility/Utility.ts";
 
 type MealOverviewProps = {
-    getMealTypeIcon: (mealType:string, iconSize:number, fill:string) => ReactJSXElement,
-    deleteFoodItem: (foodItem: FoodItem) => void,
+    deleteFoodItem?: (foodItem: FoodItem) => void,
     diaryEntry : DiaryEntry,
     mealType : string,
-    isFull : boolean
+    isFull? : boolean,
+    isHomeScreen : boolean
 }
 export default function MealOverview(props: Readonly<MealOverviewProps>) {
 
@@ -56,6 +56,7 @@ export default function MealOverview(props: Readonly<MealOverviewProps>) {
                     onClose={() => setOpenModalFoodItems(false)}
                     deleteFoodItem={props.deleteFoodItem}
                     mealType={props.mealType}
+                    isHomescreen={props.isHomeScreen}
                 />
             </>
         );

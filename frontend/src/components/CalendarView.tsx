@@ -2,6 +2,9 @@ import {CalendarMonth} from "../types/CalendarMonth.ts";
 import CalendarDayCard from "./CalendarDayCard.tsx";
 import {DiaryEntry} from "../types/Diary.ts";
 import "./CalendarView.css"
+import {Modal} from "@mui/material";
+import {useState} from "react";
+import DiaryEntryView from "./DiaryEntryView.tsx";
 type CalendarViewProps = {
     diaryEntries: DiaryEntry[],
     appUserCalories: number,
@@ -9,6 +12,9 @@ type CalendarViewProps = {
 }
 
 export default function CalendarView(props: Readonly<CalendarViewProps>) {
+
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [clickedDate, setClickedDate] = useState<string>("")
 
     const month = getCalendarMonth(props.date.getFullYear(), props.date.getMonth());
 
@@ -96,44 +102,59 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
     }
 
     function getDiaryEntryCaloriesByDate(year: number, month: number, day:number): number{
-        let dateMonth: string;
-        let dateDay: string;
 
-        if(month > 9){
-            dateMonth = ""+month+1;
-        }else{
-            dateMonth = "0"+(month+1)
-        }
-
-        if(day < 10){
-            dateDay = "0"+day;
-        }else{
-            dateDay = ""+day;
-        }
-
-        const date = year+"-"+dateMonth+"-"+dateDay;
+        const date = formattedDate(year, month, day);
 
         return percentageCaloriesOfDiaryEntry(props.diaryEntries.find(diaryEntry => diaryEntry.date === date)?.totalCalories)
     }
 
+    function formattedDate(year: number, month: number, day:number): string{
+        let monthToString: string;
+        let dayToString: string;
+
+        if(month > 9){
+            monthToString = ""+month+1;
+        }else{
+            monthToString = "0"+(month+1)
+        }
+
+        if(day < 10){
+            dayToString = "0"+day;
+        }else{
+            dayToString = ""+day;
+        }
+
+        return year+"-"+monthToString+"-"+dayToString;
+    }
+
+    function onClickCalendarDay(day: number){
+        setClickedDate(formattedDate(month.year, month.month, day));
+        setIsOpen(true);
+    }
+
     return (
-        <div className={"calendar"}>
-            <span>Mo</span>
-            <span>Di</span>
-            <span>Mi</span>
-            <span>Do</span>
-            <span>Fr</span>
-            <span>Sa</span>
-            <span>So</span>
-            {
-                month.calendarDays[0].weekday != 0 && fillWithPreviousDays(month.calendarDays[0].weekday)
-            }
-            {
-                month.calendarDays.map(day => <CalendarDayCard key={day.day} calendarDay={day} isToday={isToday} percentage={getDiaryEntryCaloriesByDate(month.year, month.month, day.day)}/>)
-            }
-            {
-                month.calendarDays[month.calendarDays.length - 1].weekday != 6 && fillWithNextDays(month.calendarDays[month.calendarDays.length - 1].weekday)
-            }
-        </div>
+        <>
+            <div className={"calendar"}>
+                <span>Mo</span>
+                <span>Di</span>
+                <span>Mi</span>
+                <span>Do</span>
+                <span>Fr</span>
+                <span>Sa</span>
+                <span>So</span>
+                {
+                    month.calendarDays[0].weekday != 0 && fillWithPreviousDays(month.calendarDays[0].weekday)
+                }
+                {
+                    month.calendarDays.map(day => <CalendarDayCard key={day.day} calendarDay={day} isToday={isToday} percentage={getDiaryEntryCaloriesByDate(month.year, month.month, day.day)} clickCalendarDay={onClickCalendarDay}/>)
+                }
+                {
+                    month.calendarDays[month.calendarDays.length - 1].weekday != 6 && fillWithNextDays(month.calendarDays[month.calendarDays.length - 1].weekday)
+                }
+            </div>
+            <Modal open={isOpen} onClose={() => setIsOpen(!isOpen)}>
+                <DiaryEntryView date={clickedDate} diaryEntry={props.diaryEntries.find(diaryEntry => diaryEntry.date === clickedDate)} totalCalories={props.appUserCalories} onClickBack={() => setIsOpen(!isOpen)}/>
+            </Modal>
+        </>
     );
 }
