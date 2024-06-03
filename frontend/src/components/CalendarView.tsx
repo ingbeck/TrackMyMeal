@@ -48,7 +48,7 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
         const calendarDaysOfNextMonth = getDaysInMonth(month.year, month.month+1)
         for (let i = 0; i < dayToFill; i++) {
             nextDay = calendarDaysOfNextMonth - (calendarDaysOfNextMonth - i);
-            spans.push(<span key={i} className={"calendar_inactive-day"}>{nextDay+1}</span>);
+            spans.push(<button key={i} className={"calendar_inactive-day"}>{nextDay+1}</button>);
         }
         return spans;
     }
@@ -61,7 +61,7 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
         const calendarDaysOfPreviousMonth = getDaysInMonth(month.year, month.month-1)
         for (let i = 0; i < weekday; i++) {
             previousDay = calendarDaysOfPreviousMonth - dayToFill;
-            spans.push(<span key={i} className={"calendar_inactive-day"}>{previousDay}</span>);
+            spans.push(<button key={i} className={"calendar_inactive-day"}>{previousDay}</button>);
             dayToFill--;
         }
         return spans;

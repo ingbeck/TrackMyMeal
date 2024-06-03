@@ -14,19 +14,30 @@
     place-content: center;
     padding: 10px 0 10px 0;
     color: lightgray;
+    border: none;
+    background: none;
 }
 
 .day {
     display: flex;
     place-content: center;
-    border: solid 1px #000;
     padding: 10px 0 10px 0;
+    background: none;
+    border: none;
 }
 
 .day_selected {
     display: flex;
     place-content: center;
-    border: solid 1px #000;
-    background-color: lightgray;
     padding: 10px 0 10px 0;
+    border: none;
+    background: none;
+}
+
+.day span,
+.day_selected span {
+    border: none;
+    background: none;
+    align-self: center;
+    justify-self: center;
 }

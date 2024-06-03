@@ -42,15 +42,13 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
         let year = date.getFullYear();
         let month = date.getMonth();
 
-        // If it's December, add 1 to the year and set the month to January
         if (month === 11) {
             year++;
-            month = 0; // January is 0 since months are zero-indexed
+            month = 0;
         } else {
-            month++; // Otherwise, just add 1 to the month
+            month++;
         }
 
-        // Create a new Date object for the next month
         setDate(new Date(year, month));
     }
 

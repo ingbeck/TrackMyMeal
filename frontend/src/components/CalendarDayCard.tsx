@@ -1,5 +1,6 @@
 import {CalendarDay} from "../types/CalendarMonth.ts";
 import "./CalendarDayCard.css"
+import {CircularProgress} from "@mui/material";
 
 type CalendarDayCardProps = {
     calendarDay : CalendarDay,
@@ -8,9 +9,10 @@ type CalendarDayCardProps = {
 
 export default function CalendarDayCard(props: Readonly<CalendarDayCardProps>) {
     return (
-        <div className={props.isToday(props.calendarDay.day) ? "day_selected" : "day"}>
+        <button className={props.isToday(props.calendarDay.day) ? "day_selected" : "day"}>
             <span>{props.calendarDay.day}</span>
-        </div>
+            <CircularProgress variant={"determinate"} value={100} style={{position: "absolute"}}/>
+        </button>
     );
 }
 
