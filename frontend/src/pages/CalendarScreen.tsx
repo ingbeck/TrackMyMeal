@@ -59,15 +59,18 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
     return (
         <div className={"homescreen"}>
             <h1>Kalender</h1>
-            <h2>{formattedDateCaption(date)}</h2>
-            <div>
-                <button onClick={buttonBackClick}>{"<"}</button>
-                <button onClick={() => setDate(new Date())}>Heute</button>
-                {
-                    isCurrentMonth(date) && <button onClick={buttonNextClick}>{">"}</button>
-                }
+            <div style={{display:"flex", justifyContent:"space-between", alignItems:"baseline"}}>
+                <h2>{formattedDateCaption(date)}</h2>
+                <div className={"modalAddFoodItem-btn-wrapper-horizontal"}>
+                    <button className={"cancel"} onClick={buttonBackClick}>{"<"}</button>
+                    <button className={"add"} onClick={() => setDate(new Date())}>Heute</button>
+                    {
+                        isCurrentMonth(date) && <button className={"cancel"} onClick={buttonNextClick}>{">"}</button>
+                    }
+                </div>
             </div>
-            <CalendarView appUserCalories={props.appUser.bmrWithActivity} diaryEntries={props.diary.diaryEntries} date={date}/>
+            <CalendarView appUserCalories={props.appUser.bmrWithActivity} diaryEntries={props.diary.diaryEntries}
+                          date={date}/>
         </div>
     );
 }

@@ -38,6 +38,10 @@
     gap: 12px;
 }
 
+.modalAddFoodItem-btn-wrapper-horizontal{
+    display: flex;
+}
+
 .modalAddFoodItem-btn-wrapper button{
     justify-self: flex-end;
     display: flex;
