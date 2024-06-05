@@ -35,13 +35,13 @@ export default function DiaryEntryView(props: Readonly<DiaryEntryViewProps>){
             <div className={"homescreen-dailyProgress"}>
                 <span id={"dailyProgress-caption"}>Ziel</span>
                 <div id={"progress"} className={"progressbar"}>
-                    {props.totalCalories !== 0 &&
+                    {props.diaryEntry &&
                         <>
                             <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"}
                                  style={{flex: progress}}>
-                                {progress > 0.33 && <span>{props.totalCalories} kcal</span>}
+                                {progress > 0.33 && <span>{props.diaryEntry.totalCalories} kcal</span>}
                             </div>
-                            {progress < 0.33 && <span>{props.totalCalories} kcal</span>}
+                            {progress < 0.33 && <span>{props.diaryEntry.totalCalories} kcal</span>}
                         </>
                     }
                 </div>
