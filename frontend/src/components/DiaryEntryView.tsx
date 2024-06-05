@@ -30,51 +30,49 @@ export default function DiaryEntryView(props: Readonly<DiaryEntryViewProps>){
     }
 
     return (
-        <div className={"testmodal"}>
-            <div className={"homescreen"}>
-                <h1>{date.getDate()}.{formattedDateCaption(date)}</h1>
-                <div className={"homescreen-dailyProgress"}>
-                    <span id={"dailyProgress-caption"}>Ziel</span>
-                    <div id={"progress"} className={"progressbar"}>
-                        {props.totalCalories !== 0 &&
-                            <>
-                                <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"}
-                                     style={{flex: progress}}>
-                                    {progress > 0.33 && <span>{props.totalCalories} kcal</span>}
-                                </div>
-                                {progress < 0.33 && <span>{props.totalCalories} kcal</span>}
-                            </>
-                        }
-                    </div>
-                    <div className={"dailyProgress-calories"}>
-                        <span>0 kcal</span>
-                        <span>{props.totalCalories} kcal</span>
-                    </div>
-                </div>
-                {
-                    props.diaryEntry?.foodItems === undefined
-                        ?
+        <div className={"homescreen"}>
+            <h1>{date.getDate()}.{formattedDateCaption(date)}</h1>
+            <div className={"homescreen-dailyProgress"}>
+                <span id={"dailyProgress-caption"}>Ziel</span>
+                <div id={"progress"} className={"progressbar"}>
+                    {props.totalCalories !== 0 &&
                         <>
-                            <h2>Deine Mahlzeiten</h2>
-                            <div className={"homescreen-meals"}>
-                                <div className={"homescreen-meals-empty"}>
-                                    <span>Keine Mahlzeiten vorhanden</span>
-                                    <p>Schade!&nbsp;Leider hast du keine Mahlzeiten getracked.</p>
-                                </div>
+                            <div className={progress > 1 ? "progressbar-fill-overflow" : "progressbar-fill"}
+                                 style={{flex: progress}}>
+                                {progress > 0.33 && <span>{props.totalCalories} kcal</span>}
                             </div>
+                            {progress < 0.33 && <span>{props.totalCalories} kcal</span>}
                         </>
-                        :
-                        <div>
-                            <h2>Deine Mahlzeiten</h2>
-                            {renderMealOverview("BREAKFAST")}
-                            {renderMealOverview("LUNCH")}
-                            {renderMealOverview("DINNER")}
-                            {renderMealOverview("SNACK")}
-                        </div>
-                }
-                <div className={"modalAddFoodItem-btn-wrapper"}>
-                    <button className={"cancel"} onClick={props.onClickBack}>Zurück</button>
+                    }
                 </div>
+                <div className={"dailyProgress-calories"}>
+                    <span>0 kcal</span>
+                    <span>{props.totalCalories} kcal</span>
+                </div>
+            </div>
+            {
+                props.diaryEntry?.foodItems === undefined
+                    ?
+                    <>
+                        <h2>Deine Mahlzeiten</h2>
+                        <div className={"homescreen-meals"}>
+                            <div className={"homescreen-meals-empty"}>
+                                <span>Keine Mahlzeiten vorhanden</span>
+                                <p>Schade!&nbsp;Leider hast du keine Mahlzeiten getracked.</p>
+                            </div>
+                        </div>
+                    </>
+                    :
+                    <div>
+                        <h2>Deine Mahlzeiten</h2>
+                        {renderMealOverview("BREAKFAST")}
+                        {renderMealOverview("LUNCH")}
+                        {renderMealOverview("DINNER")}
+                        {renderMealOverview("SNACK")}
+                    </div>
+            }
+            <div className={"modalAddFoodItem-btn-wrapper"}>
+                    <button className={"cancel"} onClick={props.onClickBack}>Zurück</button>
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import {CalendarMonth} from "../types/CalendarMonth.ts";
 import CalendarDayCard from "./CalendarDayCard.tsx";
 import {DiaryEntry} from "../types/Diary.ts";
 import "./CalendarView.css"
-import {Modal} from "@mui/material";
+import {Drawer} from "@mui/material";
 import {useState} from "react";
 import DiaryEntryView from "./DiaryEntryView.tsx";
 type CalendarViewProps = {
@@ -152,9 +152,9 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
                     month.calendarDays[month.calendarDays.length - 1].weekday != 6 && fillWithNextDays(month.calendarDays[month.calendarDays.length - 1].weekday)
                 }
             </div>
-            <Modal open={isOpen} onClose={() => setIsOpen(!isOpen)}>
+            <Drawer open={isOpen} onClose={() => setIsOpen(!isOpen)} anchor={"bottom"}>
                 <DiaryEntryView date={clickedDate} diaryEntry={props.diaryEntries.find(diaryEntry => diaryEntry.date === clickedDate)} totalCalories={props.appUserCalories} onClickBack={() => setIsOpen(!isOpen)}/>
-            </Modal>
+            </Drawer>
         </>
     );
 }
