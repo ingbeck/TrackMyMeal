@@ -62,7 +62,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
 
     return (
-        <div className={"homescreen"}>
+        <div className={"page-container"}>
             <h1>Heute</h1>
             <div className={"homescreen-dailyProgress"}>
                 <span id={"dailyProgress-caption"}>Ziel</span>

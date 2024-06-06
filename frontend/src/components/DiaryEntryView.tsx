@@ -30,7 +30,7 @@ export default function DiaryEntryView(props: Readonly<DiaryEntryViewProps>){
     }
 
     return (
-        <div className={"homescreen"}>
+        <div className={"page-container"}>
             <h1>{date.getDate()}.{formattedDateCaption(date)}</h1>
             <div className={"homescreen-dailyProgress"}>
                 <span id={"dailyProgress-caption"}>Ziel</span>

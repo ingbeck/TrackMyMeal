@@ -154,7 +154,8 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 foodItems={foodItems}
                 onClose={() => setOpenModalFoodItems(false)}
                 deleteFoodItem={props.deleteFoodItem}
-                mealType={props.mealType}/>
+                mealType={props.mealType}
+                isHomescreen={true}/>
         </div>
     );
 }

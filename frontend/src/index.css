@@ -10,3 +10,30 @@ body, :root{
 footer{
   width: 100%;
 }
+
+.page-container{
+  padding: 32px 24px 48px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.page-container h1{
+  color: #333;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 36px;
+  margin: 0;
+}
+
+.page-container h2{
+  color: #333;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 24px;
+}
+
+

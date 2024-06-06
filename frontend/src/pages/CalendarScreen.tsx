@@ -53,7 +53,7 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
     }
 
     return (
-        <div className={"homescreen"}>
+        <div className={"page-container"}>
             <h1>Kalender</h1>
             <div style={{display:"flex", justifyContent:"space-between", alignItems:"baseline"}}>
                 <h2>{formattedDateCaption(date)}</h2>
