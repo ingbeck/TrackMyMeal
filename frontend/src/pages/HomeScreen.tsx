@@ -3,10 +3,6 @@ import {useParams} from "react-router-dom";
 import {Diary, DiaryEntry, FoodItem} from "../types/Diary.ts";
 import "./HomeScreen.css"
 import {AppUser} from "../types/AppUser.ts";
-import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
-import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
-import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
-import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
 import MealOverview from "../components/MealOverview.tsx";
 // @ts-ignore
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
@@ -54,25 +50,11 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
         setProgress(part / whole)
     }
 
-    function getMealTypeIcon(mealType : string, iconSize:number, fill:string) : ReactJSXElement{
-        switch (mealType){
-            case "BREAKFAST":
-                return <BreakfastIcon width={iconSize} height={iconSize} fill={fill}/>
-            case "LUNCH":
-                return <LunchIcon width={iconSize} height={iconSize} fill={fill}/>
-            case "DINNER":
-                return <DinnerIcon width={iconSize} height={iconSize} fill={fill}/>
-            case "SNACK":
-                return <SnackIcon width={iconSize} height={iconSize} fill={fill}/>
-        }
-    }
-
     function renderMealOverview(mealType : string) : ReactJSXElement{
 
         if(props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === mealType)){
-            return  <MealOverview diaryEntry={props.currentDiaryEntry} mealType={mealType}
-                                  getMealTypeIcon={getMealTypeIcon} deleteFoodItem={props.deleteFoodItem}
-                                  isFull={totalCalories > props.appUser.bmrWithActivity}/>
+            return  <MealOverview diaryEntry={props.currentDiaryEntry} mealType={mealType} deleteFoodItem={props.deleteFoodItem}
+                                  isFull={totalCalories > props.appUser.bmrWithActivity} isHomeScreen={true}/>
         }else{
             return null
         }
@@ -80,7 +62,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
 
     return (
-        <div className={"homescreen"}>
+        <div className={"page-container"}>
             <h1>Heute</h1>
             <div className={"homescreen-dailyProgress"}>
                 <span id={"dailyProgress-caption"}>Ziel</span>

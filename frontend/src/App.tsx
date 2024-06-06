@@ -13,7 +13,7 @@ import LoginProcessingScreen from "./pages/LoginProcessingScreen.tsx";
 import axios from "axios";
 import {Diary, DiaryEntry, FoodItem} from "./types/Diary.ts";
 import AddFoodItem from "./pages/AddFoodItem.tsx";
-import {getDateToday} from "./Utility.ts";
+import {getDateToday} from "./Utility/Utility.ts";
 
 export default function App() {
 
@@ -140,7 +140,12 @@ export default function App() {
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}/>
               }/>
-              <Route path={"/calendar"} element={<CalendarScreen setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/calendar/:id"} element={<CalendarScreen
+                  getAppUser={getAppUser}
+                  appUser={appUser}
+                  setCurrentRoute={setCurrentRoute}
+                  getDiaryByUserId={getDiaryByUserId}
+                  diary={diary}/>}/>
               <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/profile/:id"} element={<ProfileScreen
                   setCurrentRoute={setCurrentRoute}

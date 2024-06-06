@@ -1,0 +1,63 @@
+.calendar{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+    gap: 8px;
+}
+
+.calendar span{
+    display: flex;
+    place-content: center;
+}
+
+.calendar_inactive-day{
+    display: flex;
+    place-content: center;
+    padding: 10px 0 10px 0;
+    color: #dedede;
+    border: none;
+    background: none;
+}
+
+.day {
+    display: flex;
+    place-content: center;
+    padding: 10px 0 10px 0;
+    background: none;
+    border: none;
+}
+
+.day_selected {
+    display: flex;
+    place-content: center;
+    padding: 10px 0 10px 0;
+    border: none;
+    background: none;
+    color: #fff;
+}
+
+.day span,
+.day_selected span {
+    border: none;
+    background: none;
+    align-self: center;
+    justify-self: center;
+    z-index: 1;
+}
+
+#backgroundCircle {
+    color: #dedede;
+}
+
+#foregroundCircle {
+    color: #9018FE;
+}
+
+#backgroundCircle,
+#foregroundCircle {
+    position: absolute;
+}
+
+.day_selected #backgroundCircle {
+    background: linear-gradient(#4A30FF 0%, #9018FE 31.5%, #C009FC 68.5%, #D161E2 100%);
+    border-radius: 100%;
+}

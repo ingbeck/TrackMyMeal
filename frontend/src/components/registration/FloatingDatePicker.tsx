@@ -1,6 +1,6 @@
 import {ChangeEvent, useEffect, useState} from 'react';
 import "./FloatingInput.css"
-import {getDateToday} from "../../Utility.ts";
+import {getDateToday} from "../../Utility/Utility.ts";
 
 type FloatingDatePickerProps = {
     label: string,

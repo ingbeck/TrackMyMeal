@@ -17,7 +17,7 @@ import {DiaryEntry, FoodItem} from "../types/Diary.ts";
 import ModalAddFoodItem from "../components/modals/ModalAddFoodItem.tsx";
 import ModalFoodItems from "../components/modals/ModalFoodItems.tsx";
 import {v4 as uuidv4} from 'uuid';
-import {translateMealType} from "../Utility.ts";
+import {translateMealType} from "../Utility/Utility.ts";
 
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
@@ -154,7 +154,8 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 foodItems={foodItems}
                 onClose={() => setOpenModalFoodItems(false)}
                 deleteFoodItem={props.deleteFoodItem}
-                mealType={props.mealType}/>
+                mealType={props.mealType}
+                isHomescreen={true}/>
         </div>
     );
 }
