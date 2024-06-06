@@ -1,5 +1,4 @@
 import {CalendarDay} from "../types/CalendarMonth.ts";
-import {CircularProgress} from "@mui/material";
 
 type CalendarDayCardProps = {
     calendarDay : CalendarDay,
@@ -9,19 +8,20 @@ type CalendarDayCardProps = {
 }
 
 export default function CalendarDayCard(props: Readonly<CalendarDayCardProps>) {
+
+    const progressFill: string = "linear-gradient(0deg, #4D2FFF3F "+props.percentage+"%, #FFF 0%)";
+
     return (
         <button className={props.isToday(props.calendarDay.day) ? "day_selected" : "day"}
-        onClick={() => props.clickCalendarDay(props.calendarDay.day)}>
-            <CircularProgress id={"backgroundCircle"}
-                              variant={"determinate"}
-                              value={100}
-                              sx={{ scale: "-1 1" }}/>
-            <CircularProgress id={"foregroundCircle"}
-                              variant={"determinate"}
-                              value={props.percentage}
-                              sx={{ scale: "-1 1" }} />
+                onClick={() => props.clickCalendarDay(props.calendarDay.day)}
+                style={!props.isToday(props.calendarDay.day)
+                    ?
+                    {background: progressFill}
+                    :
+                    {}}>
             <span>{props.calendarDay.day}</span>
         </button>
+
     );
 }
 

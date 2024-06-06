@@ -16,23 +16,35 @@
     color: #dedede;
     border: none;
     background: none;
+    flex: 1;
 }
 
 .day {
     display: flex;
-    place-content: center;
-    padding: 10px 0 10px 0;
-    background: none;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    background: linear-gradient(90deg, rgba(77, 47, 255, 0.25) 0%, rgba(143, 25, 254, 0.25) 100%);
+    border-radius: 8px;
     border: none;
+}
+
+.day-progress {
+    background: linear-gradient(90deg, #4D2FFF 0%, #8F19FE 100%);
+    border-radius: 0 0 8px 8px;
+    align-self: flex-start;
+    flex: 1;
 }
 
 .day_selected {
     display: flex;
-    place-content: center;
-    padding: 10px 0 10px 0;
+    flex-direction: column;
+    padding: 10px 0 0 0;
     border: none;
-    background: none;
+    background: linear-gradient(0deg, #4A30FF 0%, #9018FE 31.5%, #C009FC 68.5%, #D161E2 100%);
     color: #fff;
+    border-radius: 8px;
+    flex: 1;
 }
 
 .day span,
@@ -40,24 +52,5 @@
     border: none;
     background: none;
     align-self: center;
-    justify-self: center;
     z-index: 1;
-}
-
-#backgroundCircle {
-    color: #dedede;
-}
-
-#foregroundCircle {
-    color: #9018FE;
-}
-
-#backgroundCircle,
-#foregroundCircle {
-    position: absolute;
-}
-
-.day_selected #backgroundCircle {
-    background: linear-gradient(#4A30FF 0%, #9018FE 31.5%, #C009FC 68.5%, #D161E2 100%);
-    border-radius: 100%;
 }
