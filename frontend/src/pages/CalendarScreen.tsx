@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import {Diary} from "../types/Diary.ts";
 import {AppUser} from "../types/AppUser.ts";
 import {formattedDateCaption, isCurrentMonth} from "../Utility/DateTime.ts";
+import "./CalendarScreen.css"
 
 type CalendarScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -55,21 +56,23 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
     return (
         <div className={"page-container"}>
             <h1>Kalender</h1>
-            <div style={{display:"flex", justifyContent:"space-between", alignItems:"baseline"}}>
-                <h2>{formattedDateCaption(date)}</h2>
-                <div>
-                    <button onClick={() => calenderButtonClick("back")}>{"<"}</button>
-                    <button onClick={() => setDate(new Date())}>Heute</button>
-                    {
-                        isCurrentMonth(date) ? <button onClick={() => calenderButtonClick("next")}>{">"}</button> : <button style={{visibility:"hidden"}}>{">"}</button>
-                    }
+            <div className={"calendar-wrapper"}>
+                <div className={"calendar-navigation"}>
+                    <h2>{formattedDateCaption(date)}</h2>
+                    <div>
+                        <button  id={"btn-back"} onClick={() => calenderButtonClick("back")}>{"<"}</button>
+                        <button id={"btn-today"} onClick={() => setDate(new Date())}>Heute</button>
+                        {
+                            isCurrentMonth(date) ? <button id={"btn-next"} onClick={() => calenderButtonClick("next")}>{">"}</button> : <button style={{visibility:"hidden"}}>{">"}</button>
+                        }
+                    </div>
                 </div>
+                <CalendarView
+                    appUserCalories={props.appUser.bmrWithActivity}
+                    diaryEntries={props.diary.diaryEntries}
+                    date={date}
+                />
             </div>
-            <CalendarView
-                appUserCalories={props.appUser.bmrWithActivity}
-                diaryEntries={props.diary.diaryEntries}
-                date={date}
-            />
         </div>
     );
 }

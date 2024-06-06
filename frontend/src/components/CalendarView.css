@@ -13,7 +13,7 @@
     display: flex;
     place-content: center;
     padding: 10px 0 10px 0;
-    color: lightgray;
+    color: #dedede;
     border: none;
     background: none;
 }
@@ -32,6 +32,7 @@
     padding: 10px 0 10px 0;
     border: none;
     background: none;
+    color: #fff;
 }
 
 .day span,
@@ -44,7 +45,11 @@
 }
 
 #backgroundCircle {
-    color: lightgray;
+    color: #dedede;
+}
+
+#foregroundCircle {
+    color: #9018FE;
 }
 
 #backgroundCircle,
@@ -53,6 +58,6 @@
 }
 
 .day_selected #backgroundCircle {
-    background: #f1e9e9;
+    background: linear-gradient(#4A30FF 0%, #9018FE 31.5%, #C009FC 68.5%, #D161E2 100%);
     border-radius: 100%;
 }
