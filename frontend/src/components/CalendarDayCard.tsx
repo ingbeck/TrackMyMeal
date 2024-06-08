@@ -22,7 +22,7 @@ export default function CalendarDayCard(props: Readonly<CalendarDayCardProps>) {
                             onClick={() => props.clickCalendarDay(props.calendarDay.day)}
                             style={!props.isToday(props.calendarDay.day)
                                 ?
-                                {background: progressFill}
+                                {background: progressFill, color:"#000"}
                                 :
                                 {background: todayDate, color:"#fff"}}>
                         <span>{props.calendarDay.day}</span>
