@@ -82,6 +82,13 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
             && today.getFullYear() === props.date.getFullYear();
     }
 
+    function isLaterThanToday(day: number) : boolean{
+        const today = new Date();
+        const dateToCheck = new Date(month.year, month.month, day);
+
+        return today < dateToCheck;
+    }
+
     function percentageCaloriesOfDiaryEntry(diaryEntryTotalCalories?: number): number{
         let percentage: number = 0;
 
@@ -146,7 +153,11 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
                     month.calendarDays[0].weekday != 0 && fillWithPreviousDays(month.calendarDays[0].weekday)
                 }
                 {
-                    month.calendarDays.map(day => <CalendarDayCard key={day.day} calendarDay={day} isToday={isToday} percentage={getDiaryEntryCaloriesByDate(month.year, month.month, day.day)} clickCalendarDay={onClickCalendarDay}/>)
+                    month.calendarDays.map(day => <CalendarDayCard key={day.day}
+                                                                   calendarDay={day} isToday={isToday}
+                                                                   percentage={getDiaryEntryCaloriesByDate(month.year, month.month, day.day)}
+                                                                   clickCalendarDay={onClickCalendarDay}
+                                                                   isLaterThanToday={isLaterThanToday}/>)
                 }
                 {
                     month.calendarDays[month.calendarDays.length - 1].weekday != 6 && fillWithNextDays(month.calendarDays[month.calendarDays.length - 1].weekday)
