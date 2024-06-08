@@ -71,7 +71,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: app.jar
+          name: trackmymeal.jar
           path: backend/target
 
       - name: Login to DockerHub
