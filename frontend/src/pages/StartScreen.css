@@ -11,7 +11,6 @@
 .startpage-hero-wrapper{
     display: flex;
     flex-direction: column;
-    align-items: stretch;
     flex:1;
 }
 
@@ -104,5 +103,14 @@
     font-style: normal;
     font-weight: 500;
     line-height: 100%; /* 14px */
+}
+
+.onlyMobileWarning {
+    background: #f6a3a3;
+    max-width: 340px;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.08), 0 2px 3px 0 rgba(0, 0, 0, 0.17);
+    align-self: center;
+    padding: 24px;
 }
 
