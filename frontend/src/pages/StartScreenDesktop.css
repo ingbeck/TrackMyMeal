@@ -1,0 +1,49 @@
+.startpageDesktop_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vH;
+}
+
+.startpageDesktop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.12);
+    padding: 0 16px 0 72px;
+    height: 1093px;
+}
+
+.iphone {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    width: 430px;
+    height: 932px;
+    border-radius: 40px;
+    box-shadow: 0 0 0 11px #1f1f1f, 0 0 0 13px #191919, 0 0 0 20px #111;
+}
+
+.iphone button {
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: center;
+}
+
+.iphone button:hover {
+    opacity: 0.5;
+}
+
+.description {
+    margin-left: 24px;
+    color: #666;
+    text-align: center;
+    max-width: 450px;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 135%; /* 24.3px */
+}
