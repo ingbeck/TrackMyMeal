@@ -29,4 +29,9 @@ public class MealController {
     public Meal createNewMeal(@PathVariable String userId, @RequestBody MealToSaveDto mealToSave){
         return mealService.saveNewMeal(userId, mealToSave);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteMealById(@PathVariable String id){
+        mealService.deleteMealById(id);
+    }
 }

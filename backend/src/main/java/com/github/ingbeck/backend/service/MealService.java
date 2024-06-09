@@ -28,4 +28,8 @@ public class MealService {
 
         return mealRepository.save(new Meal(null, userId, mealToSave.name(), totalCalories,mealToSave.mealItems()));
     }
+
+    public void deleteMealById(String id){
+        mealRepository.deleteById(id);
+    }
 }
