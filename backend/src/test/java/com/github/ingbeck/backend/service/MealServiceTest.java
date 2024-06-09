@@ -16,6 +16,11 @@ class MealServiceTest {
     private final MealRepository mealRepository = mock(MealRepository.class);
     private final MealService mealService = new MealService(mealRepository);
 
+    List<Meal> listToExpect = List.of(
+            new Meal("1", "2", 100, List.of(
+                    new MealItem("3", "Brot", 100, "g", 250, 250)
+            )));
+
     @Test
     void getMeals_whenCalledInitially_returnEmptyList(){
         //GIVEN
@@ -33,17 +38,25 @@ class MealServiceTest {
     @Test
     void getMeals_whenCalled_returnMeals(){
         //GIVEN
-        List<Meal> expected = List.of(
-                new Meal("1", "2", 100, List.of(
-                        new MealItem("3", "Brot", 100, "g", 250, 250)
-                )));
-        when(mealRepository.findAll()).thenReturn(expected);
+        when(mealRepository.findAll()).thenReturn(listToExpect);
 
         //WHEN
         List<Meal> actual = mealService.getMeals();
 
         //THEN
-        assertEquals(expected, actual);
+        assertEquals(listToExpect, actual);
+    }
+
+    @Test
+    void getMealsByUserId_whenCalledWithValidId_returnMealsWithIUserID(){
+        //GIVEN
+        when(mealRepository.findAllByUserId("2")).thenReturn(listToExpect);
+
+        //WHEN
+        List<Meal> actual = mealService.getMealsByUserId("2");
+
+        //THEN
+        assertEquals(listToExpect, actual);
     }
 
 }
