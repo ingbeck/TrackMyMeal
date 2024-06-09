@@ -9,6 +9,7 @@ import java.util.List;
 public record Meal(
         String id,
         String userId,
+        String name,
         int totalCalories,
         List<MealItem> mealItems
 ) {

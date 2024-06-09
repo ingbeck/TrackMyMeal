@@ -17,7 +17,7 @@ class MealServiceTest {
     private final MealService mealService = new MealService(mealRepository);
 
     List<Meal> listToExpect = List.of(
-            new Meal("1", "2", 100, List.of(
+            new Meal("1", "2","Brot", 100, List.of(
                     new MealItem("3", "Brot", 100, "g", 250, 250)
             )));
 

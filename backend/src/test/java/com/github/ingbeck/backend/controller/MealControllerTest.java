@@ -27,7 +27,7 @@ class MealControllerTest {
     @Autowired
     private MealRepository mealRepository;
 
-    Meal mealToSave = new Meal("1", "2", 100, List.of(
+    Meal mealToSave = new Meal("1", "2", "Brot",100, List.of(
                     new MealItem("3", "Brot", 100, "g", 250, 250)));
 
 
@@ -52,6 +52,7 @@ class MealControllerTest {
                                                         {
                                                             "id": "1",
                                                             "userId": "2",
+                                                            "name": "Brot",
                                                             "totalCalories": 100,
                                                             "mealItems": [
                                                                 {
