@@ -24,6 +24,7 @@ class UserControllerTest {
 
     @Autowired
     MockMvc mvc;
+
     @Autowired
     private UserRepository userRepository;
 
