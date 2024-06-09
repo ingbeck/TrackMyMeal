@@ -16,7 +16,7 @@ public class OpenFoodFactsService {
 
     public OpenFoodFactsProducts searchProduct(String product){
         return rc.get()
-                .uri("search.pl?search_simple=1&json=1&countries=de&fields=id,product_name,nutriments,serving_quantity,serving_quantity_unit&sort_by=product_name&search_terms="+product)
+                .uri("search.pl?search_terms="+product+"&search_simple=1&json=1&countries=de&fields=id,product_name,nutriments,serving_quantity,serving_quantity_unit&sort_by=product_name")
                 .retrieve()
                 .body(OpenFoodFactsProducts.class);
     }
