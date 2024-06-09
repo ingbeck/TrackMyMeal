@@ -7,14 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -67,5 +68,47 @@ class MealControllerTest {
                                                         }
                                                     ]
                                                     """));
+    }
+
+    @Test
+    void createNewDiary_whenCalledWithValidJSON_thenReturnNewMeal() throws Exception{
+        //GIVEN
+        //WHEN & THEN
+        mvc.perform(post("/api/meals/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                            {
+                                "name": "Brot",
+                                "mealItems": [
+                                    {
+                                        "id": "3",
+                                        "name": "Brot",
+                                        "amount": 100,
+                                        "unit": "g",
+                                        "calories": 250,
+                                        "energyKcal100": 250
+                                    }
+                                ]
+                            }
+                        """))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                                                    {
+                                                        "userId": "2",
+                                                        "name": "Brot",
+                                                        "totalCalories": 250,
+                                                        "mealItems": [
+                                                            {
+                                                                "id": "3",
+                                                                "name": "Brot",
+                                                                "amount": 100,
+                                                                "unit": "g",
+                                                                "calories": 250,
+                                                                "energyKcal100": 250
+                                                            }
+                                                        ]
+                                                    }
+                                                    """))
+                .andExpect(jsonPath("$.id").isNotEmpty());
     }
 }

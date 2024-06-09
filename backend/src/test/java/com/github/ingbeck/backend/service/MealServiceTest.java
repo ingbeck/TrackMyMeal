@@ -2,6 +2,7 @@ package com.github.ingbeck.backend.service;
 
 import com.github.ingbeck.backend.model.meal.Meal;
 import com.github.ingbeck.backend.model.meal.MealItem;
+import com.github.ingbeck.backend.model.meal.MealToSaveDto;
 import com.github.ingbeck.backend.repository.MealRepository;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 class MealServiceTest {
 
@@ -20,6 +22,13 @@ class MealServiceTest {
             new Meal("1", "2","Brot", 100, List.of(
                     new MealItem("3", "Brot", 100, "g", 250, 250)
             )));
+
+    MealToSaveDto mealToSave = new MealToSaveDto("Porridge",
+            List.of(
+                    new MealItem("11", "Hafer", 40, "g", 100, 250),
+                    new MealItem("12", "Milch", 200, "ml", 240, 120)));
+
+    Meal mealToExpect = new Meal("2", "2", mealToSave.name(), 340, mealToSave.mealItems());
 
     @Test
     void getMeals_whenCalledInitially_returnEmptyList(){
@@ -57,6 +66,18 @@ class MealServiceTest {
 
         //THEN
         assertEquals(listToExpect, actual);
+    }
+
+    @Test
+    void safeNewMeal_whenCalledWithValidUserIdAndValidJSON_thenExpectMealToSafe(){
+        //GIVEN
+        when(mealRepository.save(any(Meal.class))).thenReturn(mealToExpect);
+
+        //WHEN
+        Meal actual = mealService.saveNewMeal("2", mealToSave);
+
+        //THEN
+        assertEquals(mealToExpect, actual);
     }
 
 }
