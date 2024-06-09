@@ -9,9 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class MealServiceTest {
 
@@ -78,6 +77,16 @@ class MealServiceTest {
 
         //THEN
         assertEquals(mealToExpect, actual);
+    }
+
+    @Test
+    void deleteMealById_whenCalledWithValidId_verifyRepoDelete(){
+        //GIVEN
+        //THEN
+        mealService.deleteMealById("2");
+
+        //
+        verify(mealRepository).deleteById("2");
     }
 
 }

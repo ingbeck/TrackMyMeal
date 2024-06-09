@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -110,5 +109,15 @@ class MealControllerTest {
                                                     }
                                                     """))
                 .andExpect(jsonPath("$.id").isNotEmpty());
+    }
+
+    @Test
+    void deleteMeal_whenCalledWithValidId_expectStatus200() throws Exception{
+        //GIVEN
+        mealRepository.save(mealToSave);
+
+        //WHEN & THEN
+        mvc.perform(delete("/api/meals/1"))
+                .andExpect(status().isOk());
     }
 }
