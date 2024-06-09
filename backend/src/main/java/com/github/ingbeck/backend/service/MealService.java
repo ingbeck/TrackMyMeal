@@ -16,4 +16,8 @@ public class MealService {
     public List<Meal> getMeals(){
         return mealRepository.findAll();
     }
+
+    public List<Meal> getMealsByUserId(String userId){
+        return mealRepository.findAllByUserId(userId);
+    }
 }
