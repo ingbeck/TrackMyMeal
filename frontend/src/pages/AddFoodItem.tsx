@@ -100,7 +100,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     }
 
     function handleSubmitNewFoodItems(){
-        navigate("/home/"+props.appUser.id)
+        navigate("/home")
     }
 
     function onClickBadgeIcon(){

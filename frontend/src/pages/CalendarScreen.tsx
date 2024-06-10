@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import CalendarView from "../components/CalendarView.tsx";
-import {useParams} from "react-router-dom";
 import {Diary} from "../types/Diary.ts";
 import {AppUser} from "../types/AppUser.ts";
 import {formattedDateCaption, isCurrentMonth} from "../Utility/DateTime.ts";
@@ -8,7 +7,7 @@ import "./CalendarScreen.css"
 
 type CalendarScreenProps = {
     setCurrentRoute : (url:string) => void,
-    getAppUser : (id:string | undefined) => void,
+    getAppUser : () => void,
     appUser: AppUser,
     getDiaryByUserId : (id: string | undefined) => void,
     diary: Diary
@@ -19,16 +18,15 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
     const[date, setDate] = useState<Date>(new Date())
 
     const url = window.location.href;
-    const params = useParams();
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [props, url]);
+        props.getAppUser()
+    }, [url]);
 
     useEffect(() => {
-        props.getAppUser(params.id)
-        props.getDiaryByUserId(params.id)
-    }, [params.id]);
+        props.getDiaryByUserId(props.appUser.id)
+    }, [props.appUser]);
 
     function calenderButtonClick(type: "back" | "next"){
         let year = date.getFullYear();

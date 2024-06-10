@@ -15,10 +15,10 @@ export default function Navbar(props: Readonly<NavbarProps>) {
 
     const navigate = useNavigate()
     const appUrl = props.appUrl
-    const homeRoute = "/home/" + props.appUser.id
-    const calendarRoute = "/calendar/" + props.appUser.id
+    const homeRoute = "/home"
+    const calendarRoute = "/calendar"
     const recipesRoute = "/recipes"
-    const profileRoute = "/profile/" + props.appUser.id
+    const profileRoute = "/profile"
 
     return (
         <nav className={"navbar"}>

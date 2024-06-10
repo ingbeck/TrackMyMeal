@@ -29,11 +29,11 @@ public class CustomSuccessAuthenticationHandler implements AuthenticationSuccess
         AppUser appUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id:" + id + " not found!"));
 
         if(!appUser.isNewUser()){
-            response.sendRedirect(appURL + "/login/" + id);
+            response.sendRedirect(appURL + "/login");
         }else{
             appUser.setNewUser(false);
             userRepository.save(appUser);
-            response.sendRedirect(appURL + "/registration/" + id);
+            response.sendRedirect(appURL + "/registration/"+id);
         }
     }
 }

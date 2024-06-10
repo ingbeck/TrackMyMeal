@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {Diary, DiaryEntry, FoodItem} from "../types/Diary.ts";
+import {DiaryEntry, FoodItem} from "../types/Diary.ts";
 import "./HomeScreen.css"
 import {AppUser} from "../types/AppUser.ts";
 import MealOverview from "../components/MealOverview.tsx";
@@ -9,28 +8,23 @@ import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
-    getAppUser : (id:string | undefined) => void,
     deleteFoodItem: (foodItem: FoodItem) => void,
     setCurrentDiaryEntry : (entry: DiaryEntry | undefined) => void,
-    diary : Diary,
     appUser : AppUser,
-    currentDiaryEntry? : DiaryEntry
+    currentDiaryEntry? : DiaryEntry,
+    getMe: () => void
 }
 export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     const url = window.location.href;
-    const params = useParams();
+
     const [progress, setProgress] = useState<number>(0)
     const [totalCalories, setTotalCalories] = useState<number>(0)
 
-
     useEffect(() => {
         props.setCurrentRoute(url)
+        props.getMe()
     }, [url]);
-
-    useEffect(() => {
-        props.getAppUser(params.id)
-    }, [props.appUser.bmrWithActivity !== 0]);
 
     useEffect(() => {
         if(props.currentDiaryEntry !== undefined){
@@ -44,7 +38,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
         if(totalCalories !== 0){
             calculateProgress(props.appUser.bmrWithActivity, totalCalories)
         }
-    }, [totalCalories]);
+    }, [props.appUser,totalCalories]);
 
     function calculateProgress(whole: number, part: number) {
         setProgress(part / whole)
@@ -59,7 +53,6 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
             return null
         }
     }
-
 
     return (
         <div className={"page-container"}>
