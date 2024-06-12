@@ -8,7 +8,6 @@ import "./CalendarPage.css"
 type CalendarScreenProps = {
     setCurrentRoute : (url:string) => void,
     appUser: AppUser,
-    getDiaryByUserId : (id: string | undefined) => void,
     diary: Diary
 }
 
@@ -21,10 +20,6 @@ export default function CalendarPage(props: Readonly<CalendarScreenProps>) {
     useEffect(() => {
         props.setCurrentRoute(url)
     }, [props, url]);
-
-    useEffect(() => {
-        props.getDiaryByUserId(props.appUser.id)
-    }, [props.appUser]);
 
     function calenderButtonClick(type: "back" | "next"){
         let year = date.getFullYear();

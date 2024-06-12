@@ -166,7 +166,6 @@ export default function App() {
               <Route path={"/calendar"} element={<CalendarPage
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}
-                  getDiaryByUserId={getDiaryByUserId}
                   diary={diary}/>}/>
               <Route path={"/recipes"} element={<RecipesPage setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/profile"} element={<ProfilePage
