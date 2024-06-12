@@ -11,7 +11,6 @@ import CustomRadioGroup from "../components/registration/CustomRadioGroup.tsx";
 import {validationSchema} from "../YupValidationSchema.ts";
 
 type RegistrationScreenProps = {
-    getUser : (id:string | undefined) => void,
     createUser : (id:string | undefined, appUserCreateDto:AppUserCreateDto) => void,
     createDiary : (id:string | undefined) => void,
     setCurrentRoute : (url:string) => void,
@@ -70,10 +69,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
     useEffect(() => {
         props.setCurrentRoute(url)
     }, []);
-
-    useEffect(() => {
-        props.getUser(params.id)
-    }, [params.id]);
 
     function handleChange(event: ChangeEvent<HTMLInputElement>){
         const value = event.target.value;

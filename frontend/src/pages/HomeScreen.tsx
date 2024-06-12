@@ -3,20 +3,21 @@ import {Diary, DiaryEntry, FoodItem} from "../types/Diary.ts";
 import "./HomeScreen.css"
 import {AppUser} from "../types/AppUser.ts";
 import MealOverview from "../components/MealOverview.tsx";
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
+import {getDateToday} from "../Utility/Utility.ts";
 
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
     diary: Diary,
     appUser : AppUser,
-    currentDiaryEntry? : DiaryEntry,
-    getMe: () => void,
     deleteFoodItems: (foodItemToDelete: FoodItem) => void
 }
 export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     const url = window.location.href;
+    const currentDiaryEntry : DiaryEntry | undefined = props.diary.diaryEntries.find(entry => entry.date === getDateToday());
 
     const [progress, setProgress] = useState<number>(0)
     const [totalCalories, setTotalCalories] = useState<number>(0)
@@ -27,12 +28,12 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
 
     useEffect(() => {
-        if(props.currentDiaryEntry !== undefined){
-            setTotalCalories(props.currentDiaryEntry.totalCalories)
+        if(currentDiaryEntry !== undefined){
+            setTotalCalories(currentDiaryEntry.totalCalories)
         }else{
             setTotalCalories(0)
         }
-    }, [props.currentDiaryEntry]);
+    }, [currentDiaryEntry]);
 
     useEffect(() => {
         if(totalCalories !== 0){
@@ -46,8 +47,8 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     function renderMealOverview(mealType : string) : ReactJSXElement{
 
-        if(props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === mealType)){
-            return  <MealOverview diaryEntry={props.currentDiaryEntry}
+        if(currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === mealType)){
+            return  <MealOverview diaryEntry={currentDiaryEntry}
                                   deleteFoodItem={props.deleteFoodItems}
                                   mealType={mealType}
                                   isFull={totalCalories > props.appUser.bmrWithActivity}
@@ -92,7 +93,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                 }
             </div>
             {
-                props.currentDiaryEntry?.foodItems === undefined
+                currentDiaryEntry?.foodItems === undefined
                     ?
                     <>
                         <h2>Deine Mahlzeiten</h2>

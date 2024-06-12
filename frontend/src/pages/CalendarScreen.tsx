@@ -7,7 +7,6 @@ import "./CalendarScreen.css"
 
 type CalendarScreenProps = {
     setCurrentRoute : (url:string) => void,
-    getAppUser : () => void,
     appUser: AppUser,
     getDiaryByUserId : (id: string | undefined) => void,
     diary: Diary
@@ -21,8 +20,7 @@ export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-        props.getAppUser()
-    }, [url]);
+    }, [props, url]);
 
     useEffect(() => {
         props.getDiaryByUserId(props.appUser.id)

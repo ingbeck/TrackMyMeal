@@ -8,20 +8,21 @@ import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFact
 import OpenFoodFactsProductsGallery from "../components/OpenFoodFactsProductsGallery.tsx";
 import {Badge, Box, CircularProgress} from "@mui/material";
 import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
 import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
 import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
-import {DiaryEntry, FoodItem} from "../types/Diary.ts";
+import {Diary, DiaryEntry, FoodItem} from "../types/Diary.ts";
 import ModalAddFoodItem from "../components/modals/ModalAddFoodItem.tsx";
 import ModalFoodItems from "../components/modals/ModalFoodItems.tsx";
 import {v4 as uuidv4} from 'uuid';
-import {translateMealType} from "../Utility/Utility.ts";
+import {getDateToday, translateMealType} from "../Utility/Utility.ts";
 
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
-    currentDiaryEntry : DiaryEntry | undefined,
+    diary: Diary,
     updateDiaryEntry : (newFoodItem : FoodItem) => void,
     mealType : string,
     appUser : AppUser,
@@ -31,6 +32,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     const navigate = useNavigate()
     const url = window.location.href;
+    const currentDiaryEntry : DiaryEntry | undefined = props.diary.diaryEntries.find(entry => entry.date === getDateToday());
 
     const [searchText, setSearchText] = useState<string>("")
     const [currentProducts, setCurrentProducts] = useState<OpenFoodFactsProducts | null>(null)
@@ -47,15 +49,15 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     }, [url]);
 
     useEffect(() => {
-        if(props.currentDiaryEntry !== undefined){
-            setFoodItems(props.currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType))
-            setBadgeCount(props.currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType).length)
+        if(currentDiaryEntry !== undefined){
+            setFoodItems(currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType))
+            setBadgeCount(currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType).length)
         }else{
             setBadgeCount(0)
             setOpenModalFoodItems(false)
             setFoodItems([])
         }
-    }, [props.currentDiaryEntry]);
+    }, [currentDiaryEntry]);
 
     function fetchOpenFoodFactsProducts(text : string){
         axios.get("/api/openfoodfacts/" + text)

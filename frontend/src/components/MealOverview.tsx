@@ -1,5 +1,6 @@
 import {DiaryEntry, FoodItem} from "../types/Diary.ts";
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 import "./MealOverview.css"
 import {useEffect, useState} from "react";

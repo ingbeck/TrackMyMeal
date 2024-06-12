@@ -9,7 +9,6 @@ import {validationSchema} from "../YupValidationSchema.ts";
 
 type ProfileScreenProps = {
     setCurrentRoute : (url:string) => void,
-    getAppUser : () => void,
     deleteUser : (id: string | undefined) => void,
     updateUser : (id:string | undefined, appUserCreateDto:AppUserCreateDto) => void,
     logout : () => void,
@@ -39,7 +38,6 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-        props.getAppUser()
     }, [url]);
 
 
