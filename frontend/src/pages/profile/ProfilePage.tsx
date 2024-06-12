@@ -1,25 +1,22 @@
 import {ChangeEvent, useEffect, useState} from "react";
-import {AppUser} from "../types/AppUser.ts";
-import {useParams} from "react-router-dom";
-import "./ProfileScreen.css"
-import {ErrorState, FormInput} from "./RegistrationScreen.tsx";
-import {AppUserCreateDto} from "../types/AppUserCreateDto.ts";
-import {getDateToday} from "../Utility/Utility.ts";
+import {AppUser} from "../../types/AppUser.ts";
+import "./ProfilePage.css"
+import {ErrorState, FormInput} from "../registration/RegistrationPage.tsx";
+import {AppUserCreateDto} from "../../types/AppUserCreateDto.ts";
+import {getDateToday} from "../../Utility/Utility.ts";
 import * as Yup from "yup";
-import {validationSchema} from "../YupValidationSchema.ts";
+import {validationSchema} from "../../YupValidationSchema.ts";
 
 type ProfileScreenProps = {
     setCurrentRoute : (url:string) => void,
-    getAppUser : (id:string | undefined) => void,
     deleteUser : (id: string | undefined) => void,
     updateUser : (id:string | undefined, appUserCreateDto:AppUserCreateDto) => void,
     logout : () => void,
     appUser : AppUser
 }
-export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
+export default function ProfilePage(props: Readonly<ProfileScreenProps>) {
 
     const url = window.location.href;
-    const params = useParams();
     const initialFormData:FormInput = {
         birthday : props.appUser.birthdate,
         gender : props.appUser.gender,
@@ -41,15 +38,12 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [url]);
+    }, [props, url]);
 
-    useEffect(() => {
-        props.getAppUser(params.id)
-    }, [params.id]);
 
     function deleteUser(){
         if (window.confirm("Möchtest du dein Profil endgültig löschen?"))
-            props.deleteUser(params.id)
+            props.deleteUser(props.appUser.id)
     }
 
     function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>){
@@ -72,7 +66,7 @@ export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
                     weight: Number(formData.weight),
                     activityLevel: formData.activityLevel
                 }
-                props.updateUser(params.id, appUserCreateDto)
+                props.updateUser(props.appUser.id, appUserCreateDto)
                 setIsEditable(!isEditable)
                 setErrors(initialErrorState)
             })

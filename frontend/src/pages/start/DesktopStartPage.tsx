@@ -1,10 +1,10 @@
-import "./StartScreenDesktop.css"
-import QrCode from "../assets/qr-trackmymeal-net.svg"
-import Logo from "../assets/logo.png"
+import "./DesktopStartPage.css"
+import QrCode from "../../assets/qr-trackmymeal-net.svg"
+import Logo from "../../assets/logo.png"
 import {useState} from "react";
 import {Modal} from "@mui/material";
 
-export default function StartScreenDesktop() {
+export default function DesktopStartPage() {
     const [qrCodeOpen, setQrCodeOpen] = useState<boolean>(false)
     const [mouseEnter, setMouseEnter] = useState<boolean>(false)
 

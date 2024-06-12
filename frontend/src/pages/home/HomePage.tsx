@@ -1,50 +1,44 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {Diary, DiaryEntry, FoodItem} from "../types/Diary.ts";
-import "./HomeScreen.css"
-import {AppUser} from "../types/AppUser.ts";
-import MealOverview from "../components/MealOverview.tsx";
-// @ts-ignore
+import {Diary, DiaryEntry, FoodItem} from "../../types/Diary.ts";
+import "./HomePage.css"
+import {AppUser} from "../../types/AppUser.ts";
+import MealOverview from "../../components/MealOverview.tsx";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
+import {getDateToday} from "../../Utility/Utility.ts";
 
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
-    getAppUser : (id:string | undefined) => void,
-    deleteFoodItem: (foodItem: FoodItem) => void,
-    setCurrentDiaryEntry : (entry: DiaryEntry | undefined) => void,
-    diary : Diary,
+    diary: Diary,
     appUser : AppUser,
-    currentDiaryEntry? : DiaryEntry
+    deleteFoodItems: (foodItemToDelete: FoodItem) => void
 }
-export default function HomeScreen(props: Readonly<HomeScreenProps>) {
+export default function HomePage(props: Readonly<HomeScreenProps>) {
 
     const url = window.location.href;
-    const params = useParams();
+    const currentDiaryEntry : DiaryEntry | undefined = props.diary.diaryEntries.find(entry => entry.date === getDateToday());
+
     const [progress, setProgress] = useState<number>(0)
     const [totalCalories, setTotalCalories] = useState<number>(0)
 
-
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [url]);
+    }, [props, url]);
 
     useEffect(() => {
-        props.getAppUser(params.id)
-    }, [props.appUser.bmrWithActivity !== 0]);
-
-    useEffect(() => {
-        if(props.currentDiaryEntry !== undefined){
-            setTotalCalories(props.currentDiaryEntry.totalCalories)
+        if(currentDiaryEntry !== undefined){
+            setTotalCalories(currentDiaryEntry.totalCalories)
         }else{
             setTotalCalories(0)
         }
-    }, [props.currentDiaryEntry]);
+    }, [currentDiaryEntry]);
 
     useEffect(() => {
         if(totalCalories !== 0){
             calculateProgress(props.appUser.bmrWithActivity, totalCalories)
         }
-    }, [totalCalories]);
+    }, [props.appUser, totalCalories]);
 
     function calculateProgress(whole: number, part: number) {
         setProgress(part / whole)
@@ -52,14 +46,16 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     function renderMealOverview(mealType : string) : ReactJSXElement{
 
-        if(props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === mealType)){
-            return  <MealOverview diaryEntry={props.currentDiaryEntry} mealType={mealType} deleteFoodItem={props.deleteFoodItem}
-                                  isFull={totalCalories > props.appUser.bmrWithActivity} isHomeScreen={true}/>
+        if(currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === mealType)){
+            return  <MealOverview diaryEntry={currentDiaryEntry}
+                                  deleteFoodItem={props.deleteFoodItems}
+                                  mealType={mealType}
+                                  isFull={totalCalories > props.appUser.bmrWithActivity}
+                                  isHomeScreen={true}/>
         }else{
             return null
         }
     }
-
 
     return (
         <div className={"page-container"}>
@@ -96,7 +92,7 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
                 }
             </div>
             {
-                props.currentDiaryEntry?.foodItems === undefined
+                currentDiaryEntry?.foodItems === undefined
                     ?
                     <>
                         <h2>Deine Mahlzeiten</h2>

@@ -1,22 +1,22 @@
-import "./StartScreen.css"
-import Logo from "../assets/logo.png"
-import GoogleLogo from "../assets/google.svg"
+import "./StartPage.css"
+import Logo from "../../assets/logo.png"
+import GoogleLogo from "../../assets/google.svg"
 import {useEffect} from "react";
-import StartScreenDesktop from "./StartScreenDesktop.tsx";
+import DesktopStartPage from "./DesktopStartPage.tsx";
 
 type StartScreenProps = {
     login: () => void,
     setCurrentRoute: (url:string) => void
 }
 
-export default function StartScreen(props: Readonly<StartScreenProps>) {
+export default function StartPage(props: Readonly<StartScreenProps>) {
 
     const url = window.location.href;
     const isMobile = /iPhone|iPod|Android/i.test(navigator.userAgent);
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, []);
+    }, [props, url]);
 
     return (
         <>
@@ -43,7 +43,7 @@ export default function StartScreen(props: Readonly<StartScreenProps>) {
                         </div>
                     </div>
                     :
-                    <StartScreenDesktop/>
+                    <DesktopStartPage/>
             }
         </>
     );

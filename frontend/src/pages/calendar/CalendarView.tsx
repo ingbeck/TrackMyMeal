@@ -1,6 +1,6 @@
-import {CalendarMonth} from "../types/CalendarMonth.ts";
+import {CalendarMonth} from "../../types/CalendarMonth.ts";
 import CalendarDayCard from "./CalendarDayCard.tsx";
-import {DiaryEntry} from "../types/Diary.ts";
+import {DiaryEntry} from "../../types/Diary.ts";
 import "./CalendarView.css"
 import {Drawer} from "@mui/material";
 import {useState} from "react";

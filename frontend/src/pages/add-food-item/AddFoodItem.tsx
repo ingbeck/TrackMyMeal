@@ -1,36 +1,38 @@
 import "./AddFoodItem.css"
 import {useNavigate} from "react-router-dom";
-import {AppUser} from "../types/AppUser.ts";
+import {AppUser} from "../../types/AppUser.ts";
 import {useEffect, useState} from "react";
-import SearchComponent from "../components/SearchComponent.tsx";
+import SearchComponent from "../../components/SearchComponent.tsx";
 import axios from "axios";
-import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
-import OpenFoodFactsProductsGallery from "../components/OpenFoodFactsProductsGallery.tsx";
+import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../../types/OpenFoodFactsProducts.ts";
+import OpenFoodFactsProductsGallery from "../../components/OpenFoodFactsProductsGallery.tsx";
 import {Badge, Box, CircularProgress} from "@mui/material";
-import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
-// @ts-ignore
+import SnackIcon from "../../components/svg/meal-icons/SnackIcon.tsx";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
-import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
-import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
-import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
-import {DiaryEntry, FoodItem} from "../types/Diary.ts";
-import ModalAddFoodItem from "../components/modals/ModalAddFoodItem.tsx";
-import ModalFoodItems from "../components/modals/ModalFoodItems.tsx";
+import BreakfastIcon from "../../components/svg/meal-icons/BreakfastIcon.tsx";
+import LunchIcon from "../../components/svg/meal-icons/LunchIcon.tsx";
+import DinnerIcon from "../../components/svg/meal-icons/DinnerIcon.tsx";
+import {Diary, DiaryEntry, FoodItem} from "../../types/Diary.ts";
+import ModalAddFoodItem from "../../components/modals/ModalAddFoodItem.tsx";
+import ModalFoodItems from "../../components/modals/ModalFoodItems.tsx";
 import {v4 as uuidv4} from 'uuid';
-import {translateMealType} from "../Utility/Utility.ts";
+import {getDateToday, translateMealType} from "../../Utility/Utility.ts";
 
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
-    currentDiaryEntry : DiaryEntry | undefined,
+    diary: Diary,
     updateDiaryEntry : (newFoodItem : FoodItem) => void,
-    deleteFoodItem : (foodItemToDelete : FoodItem) => void,
     mealType : string,
-    appUser : AppUser
+    appUser : AppUser,
+    deleteFoodItem : (foodItemToDelete: FoodItem) => void
 }
 function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     const navigate = useNavigate()
     const url = window.location.href;
+    const currentDiaryEntry : DiaryEntry | undefined = props.diary.diaryEntries.find(entry => entry.date === getDateToday());
 
     const [searchText, setSearchText] = useState<string>("")
     const [currentProducts, setCurrentProducts] = useState<OpenFoodFactsProducts | null>(null)
@@ -44,18 +46,18 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [url]);
+    }, [props, url]);
 
     useEffect(() => {
-        if(props.currentDiaryEntry !== undefined){
-            setFoodItems(props.currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType))
-            setBadgeCount(props.currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType).length)
+        if(currentDiaryEntry !== undefined){
+            setFoodItems(currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType))
+            setBadgeCount(currentDiaryEntry.foodItems.filter((foodItem) => foodItem.mealType === props.mealType).length)
         }else{
             setBadgeCount(0)
             setOpenModalFoodItems(false)
             setFoodItems([])
         }
-    }, [props.currentDiaryEntry]);
+    }, [props.mealType, currentDiaryEntry]);
 
     function fetchOpenFoodFactsProducts(text : string){
         axios.get("/api/openfoodfacts/" + text)
@@ -100,7 +102,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
     }
 
     function handleSubmitNewFoodItems(){
-        navigate("/home/"+props.appUser.id)
+        navigate("/home")
     }
 
     function onClickBadgeIcon(){
@@ -153,8 +155,8 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 open={openModalFoodItems}
                 foodItems={foodItems}
                 onClose={() => setOpenModalFoodItems(false)}
-                deleteFoodItem={props.deleteFoodItem}
                 mealType={props.mealType}
+                deleteFoodItem={props.deleteFoodItem}
                 isHomescreen={true}/>
         </div>
     );
