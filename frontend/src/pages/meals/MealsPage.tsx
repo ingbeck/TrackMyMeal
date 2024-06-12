@@ -3,6 +3,7 @@ import {AppUser} from "../../types/AppUser.ts";
 import {Meal} from "../../types/Meal.ts";
 import axios from "axios";
 import SearchComponent from "../../components/SearchComponent.tsx";
+import MealGallery from "../../components/MealGallery.tsx";
 type MealsScreenProps = {
     setCurrentRoute : (url:string) => void,
     appUser: AppUser
@@ -37,7 +38,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
         <div className={"page-container"}>
             <h1>Mahlzeiten</h1>
             <SearchComponent handleSearchText={setSearchText}/>
-            {filteredMeals !== undefined && filteredMeals.map((meal) => <span key={meal.id}>{meal.name}</span>)}
+            <MealGallery meals={filteredMeals}/>
         </div>
     );
 }

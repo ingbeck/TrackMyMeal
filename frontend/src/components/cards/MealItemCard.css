@@ -1,0 +1,7 @@
+.mealItemCard {
+    border: solid 1px #000;
+    flex-basis: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
