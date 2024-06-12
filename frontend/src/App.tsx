@@ -7,7 +7,7 @@ import {AppUser} from "./types/AppUser.ts";
 import {AppUserCreateDto} from "./types/AppUserCreateDto.ts";
 import HomePage from "./pages/home/HomePage.tsx";
 import CalendarPage from "./pages/calendar/CalendarPage.tsx";
-import RecipesPage from "./pages/recipes/RecipesPage.tsx";
+import MealsPage from "./pages/meals/MealsPage.tsx";
 import ProfilePage from "./pages/profile/ProfilePage.tsx";
 import LoginProcessingScreen from "./pages/LoginProcessingPage.tsx";
 import axios from "axios";
@@ -170,7 +170,9 @@ export default function App() {
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}
                   diary={diary}/>}/>
-              <Route path={"/recipes"} element={<RecipesPage setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/recipes"} element={<MealsPage
+                  setCurrentRoute={setCurrentRoute}
+                  appUser={appUser}/>}/>
               <Route path={"/profile"} element={<ProfilePage
                   setCurrentRoute={setCurrentRoute}
                   appUser={appUser}
