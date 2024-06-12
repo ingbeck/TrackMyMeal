@@ -66,7 +66,7 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-        if(appUser.id !== "" && appUser.isNewUser){
+        if(appUser.id !== "" && !appUser.isNewUser){
             getDiaryByUserId(appUser.id)
         }
     }, [appUser]);
