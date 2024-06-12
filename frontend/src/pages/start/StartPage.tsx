@@ -16,7 +16,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, []);
+    }, [props, url]);
 
     return (
         <>

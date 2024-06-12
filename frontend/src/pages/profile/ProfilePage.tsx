@@ -38,7 +38,7 @@ export default function ProfilePage(props: Readonly<ProfileScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [url]);
+    }, [props, url]);
 
 
     function deleteUser(){

@@ -24,8 +24,7 @@ export default function HomePage(props: Readonly<HomeScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [url]);
-
+    }, [props, url]);
 
     useEffect(() => {
         if(currentDiaryEntry !== undefined){
@@ -39,7 +38,7 @@ export default function HomePage(props: Readonly<HomeScreenProps>) {
         if(totalCalories !== 0){
             calculateProgress(props.appUser.bmrWithActivity, totalCalories)
         }
-    }, [props.appUser,totalCalories]);
+    }, [props.appUser, totalCalories]);
 
     function calculateProgress(whole: number, part: number) {
         setProgress(part / whole)

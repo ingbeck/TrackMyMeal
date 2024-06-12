@@ -68,7 +68,7 @@ export default function RegistrationPage(props: Readonly<RegistrationScreenProps
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, []);
+    }, [props, url]);
 
     function handleChange(event: ChangeEvent<HTMLInputElement>){
         const value = event.target.value;
@@ -112,7 +112,7 @@ export default function RegistrationPage(props: Readonly<RegistrationScreenProps
             })
     }
 
-    // @ts-ignore
+    // @ts-expect-error
     return (
         <div className={"regscreen"}>
             <div className={"regscreen-form-wrapper"}>

@@ -1,7 +1,8 @@
 import {formattedDateCaption} from "../../Utility/DateTime.ts";
 import {DiaryEntry} from "../../types/Diary.ts";
 import MealOverview from "../../components/MealOverview.tsx";
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 
 type DiaryEntryViewProps = {

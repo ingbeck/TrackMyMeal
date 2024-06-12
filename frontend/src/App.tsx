@@ -39,8 +39,10 @@ export default function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
-
         getAppUrl()
+    }, []);
+
+    useEffect(() => {
 
         const foundUser  = localStorage.getItem("user");
 
@@ -95,10 +97,11 @@ export default function App() {
                 localStorage.setItem("user", JSON.stringify(response.data));
             })
     }
-
     function getAppUrl(){
         axios.get("/api/currentUrl")
-            .then(response => setAppUrl(response.data))
+            .then(response => {
+                setAppUrl(response.data)
+            })
     }
 
     function getDiaryByUserId(userId:string | undefined){
