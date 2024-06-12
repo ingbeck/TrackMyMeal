@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {DiaryEntry, FoodItem} from "../types/Diary.ts";
+import {Diary, DiaryEntry, FoodItem} from "../types/Diary.ts";
 import "./HomeScreen.css"
 import {AppUser} from "../types/AppUser.ts";
 import MealOverview from "../components/MealOverview.tsx";
@@ -8,11 +8,11 @@ import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
-    deleteFoodItem: (foodItem: FoodItem) => void,
-    setCurrentDiaryEntry : (entry: DiaryEntry | undefined) => void,
+    diary: Diary,
     appUser : AppUser,
     currentDiaryEntry? : DiaryEntry,
-    getMe: () => void
+    getMe: () => void,
+    deleteFoodItems: (foodItemToDelete: FoodItem) => void
 }
 export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
@@ -23,8 +23,8 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-        props.getMe()
     }, [url]);
+
 
     useEffect(() => {
         if(props.currentDiaryEntry !== undefined){
@@ -47,8 +47,11 @@ export default function HomeScreen(props: Readonly<HomeScreenProps>) {
     function renderMealOverview(mealType : string) : ReactJSXElement{
 
         if(props.currentDiaryEntry?.foodItems.find((foodItem) => foodItem.mealType === mealType)){
-            return  <MealOverview diaryEntry={props.currentDiaryEntry} mealType={mealType} deleteFoodItem={props.deleteFoodItem}
-                                  isFull={totalCalories > props.appUser.bmrWithActivity} isHomeScreen={true}/>
+            return  <MealOverview diaryEntry={props.currentDiaryEntry}
+                                  deleteFoodItem={props.deleteFoodItems}
+                                  mealType={mealType}
+                                  isFull={totalCalories > props.appUser.bmrWithActivity}
+                                  isHomeScreen={true}/>
         }else{
             return null
         }

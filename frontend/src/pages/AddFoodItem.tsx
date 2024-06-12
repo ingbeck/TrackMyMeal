@@ -23,9 +23,9 @@ type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
     currentDiaryEntry : DiaryEntry | undefined,
     updateDiaryEntry : (newFoodItem : FoodItem) => void,
-    deleteFoodItem : (foodItemToDelete : FoodItem) => void,
     mealType : string,
-    appUser : AppUser
+    appUser : AppUser,
+    deleteFoodItem : (foodItemToDelete: FoodItem) => void
 }
 function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
@@ -153,8 +153,8 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
                 open={openModalFoodItems}
                 foodItems={foodItems}
                 onClose={() => setOpenModalFoodItems(false)}
-                deleteFoodItem={props.deleteFoodItem}
                 mealType={props.mealType}
+                deleteFoodItem={props.deleteFoodItem}
                 isHomescreen={true}/>
         </div>
     );

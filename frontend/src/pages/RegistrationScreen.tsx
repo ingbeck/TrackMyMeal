@@ -67,8 +67,6 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
         {id: 4, label: "Couchpotato", value: "COUCHPOTATO"}
     ];
 
-
-
     useEffect(() => {
         props.setCurrentRoute(url)
     }, []);
@@ -100,7 +98,7 @@ export default function RegistrationScreen(props: Readonly<RegistrationScreenPro
                 }
                 props.createUser(params.id, appUserCreateDto)
                 props.createDiary(params.id)
-                navigate("/home/" + params.id)
+                navigate("/home")
             })
             .catch((error: Yup.ValidationError) => {
                 const newErrors: ErrorState = {

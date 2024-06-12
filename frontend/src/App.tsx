@@ -17,7 +17,6 @@ import {getDateToday} from "./Utility/Utility.ts";
 
 export default function App() {
 
-
     const today = getDateToday()
     const[appUrl, setAppUrl] = useState<string>("")
     const[appUser, setAppUser] = useState<AppUser>({
@@ -42,18 +41,13 @@ export default function App() {
 
     useEffect(() => {
         getAppUrl()
-    }, []);
+    }, [])
 
     useEffect(() => {
         if(appUser.id !== ""){
             getDiaryByUserId(appUser.id)
         }
-    }, [appUser.id === ""]);
-
-    useEffect(() => {
-            setCurrentDiaryEntry(diary.diaryEntries.find(entry => entry.date === today))
-    }, [diary.userId === appUser.id]);
-
+    }, [appUser]);
 
     function login(){
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -65,10 +59,17 @@ export default function App() {
             .then(() => navigate("/"))
     }
 
-    function getAppUser(id:string | undefined){
-        axios.get("/api/users/" + id)
+    function getMe(){
+        axios.get("/api/users/me")
             .then(response => {
-                setAppUser(response.data)
+                getAppUserById(response.data.id);
+            });
+    }
+
+    function getAppUserById(id: string | undefined){
+        axios.get("/api/users/"+id)
+            .then(response => {
+                setAppUser(response.data);
             })
     }
 
@@ -79,7 +80,10 @@ export default function App() {
 
     function getDiaryByUserId(userId:string | undefined){
         axios.get("/api/diaries/"+userId)
-            .then(response => setDiary(response.data))
+            .then(response => {
+                setDiary(response.data);
+                setCurrentDiaryEntry(diary.diaryEntries.find(entry => entry.date === today));
+            })
             .catch(error => console.log(error.message))
     }
 
@@ -98,7 +102,16 @@ export default function App() {
 
     function updateDiaryEntry(newFoodItem: FoodItem){
         axios.put("/api/diaries/"+appUser.id+"/"+getDateToday(), newFoodItem)
-            .then(response => setCurrentDiaryEntry(response.data))
+            .then((response) => {
+                setCurrentDiaryEntry(response.data)
+            })
+    }
+
+    function deleteUser(id: string | undefined){
+        axios.delete("/api/users/"+ id)
+            .then(() => {
+                navigate("/")
+            })
     }
 
     function deleteFoodItem(foodItemToDelete: FoodItem){
@@ -110,47 +123,40 @@ export default function App() {
                     setCurrentDiaryEntry(response.data)
                 }
             })
-    }
-
-    function deleteUser(id: string | undefined){
-        axios.delete("/api/users/"+ id)
-            .then(() => {
-                navigate("/")
-            })
+            .catch(() => setCurrentDiaryEntry(undefined))
     }
 
     return (
       <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl} setCurrentMeal={setCurrentMeal}>
           <Routes>
               <Route path={"/"} element={<StartScreen login={login} setCurrentRoute={setCurrentRoute}/>}/>
-              <Route path={"/login/:id"} element={<LoginProcessingScreen getUser={getAppUser}/>}/>
-              <Route path={"/home/:id"} element={<HomeScreen
+              <Route path={"/login"} element={<LoginProcessingScreen getMe={getMe}/>}/>
+              <Route path={"/home"} element={<HomeScreen
                   setCurrentRoute={setCurrentRoute}
-                  getAppUser={getAppUser}
+                  deleteFoodItems={deleteFoodItem}
                   appUser={appUser}
                   currentDiaryEntry={currentDiaryEntry}
-                  deleteFoodItem={deleteFoodItem}
-                  setCurrentDiaryEntry={setCurrentDiaryEntry}
-                  diary={diary}/>
+                  diary={diary}
+                  getMe={getMe}/>
               }/>
               <Route path={"/registration/:id"} element={<RegistrationScreen
-                  getUser={getAppUser}
+                  getUser={getAppUserById}
                   createUser={createUser}
                   createDiary={createDiary}
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}/>
               }/>
-              <Route path={"/calendar/:id"} element={<CalendarScreen
-                  getAppUser={getAppUser}
+              <Route path={"/calendar"} element={<CalendarScreen
+                  getAppUser={getMe}
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}
                   getDiaryByUserId={getDiaryByUserId}
                   diary={diary}/>}/>
               <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
-              <Route path={"/profile/:id"} element={<ProfileScreen
+              <Route path={"/profile"} element={<ProfileScreen
                   setCurrentRoute={setCurrentRoute}
                   appUser={appUser}
-                  getAppUser={getAppUser}
+                  getAppUser={getMe}
                   deleteUser={deleteUser}
                   logout={logout}
                   updateUser={createUser}/>
@@ -160,8 +166,8 @@ export default function App() {
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}
                   updateDiaryEntry={updateDiaryEntry}
-                  deleteFoodItem={deleteFoodItem}
-                  currentDiaryEntry={currentDiaryEntry}/>
+                  currentDiaryEntry={currentDiaryEntry}
+                  deleteFoodItem={deleteFoodItem}/>
               }/>
           </Routes>
       </Layout>

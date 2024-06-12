@@ -11,7 +11,7 @@ import SnackButton from "./svg/meal-icons/SnackButton.tsx";
 import {translateMealType} from "../Utility/Utility.ts";
 
 type MealOverviewProps = {
-    deleteFoodItem?: (foodItem: FoodItem) => void,
+    deleteFoodItem?: (foodItemToDelete: FoodItem) => void ,
     diaryEntry : DiaryEntry,
     mealType : string,
     isFull? : boolean,
@@ -19,8 +19,14 @@ type MealOverviewProps = {
 }
 export default function MealOverview(props: Readonly<MealOverviewProps>) {
 
-        const [foodItems, setFoodItems] = useState<FoodItem[]>([])
-        const [openModalFoodItems, setOpenModalFoodItems] = useState<boolean>(false)
+    const [foodItems, setFoodItems] = useState<FoodItem[]>([])
+    const [openModalFoodItems, setOpenModalFoodItems] = useState<boolean>(false)
+
+    useEffect(() => {
+        if(props.diaryEntry){
+            setFoodItems(props.diaryEntry.foodItems.filter(foodItem => foodItem.mealType === props.mealType))
+        }
+    }, [props.mealType, props.diaryEntry]);
 
     function getIcon(mealType : string) : ReactJSXElement {
         switch (mealType){
@@ -36,10 +42,6 @@ export default function MealOverview(props: Readonly<MealOverviewProps>) {
                 return ""
         }
     }
-
-    useEffect(() => {
-        setFoodItems(props.diaryEntry.foodItems.filter(foodItem => foodItem.mealType === props.mealType))
-    }, [props.diaryEntry]);
 
     return (
             <>
