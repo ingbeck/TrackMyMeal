@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
-import {Diary, DiaryEntry, FoodItem} from "../types/Diary.ts";
-import "./HomeScreen.css"
-import {AppUser} from "../types/AppUser.ts";
-import MealOverview from "../components/MealOverview.tsx";
+import {Diary, DiaryEntry, FoodItem} from "../../types/Diary.ts";
+import "./HomePage.css"
+import {AppUser} from "../../types/AppUser.ts";
+import MealOverview from "../../components/MealOverview.tsx";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
-import {getDateToday} from "../Utility/Utility.ts";
+import {getDateToday} from "../../Utility/Utility.ts";
 
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -14,7 +14,7 @@ type HomeScreenProps = {
     appUser : AppUser,
     deleteFoodItems: (foodItemToDelete: FoodItem) => void
 }
-export default function HomeScreen(props: Readonly<HomeScreenProps>) {
+export default function HomePage(props: Readonly<HomeScreenProps>) {
 
     const url = window.location.href;
     const currentDiaryEntry : DiaryEntry | undefined = props.diary.diaryEntries.find(entry => entry.date === getDateToday());

@@ -1,6 +1,6 @@
-import {formattedDateCaption} from "../Utility/DateTime.ts";
-import {DiaryEntry} from "../types/Diary.ts";
-import MealOverview from "./MealOverview.tsx";
+import {formattedDateCaption} from "../../Utility/DateTime.ts";
+import {DiaryEntry} from "../../types/Diary.ts";
+import MealOverview from "../../components/MealOverview.tsx";
 // @ts-ignore
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 

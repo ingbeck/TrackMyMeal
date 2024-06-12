@@ -1,11 +1,11 @@
 import {ChangeEvent, useEffect, useState} from "react";
-import {AppUser} from "../types/AppUser.ts";
-import "./ProfileScreen.css"
-import {ErrorState, FormInput} from "./RegistrationScreen.tsx";
-import {AppUserCreateDto} from "../types/AppUserCreateDto.ts";
-import {getDateToday} from "../Utility/Utility.ts";
+import {AppUser} from "../../types/AppUser.ts";
+import "./ProfilePage.css"
+import {ErrorState, FormInput} from "../registration/RegistrationPage.tsx";
+import {AppUserCreateDto} from "../../types/AppUserCreateDto.ts";
+import {getDateToday} from "../../Utility/Utility.ts";
 import * as Yup from "yup";
-import {validationSchema} from "../YupValidationSchema.ts";
+import {validationSchema} from "../../YupValidationSchema.ts";
 
 type ProfileScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -14,7 +14,7 @@ type ProfileScreenProps = {
     logout : () => void,
     appUser : AppUser
 }
-export default function ProfileScreen(props: Readonly<ProfileScreenProps>) {
+export default function ProfilePage(props: Readonly<ProfileScreenProps>) {
 
     const url = window.location.href;
     const initialFormData:FormInput = {

@@ -2,13 +2,13 @@ import {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import {AppUser} from "../types/AppUser.ts";
 
-type LoginProcessingScreen = {
+type LoginProcessingPage = {
     getMe : () => void,
     appUser : AppUser
 }
 
 
-export default function LoginProcessingScreen(props: Readonly<LoginProcessingScreen>) {
+export default function LoginProcessingScreen(props: Readonly<LoginProcessingPage>) {
 
     const navigate = useNavigate()
 

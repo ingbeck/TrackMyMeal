@@ -1,18 +1,18 @@
 import Layout from "./components/Layout.tsx";
 import {Route, Routes, useNavigate} from "react-router-dom";
-import StartScreen from "./pages/StartScreen.tsx";
+import StartPage from "./pages/start/StartPage.tsx";
 import {useEffect, useState} from "react";
-import RegistrationScreen from "./pages/RegistrationScreen.tsx";
+import RegistrationPage from "./pages/registration/RegistrationPage.tsx";
 import {AppUser} from "./types/AppUser.ts";
 import {AppUserCreateDto} from "./types/AppUserCreateDto.ts";
-import HomeScreen from "./pages/HomeScreen.tsx";
-import CalendarScreen from "./pages/CalendarScreen.tsx";
-import RecipesScreen from "./pages/RecipesScreen.tsx";
-import ProfileScreen from "./pages/ProfileScreen.tsx";
-import LoginProcessingScreen from "./pages/LoginProcessingScreen.tsx";
+import HomePage from "./pages/home/HomePage.tsx";
+import CalendarPage from "./pages/calendar/CalendarPage.tsx";
+import RecipesPage from "./pages/recipes/RecipesPage.tsx";
+import ProfilePage from "./pages/profile/ProfilePage.tsx";
+import LoginProcessingScreen from "./pages/LoginProcessingPage.tsx";
 import axios from "axios";
 import {Diary,FoodItem} from "./types/Diary.ts";
-import AddFoodItem from "./pages/AddFoodItem.tsx";
+import AddFoodItem from "./pages/add-food-item/AddFoodItem.tsx";
 import {getDateToday} from "./Utility/Utility.ts";
 
 export default function App() {
@@ -39,8 +39,11 @@ export default function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
+
         getAppUrl()
+
         const foundUser  = localStorage.getItem("user");
+
         if (foundUser) {
             const loggedInUser = JSON.parse(foundUser);
             setAppUser({
@@ -74,6 +77,7 @@ export default function App() {
     function logout(){
         axios.post("/api/users/logout")
             .then(() => navigate("/"));
+
         localStorage.clear();
     }
 
@@ -141,31 +145,31 @@ export default function App() {
     return (
       <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl} setCurrentMeal={setCurrentMeal}>
           <Routes>
-              <Route path={"/"} element={<StartScreen
+              <Route path={"/"} element={<StartPage
                   login={login}
                   setCurrentRoute={setCurrentRoute}/>}/>
               <Route path={"/login"} element={<LoginProcessingScreen
                   getMe={getMe}
                   appUser={appUser}/>}/>
-              <Route path={"/home"} element={<HomeScreen
+              <Route path={"/home"} element={<HomePage
                   setCurrentRoute={setCurrentRoute}
                   deleteFoodItems={deleteFoodItem}
                   appUser={appUser}
                   diary={diary}/>
               }/>
-              <Route path={"/registration/:id"} element={<RegistrationScreen
+              <Route path={"/registration/:id"} element={<RegistrationPage
                   createUser={createUser}
                   createDiary={createDiary}
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}/>
               }/>
-              <Route path={"/calendar"} element={<CalendarScreen
+              <Route path={"/calendar"} element={<CalendarPage
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}
                   getDiaryByUserId={getDiaryByUserId}
                   diary={diary}/>}/>
-              <Route path={"/recipes"} element={<RecipesScreen setCurrentRoute={setCurrentRoute}/>}/>
-              <Route path={"/profile"} element={<ProfileScreen
+              <Route path={"/recipes"} element={<RecipesPage setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/profile"} element={<ProfilePage
                   setCurrentRoute={setCurrentRoute}
                   appUser={appUser}
                   deleteUser={deleteUser}

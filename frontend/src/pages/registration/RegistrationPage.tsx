@@ -1,14 +1,14 @@
 
-import {AppUser} from "../types/AppUser.ts";
+import {AppUser} from "../../types/AppUser.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, useEffect, useState} from "react";
-import "./RegistrationScreen.css"
-import {AppUserCreateDto} from "../types/AppUserCreateDto.ts";
-import FloatingNumberInput from "../components/registration/FloatingNumberInput.tsx";
-import FloatingDatePicker from "../components/registration/FloatingDatePicker.tsx";
+import "./RegistrationPagen.css"
+import {AppUserCreateDto} from "../../types/AppUserCreateDto.ts";
+import FloatingNumberInput from "../../components/registration/FloatingNumberInput.tsx";
+import FloatingDatePicker from "../../components/registration/FloatingDatePicker.tsx";
 import * as Yup from 'yup';
-import CustomRadioGroup from "../components/registration/CustomRadioGroup.tsx";
-import {validationSchema} from "../YupValidationSchema.ts";
+import CustomRadioGroup from "../../components/registration/CustomRadioGroup.tsx";
+import {validationSchema} from "../../YupValidationSchema.ts";
 
 type RegistrationScreenProps = {
     createUser : (id:string | undefined, appUserCreateDto:AppUserCreateDto) => void,
@@ -33,7 +33,7 @@ export type ErrorState = {
     activityLevel : string
 }
 
-export default function RegistrationScreen(props: Readonly<RegistrationScreenProps>) {
+export default function RegistrationPage(props: Readonly<RegistrationScreenProps>) {
 
     const params = useParams()
     const url = window.location.href;

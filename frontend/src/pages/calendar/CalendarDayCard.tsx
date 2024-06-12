@@ -1,4 +1,4 @@
-import {CalendarDay} from "../types/CalendarMonth.ts";
+import {CalendarDay} from "../../types/CalendarMonth.ts";
 
 type CalendarDayCardProps = {
     calendarDay : CalendarDay,

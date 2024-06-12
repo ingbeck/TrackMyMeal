@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import CalendarView from "../components/CalendarView.tsx";
-import {Diary} from "../types/Diary.ts";
-import {AppUser} from "../types/AppUser.ts";
-import {formattedDateCaption, isCurrentMonth} from "../Utility/DateTime.ts";
-import "./CalendarScreen.css"
+import CalendarView from "./CalendarView.tsx";
+import {Diary} from "../../types/Diary.ts";
+import {AppUser} from "../../types/AppUser.ts";
+import {formattedDateCaption, isCurrentMonth} from "../../Utility/DateTime.ts";
+import "./CalendarPage.css"
 
 type CalendarScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -12,7 +12,7 @@ type CalendarScreenProps = {
     diary: Diary
 }
 
-export default function CalendarScreen(props: Readonly<CalendarScreenProps>) {
+export default function CalendarPage(props: Readonly<CalendarScreenProps>) {
 
     const[date, setDate] = useState<Date>(new Date())
 

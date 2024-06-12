@@ -1,24 +1,24 @@
 import "./AddFoodItem.css"
 import {useNavigate} from "react-router-dom";
-import {AppUser} from "../types/AppUser.ts";
+import {AppUser} from "../../types/AppUser.ts";
 import {useEffect, useState} from "react";
-import SearchComponent from "../components/SearchComponent.tsx";
+import SearchComponent from "../../components/SearchComponent.tsx";
 import axios from "axios";
-import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../types/OpenFoodFactsProducts.ts";
-import OpenFoodFactsProductsGallery from "../components/OpenFoodFactsProductsGallery.tsx";
+import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../../types/OpenFoodFactsProducts.ts";
+import OpenFoodFactsProductsGallery from "../../components/OpenFoodFactsProductsGallery.tsx";
 import {Badge, Box, CircularProgress} from "@mui/material";
-import SnackIcon from "../components/svg/meal-icons/SnackIcon.tsx";
+import SnackIcon from "../../components/svg/meal-icons/SnackIcon.tsx";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
-import BreakfastIcon from "../components/svg/meal-icons/BreakfastIcon.tsx";
-import LunchIcon from "../components/svg/meal-icons/LunchIcon.tsx";
-import DinnerIcon from "../components/svg/meal-icons/DinnerIcon.tsx";
-import {Diary, DiaryEntry, FoodItem} from "../types/Diary.ts";
-import ModalAddFoodItem from "../components/modals/ModalAddFoodItem.tsx";
-import ModalFoodItems from "../components/modals/ModalFoodItems.tsx";
+import BreakfastIcon from "../../components/svg/meal-icons/BreakfastIcon.tsx";
+import LunchIcon from "../../components/svg/meal-icons/LunchIcon.tsx";
+import DinnerIcon from "../../components/svg/meal-icons/DinnerIcon.tsx";
+import {Diary, DiaryEntry, FoodItem} from "../../types/Diary.ts";
+import ModalAddFoodItem from "../../components/modals/ModalAddFoodItem.tsx";
+import ModalFoodItems from "../../components/modals/ModalFoodItems.tsx";
 import {v4 as uuidv4} from 'uuid';
-import {getDateToday, translateMealType} from "../Utility/Utility.ts";
+import {getDateToday, translateMealType} from "../../Utility/Utility.ts";
 
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,
