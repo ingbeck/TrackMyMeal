@@ -46,7 +46,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-    }, [url]);
+    }, [props, url]);
 
     useEffect(() => {
         if(currentDiaryEntry !== undefined){
@@ -57,7 +57,7 @@ function AddFoodItem(props: Readonly<AddFoodItemProps>) {
             setOpenModalFoodItems(false)
             setFoodItems([])
         }
-    }, [currentDiaryEntry]);
+    }, [props.mealType, currentDiaryEntry]);
 
     function fetchOpenFoodFactsProducts(text : string){
         axios.get("/api/openfoodfacts/" + text)
