@@ -112,7 +112,7 @@ export default function RegistrationPage(props: Readonly<RegistrationScreenProps
             })
     }
 
-    // @ts-expect-error
+    // @ts-ignore
     return (
         <div className={"regscreen"}>
             <div className={"regscreen-form-wrapper"}>
