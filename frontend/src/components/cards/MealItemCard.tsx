@@ -1,7 +1,13 @@
 import {Meal, MealItem} from "../../types/Meal.ts";
 import "./MealItemCard.css"
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {highlightSearchText} from "../../Utility/Utility.ts";
+import AddButton from "../svg/AddButton.tsx";
+import {Modal} from "@mui/material";
+import BreakfastButton from "../svg/meal-icons/BreakfastButton.tsx";
+import LunchButton from "../svg/meal-icons/LunchButton.tsx";
+import DinnerButton from "../svg/meal-icons/DinnerButton.tsx";
+import SnackButton from "../svg/meal-icons/SnackButton.tsx";
 
 type MealItemCardProps = {
     meal: Meal,
@@ -10,6 +16,8 @@ type MealItemCardProps = {
 export default function MealItemCard(props: Readonly<MealItemCardProps>) {
 
     const numberMealItemsToRender: number = 4;
+
+    const [open, setOpen] = useState<boolean>(false);
 
     useEffect(() => {
 
@@ -36,20 +44,57 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
         )
     }
 
+    function handleAddButtonClick(){
+        setOpen(!open);
+    }
+
+    function handleMealButtonClick(){
+        setOpen(!open)
+    }
+
+
     return (
-        <div className={"card meal"}>
-        <div className={"card-header mealCard_divider"}>
-                <div className={"card-header-wrapper"}>
-                    <label id={props.meal.id}>{props.meal.name}</label>
-                    <span className={"gradient"}><span
-                        className={"serving"}>{props.meal.totalCalories}</span> kcal</span>
+        <>
+            <div className={"card meal"}>
+                <div className={"card-header mealCard_divider"}>
+                    <div className={"card-header-wrapper"}>
+                        <label id={props.meal.id}>{props.meal.name}</label>
+                        <span className={"gradient"}><span
+                            className={"serving"}>{props.meal.totalCalories}</span> kcal</span>
+                    </div>
+                    <button onClick={handleAddButtonClick}><AddButton width={40} height={40}/>
+                    </button>
+                </div>
+                <div className={"meal_mealItem-wrapper"}>
+                    {renderMealItems(numberMealItemsToRender)}
+                    {props.meal.mealItems.length > numberMealItemsToRender &&
+                        <span className={"meal_mealItem"}>...</span>}
                 </div>
             </div>
-            <div className={"meal_mealItem-wrapper"}>
-                {renderMealItems(numberMealItemsToRender)}
-                {props.meal.mealItems.length > numberMealItemsToRender && <span className={"meal_mealItem"}>...</span>}
-            </div>
-        </div>
-    );
+            <Modal style={{placeSelf:"center"}} open={open} onClose={() => setOpen(!open)}>
+                <div className={"mealButton-wrapper"}>
+                    <button onClick={handleMealButtonClick}>
+                        <BreakfastButton width={40} height={40}/>
+                        <span>Frühstück</span>
+                    </button>
+                    <button onClick={handleMealButtonClick}>
+                        <LunchButton width={40} height={40}/>
+                        <span>Mittagessen</span>
+                    </button>
+                    <button onClick={handleMealButtonClick}>
+                        <DinnerButton width={40} height={40}/>
+                        <span>Abendessen</span>
+                    </button>
+                    <button onClick={handleMealButtonClick}>
+                        <SnackButton width={40} height={40}/>
+                        <span>Snack</span>
+                    </button>
+                </div>
+            </Modal>
+        </>
+
+
+    )
+        ;
 }
 
