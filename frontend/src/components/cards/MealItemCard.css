@@ -1,7 +1,20 @@
-.mealItemCard {
-    border: solid 1px #000;
+.meal {
     flex-basis: 100%;
+}
+
+.mealCard_divider {
+    padding-bottom: 8px;
+    border-bottom: solid 1px #DDD;
+}
+
+.meal_mealItem {
+    color: #b4b3b3;
+}
+
+.meal_mealItem-wrapper {
     display: flex;
-    justify-content: space-between;
-    padding: 8px;
+    flex-direction: column;
+    flex-basis: 100%;
+    padding-top: 8px;
+    gap: 4px;
 }
