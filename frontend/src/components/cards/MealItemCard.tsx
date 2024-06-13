@@ -1,10 +1,18 @@
 import {Meal, MealItem} from "../../types/Meal.ts";
 import "./MealItemCard.css"
+import {useEffect} from "react";
 
 type MealItemCardProps = {
-    meal: Meal
+    meal: Meal,
+    searchText: string
 }
 export default function MealItemCard(props: Readonly<MealItemCardProps>) {
+
+    useEffect(() => {
+
+        search(props.searchText, props.meal.id);
+
+    }, [props]);
 
     function renderMealItems(){
         let mealItemsToRender: MealItem[];
@@ -20,11 +28,27 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
         )
     }
 
+    function search(searchText : string, elementToSearchId : string){
+        const textToSearch : string = searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const pattern : RegExp = new RegExp(textToSearch, "gi");
+        const elementToReplace = document.getElementById(elementToSearchId)
+
+        if(textToSearch !== ""){
+            if(elementToReplace && elementToReplace.textContent){
+                elementToReplace.innerHTML = elementToReplace.textContent.replace(pattern, match => `<mark>${match}</mark>`)
+            }
+        }else{
+            if(elementToReplace && elementToReplace.textContent){
+                elementToReplace.innerHTML = elementToReplace.textContent.replace(textToSearch, "")
+            }
+        }
+    }
+
     return (
         <div className={"card meal"}>
             <div className={"card-header mealCard_divider"}>
                 <div className={"card-header-wrapper"}>
-                    <label>{props.meal.name}</label>
+                    <label id={props.meal.id}>{props.meal.name}</label>
                     <span className={"gradient"}><span
                         className={"serving"}>{props.meal.totalCalories}</span> kcal</span>
                 </div>

@@ -38,7 +38,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
         <div className={"page-container"}>
             <h1>Mahlzeiten</h1>
             <SearchComponent handleSearchText={setSearchText}/>
-            <MealGallery meals={filteredMeals}/>
+            <MealGallery meals={filteredMeals} searchText={searchText}/>
         </div>
     );
 }
