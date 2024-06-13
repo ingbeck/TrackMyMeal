@@ -1,6 +1,7 @@
 import {Meal, MealItem} from "../../types/Meal.ts";
 import "./MealItemCard.css"
 import {useEffect} from "react";
+import {highlightSearchText} from "../../Utility/Utility.ts";
 
 type MealItemCardProps = {
     meal: Meal,
@@ -10,7 +11,7 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
 
     useEffect(() => {
 
-        search(props.searchText, props.meal.id);
+        highlightSearchText(props.searchText, props.meal.id);
 
     }, [props]);
 
@@ -26,22 +27,6 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
         return mealItemsToRender.map(mealItem =>
             <span key={mealItem.id} className={"meal_mealItem"}>{mealItem.name}</span>
         )
-    }
-
-    function search(searchText : string, elementToSearchId : string){
-        const textToSearch : string = searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        const pattern : RegExp = new RegExp(textToSearch, "gi");
-        const elementToReplace = document.getElementById(elementToSearchId)
-
-        if(textToSearch !== ""){
-            if(elementToReplace && elementToReplace.textContent){
-                elementToReplace.innerHTML = elementToReplace.textContent.replace(pattern, match => `<mark>${match}</mark>`)
-            }
-        }else{
-            if(elementToReplace && elementToReplace.textContent){
-                elementToReplace.innerHTML = elementToReplace.textContent.replace(textToSearch, "")
-            }
-        }
     }
 
     return (
