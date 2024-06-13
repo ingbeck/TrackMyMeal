@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +39,7 @@ public class MealService {
 
     public void addMealToDiary(String userId, String date, Meal meal, MealType mealType){
         for(MealItem mealItem: meal.mealItems()){
-            diaryService.updateDiaryEntry(userId, date, new FoodItem(null, mealItem.name(), mealItem.amount(), mealItem.unit(), mealItem.calories(), mealType));
+            diaryService.updateDiaryEntry(userId, date, new FoodItem(UUID.randomUUID().toString(), mealItem.name(), mealItem.amount(), mealItem.unit(), mealItem.calories(), mealType));
         }
     }
 }
