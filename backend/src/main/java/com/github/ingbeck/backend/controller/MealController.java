@@ -1,5 +1,6 @@
 package com.github.ingbeck.backend.controller;
 
+import com.github.ingbeck.backend.model.diary.MealType;
 import com.github.ingbeck.backend.model.meal.Meal;
 import com.github.ingbeck.backend.model.meal.MealToSaveDto;
 import com.github.ingbeck.backend.service.MealService;
@@ -33,5 +34,10 @@ public class MealController {
     @DeleteMapping("/{id}")
     public void deleteMealById(@PathVariable String id){
         mealService.deleteMealById(id);
+    }
+
+    @PutMapping("/{id}/{date}/{mealType}")
+    public void addMealToDiary(@PathVariable String id, @PathVariable String date, @PathVariable MealType mealType, @RequestBody Meal meal){
+        mealService.addMealToDiary(id, date, meal, mealType);
     }
 }
