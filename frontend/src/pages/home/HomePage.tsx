@@ -6,7 +6,7 @@ import MealOverview from "../../components/MealOverview.tsx";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
-import {getDateToday} from "../../Utility/Utility.ts";
+import {getDateToday} from "../../Utility/DateTime.ts";
 
 type HomeScreenProps = {
     setCurrentRoute : (url:string) => void,
