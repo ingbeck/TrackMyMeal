@@ -13,8 +13,8 @@
 
 .meal_mealItem-wrapper {
     display: flex;
-    flex-direction: column;
     flex-basis: 100%;
+    flex-wrap: wrap;
     padding-top: 8px;
     gap: 4px;
 }
