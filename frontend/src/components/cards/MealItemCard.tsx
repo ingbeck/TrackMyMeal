@@ -11,7 +11,8 @@ import SnackButton from "../svg/meal-icons/SnackButton.tsx";
 
 type MealItemCardProps = {
     meal: Meal,
-    searchText: string
+    searchText: string,
+    addMealToDiary: (mealType: string, meal: Meal) => void
 }
 export default function MealItemCard(props: Readonly<MealItemCardProps>) {
 
@@ -48,10 +49,10 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
         setOpen(!open);
     }
 
-    function handleMealButtonClick(){
+    function handleMealButtonClick(mealType: string){
+        props.addMealToDiary(mealType, props.meal);
         setOpen(!open)
     }
-
 
     return (
         <>
@@ -73,19 +74,19 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
             </div>
             <Modal style={{placeSelf:"center"}} open={open} onClose={() => setOpen(!open)}>
                 <div className={"mealButton-wrapper"}>
-                    <button onClick={handleMealButtonClick}>
+                    <button onClick={() => handleMealButtonClick("BREAKFAST")}>
                         <BreakfastButton width={40} height={40}/>
                         <span>Frühstück</span>
                     </button>
-                    <button onClick={handleMealButtonClick}>
+                    <button onClick={() => handleMealButtonClick("LUNCH")}>
                         <LunchButton width={40} height={40}/>
                         <span>Mittagessen</span>
                     </button>
-                    <button onClick={handleMealButtonClick}>
+                    <button onClick={() => handleMealButtonClick("DINNER")}>
                         <DinnerButton width={40} height={40}/>
                         <span>Abendessen</span>
                     </button>
-                    <button onClick={handleMealButtonClick}>
+                    <button onClick={() => handleMealButtonClick("SNACK")}>
                         <SnackButton width={40} height={40}/>
                         <span>Snack</span>
                     </button>

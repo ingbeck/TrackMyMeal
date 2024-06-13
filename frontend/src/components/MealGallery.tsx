@@ -4,7 +4,8 @@ import "./MealGallery.css"
 
 type MealGalleryProps = {
     meals: Meal[],
-    searchText: string
+    searchText: string,
+    addMealToDiary: (mealType: string, meal: Meal) => void
 }
 export default function MealGallery(props: Readonly<MealGalleryProps>) {
 
@@ -12,7 +13,7 @@ export default function MealGallery(props: Readonly<MealGalleryProps>) {
         <div className={"mealGallery"}>
             {props.meals.length !== 0
                 ?
-                props.meals.map((meal) => <MealItemCard key={meal.id} meal={meal} searchText={props.searchText}/>)
+                props.meals.map((meal) => <MealItemCard key={meal.id} meal={meal} searchText={props.searchText} addMealToDiary={props.addMealToDiary}/>)
                 :
                 <span>Keine Mahlzeit gefunden</span>
             }

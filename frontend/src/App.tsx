@@ -14,8 +14,12 @@ import axios from "axios";
 import {Diary,FoodItem} from "./types/Diary.ts";
 import AddFoodItem from "./pages/add-food-item/AddFoodItem.tsx";
 import {getDateToday} from "./Utility/DateTime.ts";
+import {Meal} from "./types/Meal.ts";
 
 export default function App() {
+
+
+    const initialMeals:Meal[] = [{id:"", userId:"", name:"", mealItems:[], totalCalories: 0}]
 
     const[appUrl, setAppUrl] = useState<string>("")
     const[appUser, setAppUser] = useState<AppUser>({
@@ -35,8 +39,10 @@ export default function App() {
     const[diary, setDiary] = useState<Diary>({id:"", userId:"", diaryEntries:[]});
     const[currentRoute, setCurrentRoute] = useState<string>("")
     const[currentMeal, setCurrentMeal] = useState<string>("")
+    const[meals, setMeals] = useState<Meal[]>(initialMeals)
 
     const navigate = useNavigate();
+
 
     useEffect(() => {
         getAppUrl()
@@ -68,6 +74,7 @@ export default function App() {
     useEffect(() => {
         if(appUser.id !== "" && !appUser.isNewUser){
             getDiaryByUserId(appUser.id)
+            getMealsByUserId(appUser.id)
         }
     }, [appUser]);
 
@@ -145,6 +152,19 @@ export default function App() {
             .catch((error) => console.log(error.message))
     }
 
+    function getMealsByUserId(id: string |undefined){
+        axios.get("/api/meals/"+id)
+            .then(response => setMeals(response.data))
+            .catch(error => console.log(error.message));
+    }
+
+    function addMealToDiary(mealType: string, meal: Meal){
+        axios.put("/api/meals/"+appUser.id+"/"+getDateToday()+"/"+mealType, meal)
+            .then(()  => getDiaryByUserId(appUser.id))
+            .catch(error => console.log(error.message));
+    }
+
+
     return (
       <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl} setCurrentMeal={setCurrentMeal}>
           <Routes>
@@ -172,7 +192,9 @@ export default function App() {
                   diary={diary}/>}/>
               <Route path={"/recipes"} element={<MealsPage
                   setCurrentRoute={setCurrentRoute}
-                  appUser={appUser}/>}/>
+                  appUser={appUser}
+                  meals={meals}
+                  addMealToDiary={addMealToDiary}/>}/>
               <Route path={"/profile"} element={<ProfilePage
                   setCurrentRoute={setCurrentRoute}
                   appUser={appUser}
