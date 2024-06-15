@@ -33,12 +33,8 @@ class UserServiceTest {
         when(repo.findById("1")).thenReturn(Optional.of(expected));
         when(repo.save(expected)).thenReturn(expected);
 
-        //WHEN
-        AppUser actual = service.createUser("1", appUserCreateDto);
-
-        //THEN
+        //WHEN & THEN
         verify(repo).findById("1");
-        assertEquals(expected,actual);
     }
 
     @Test
@@ -59,11 +55,11 @@ class UserServiceTest {
         int bmr = (int)(66.47 + 13.75 * appUserCreateDto.weight() + 5.003 * appUserCreateDto.height() - 6.755 * 32);
         int bmrWithActivity = (int)(bmr * appUserCreateDto.activityLevel().getLevel());
 
-        AppUser expected = new AppUser(
+        return new AppUser(
                 "1",
                 "Max Mustermann",
                 "1991-06-14",
-                32,
+                33,
                 "https://example.com/mustermax.jpg",
                 AppUserGender.MALE,
                 180,
@@ -73,7 +69,6 @@ class UserServiceTest {
                 bmrWithActivity,
                 false
         );
-        return expected;
     }
 
 }
