@@ -8,12 +8,16 @@ import BreakfastButton from "../svg/meal-icons/BreakfastButton.tsx";
 import LunchButton from "../svg/meal-icons/LunchButton.tsx";
 import DinnerButton from "../svg/meal-icons/DinnerButton.tsx";
 import SnackButton from "../svg/meal-icons/SnackButton.tsx";
+import DeleteButton from "../svg/DeleteButton.tsx";
 
 type MealItemCardProps = {
     meal: Meal,
     searchText: string,
-    addMealToDiary: (mealType: string, meal: MealToSaveDto) => void
+    addMealToDiary: (mealType: string, meal: MealToSaveDto) => void,
+    deleteMeal: (id : string) => void,
+    isEditable: boolean
 }
+
 export default function MealItemCard(props: Readonly<MealItemCardProps>) {
 
     const numberMealItemsToRender: number = 4;
@@ -49,6 +53,10 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
         setOpen(!open);
     }
 
+    function handleDeleteButtonClick(){
+        props.deleteMeal(props.meal.id);
+    }
+
     function handleMealButtonClick(mealType: string){
         const mealToAdd: MealToSaveDto = {name: props.meal.name, mealItems: props.meal.mealItems}
         props.addMealToDiary(mealType, mealToAdd);
@@ -64,8 +72,13 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
                         <span className={"gradient"}><span
                             className={"serving"}>{props.meal.totalCalories}</span> kcal</span>
                     </div>
-                    <button onClick={handleAddButtonClick}><AddButton width={40} height={40}/>
-                    </button>
+                    {
+                        props.isEditable
+                            ?
+                            <button onClick={handleDeleteButtonClick}><DeleteButton/></button>
+                            :
+                            <button onClick={handleAddButtonClick}><AddButton width={40} height={40}/></button>
+                    }
                 </div>
                 <div className={"meal_mealItem-wrapper"}>
                     {renderMealItems(numberMealItemsToRender)}

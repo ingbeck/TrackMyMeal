@@ -164,6 +164,12 @@ export default function App() {
             .catch(error => console.log(error.message));
     }
 
+    function deleteMeal(id:string){
+        axios.delete("/api/meals/"+id)
+            .then(() => getMealsByUserId(appUser.id))
+            .catch(error => console.log(error.message));
+    }
+
 
     return (
       <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl} setCurrentMeal={setCurrentMeal}>
@@ -194,7 +200,9 @@ export default function App() {
                   setCurrentRoute={setCurrentRoute}
                   appUser={appUser}
                   meals={meals}
-                  addMealToDiary={addMealToDiary}/>}/>
+                  addMealToDiary={addMealToDiary}
+                  deleteMeal={deleteMeal}/>
+              }/>
               <Route path={"/profile"} element={<ProfilePage
                   setCurrentRoute={setCurrentRoute}
                   appUser={appUser}
