@@ -37,8 +37,8 @@ public class MealService {
         mealRepository.deleteById(id);
     }
 
-    public void addMealToDiary(String userId, String date, Meal meal, MealType mealType){
-        for(MealItem mealItem: meal.mealItems()){
+    public void addMealToDiary(String userId, String date, MealToSaveDto mealToSave, MealType mealType){
+        for(MealItem mealItem: mealToSave.mealItems()){
             diaryService.updateDiaryEntry(userId, date, new FoodItem(UUID.randomUUID().toString(), mealItem.name(), mealItem.amount(), mealItem.unit(), mealItem.calories(), mealType));
         }
     }

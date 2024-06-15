@@ -1,13 +1,13 @@
 import {useEffect, useState} from "react";
 import {AppUser} from "../../types/AppUser.ts";
-import {Meal} from "../../types/Meal.ts";
+import {Meal, MealToSaveDto} from "../../types/Meal.ts";
 import SearchComponent from "../../components/SearchComponent.tsx";
 import MealGallery from "../../components/MealGallery.tsx";
 
 type MealsScreenProps = {
     setCurrentRoute : (url:string) => void,
     appUser: AppUser,
-    addMealToDiary: (mealType: string, meal: Meal) => void
+    addMealToDiary: (mealType: string, meal: MealToSaveDto) => void
     meals: Meal[]
 }
 export default function MealsPage(props: Readonly<MealsScreenProps>) {

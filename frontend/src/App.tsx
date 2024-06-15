@@ -14,7 +14,7 @@ import axios from "axios";
 import {Diary,FoodItem} from "./types/Diary.ts";
 import AddFoodItem from "./pages/add-food-item/AddFoodItem.tsx";
 import {getDateToday} from "./Utility/DateTime.ts";
-import {Meal} from "./types/Meal.ts";
+import {Meal, MealToSaveDto} from "./types/Meal.ts";
 
 export default function App() {
 
@@ -158,7 +158,7 @@ export default function App() {
             .catch(error => console.log(error.message));
     }
 
-    function addMealToDiary(mealType: string, meal: Meal){
+    function addMealToDiary(mealType: string, meal: MealToSaveDto){
         axios.put("/api/meals/"+appUser.id+"/"+getDateToday()+"/"+mealType, meal)
             .then(()  => getDiaryByUserId(appUser.id))
             .catch(error => console.log(error.message));

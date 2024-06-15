@@ -37,7 +37,7 @@ public class MealController {
     }
 
     @PutMapping("/{id}/{date}/{mealType}")
-    public void addMealToDiary(@PathVariable String id, @PathVariable String date, @PathVariable MealType mealType, @RequestBody Meal meal){
-        mealService.addMealToDiary(id, date, meal, mealType);
+    public void addMealToDiary(@PathVariable String id, @PathVariable String date, @PathVariable MealType mealType, @RequestBody MealToSaveDto mealToSaveDto){
+        mealService.addMealToDiary(id, date, mealToSaveDto, mealType);
     }
 }

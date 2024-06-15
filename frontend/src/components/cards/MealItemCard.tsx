@@ -1,4 +1,4 @@
-import {Meal, MealItem} from "../../types/Meal.ts";
+import {Meal, MealItem, MealToSaveDto} from "../../types/Meal.ts";
 import "./MealItemCard.css"
 import {useEffect, useState} from "react";
 import {highlightSearchText} from "../../Utility/Utility.ts";
@@ -12,7 +12,7 @@ import SnackButton from "../svg/meal-icons/SnackButton.tsx";
 type MealItemCardProps = {
     meal: Meal,
     searchText: string,
-    addMealToDiary: (mealType: string, meal: Meal) => void
+    addMealToDiary: (mealType: string, meal: MealToSaveDto) => void
 }
 export default function MealItemCard(props: Readonly<MealItemCardProps>) {
 
@@ -50,7 +50,8 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
     }
 
     function handleMealButtonClick(mealType: string){
-        props.addMealToDiary(mealType, props.meal);
+        const mealToAdd: MealToSaveDto = {name: props.meal.name, mealItems: props.meal.mealItems}
+        props.addMealToDiary(mealType, mealToAdd);
         setOpen(!open)
     }
 

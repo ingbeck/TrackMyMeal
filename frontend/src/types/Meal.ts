@@ -6,7 +6,7 @@ export type Meal = {
     mealItems: MealItem[]
 }
 
-export type MealToSafeDto = {
+export type MealToSaveDto = {
     name: string,
     mealItems: MealItem[]
 }
