@@ -1,0 +1,15 @@
+.addMealItems-btn{
+    border: solid;
+    border-radius: 16px;
+    padding: 16px;
+    place-self: center;
+    margin-top: 24px;
+}
+
+.addMealItems-btn-add{
+    border: solid;
+    border-radius: 16px;
+    padding: 16px;
+    place-self: center;
+    margin-top: 24px;
+}

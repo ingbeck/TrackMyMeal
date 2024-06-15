@@ -54,7 +54,8 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
     }
 
     function handleDeleteButtonClick(){
-        props.deleteMeal(props.meal.id);
+        if (window.confirm("Möchtest du diese Mahlzeit löschen?"))
+            props.deleteMeal(props.meal.id);
     }
 
     function handleMealButtonClick(mealType: string){
