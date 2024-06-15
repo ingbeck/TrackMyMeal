@@ -33,6 +33,8 @@ class UserServiceTest {
         when(repo.findById("1")).thenReturn(Optional.of(expected));
         when(repo.save(expected)).thenReturn(expected);
 
+        service.createUser("1", appUserCreateDto);
+
         //WHEN & THEN
         verify(repo).findById("1");
     }
