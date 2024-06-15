@@ -1,7 +1,9 @@
 package com.github.ingbeck.backend.controller;
 
+import com.github.ingbeck.backend.model.diary.Diary;
 import com.github.ingbeck.backend.model.meal.Meal;
 import com.github.ingbeck.backend.model.meal.MealItem;
+import com.github.ingbeck.backend.repository.DiaryRepository;
 import com.github.ingbeck.backend.repository.MealRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,13 @@ class MealControllerTest {
 
     @Autowired
     private MealRepository mealRepository;
+    @Autowired
+    private DiaryRepository diaryRepository;
 
     Meal mealToSave = new Meal("1", "2", "Brot",100, List.of(
                     new MealItem("3", "Brot", 100, "g", 250, 250)));
 
+    Diary diaryToSave = new Diary("1", "2", List.of());
 
     @Test
     void getAllMeals_whenCalledInitially_thenReturnEmptyList() throws Exception{
@@ -71,7 +76,6 @@ class MealControllerTest {
 
     @Test
     void createNewDiary_whenCalledWithValidJSON_thenReturnNewMeal() throws Exception{
-        //GIVEN
         //WHEN & THEN
         mvc.perform(post("/api/meals/2")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -118,6 +122,32 @@ class MealControllerTest {
 
         //WHEN & THEN
         mvc.perform(delete("/api/meals/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void addMealToDiary_whenCalledWithValidParams_expectStatus200() throws Exception{
+        //GIVEN
+        diaryRepository.save(diaryToSave);
+
+        //WHEN & THEN
+        mvc.perform(put("/api/meals/2/2024-01-01/DINNER")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                            {
+                                "name": "Brot",
+                                "mealItems": [
+                                    {
+                                        "id": "3",
+                                        "name": "Brot",
+                                        "amount": 100,
+                                        "unit": "g",
+                                        "calories": 250,
+                                        "energyKcal100": 250
+                                    }
+                                ]
+                            }
+                        """))
                 .andExpect(status().isOk());
     }
 }
