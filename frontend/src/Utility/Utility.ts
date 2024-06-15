@@ -1,14 +1,12 @@
-export function highlightSearchText(searchText : string, elementToHighlightId : string){
-    const textToSearch : string = searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const pattern : RegExp = new RegExp(textToSearch, "gi");
+export function highlightSearchText(searchText : string, elementToHighlightId : string) {
+    const textToSearch: string = searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern: RegExp = new RegExp(textToSearch, "gi");
     const elementToReplace = document.getElementById(elementToHighlightId)
 
-    if(textToSearch !== ""){
-        if(elementToReplace && elementToReplace.textContent){
+    if (elementToReplace?.textContent) {
+        if (textToSearch !== "") {
             elementToReplace.innerHTML = elementToReplace.textContent.replace(pattern, match => `<mark>${match}</mark>`)
-        }
-    }else{
-        if(elementToReplace && elementToReplace.textContent){
+        } else {
             elementToReplace.innerHTML = elementToReplace.textContent.replace(textToSearch, "")
         }
     }
