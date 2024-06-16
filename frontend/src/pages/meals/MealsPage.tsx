@@ -4,7 +4,7 @@ import {Meal, MealItem, MealToSaveDto} from "../../types/Meal.ts";
 import SearchComponent from "../../components/SearchComponent.tsx";
 import MealGallery from "../../components/MealGallery.tsx";
 import AddButton from "../../components/svg/AddButton.tsx";
-import {Badge, Box, Modal} from "@mui/material";
+import {Badge, Box, CircularProgress, Modal} from "@mui/material";
 import "./MealPage.css"
 import axios from "axios";
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../../types/OpenFoodFactsProducts.ts";
@@ -125,8 +125,15 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
     }
 
     function handleSubmitNewMeal(){
-        const mealToSave : MealToSaveDto = {name:mealName, mealItems:mealItems}
-        props.addNewMeal(mealToSave);
+        if(mealName.length !== 0 && mealItems.length !== 0){
+            const mealToSave : MealToSaveDto = {name:mealName, mealItems:mealItems}
+            props.addNewMeal(mealToSave);
+            setAddButtonClicked(false);
+            setMealItems([]);
+            setMealName("");
+        }else{
+            window.alert("Die Mahlzeit muss einen Namen haben und es muss mindestens eine Zutat hinzugefügt werden")
+        }
     }
 
 
@@ -149,7 +156,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                                         <div style={{flexBasis: "100%"}}>
                                             <form>
                                                 <input className={"searchbar"} placeholder={"Name"}
-                                                       onChange={handleChange}/>
+                                                       onChange={handleChange} required/>
                                             </form>
                                         </div>
                                     </div>
@@ -166,7 +173,6 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                                             </div>
                                         </>
                                     }
-
                                     <div className={"modalItems-btn_wrapper"}>
                                         <Badge className={"addMealItems-btn"}
                                                badgeContent={badgeCount}
@@ -216,7 +222,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                 }}>
                     <div>
                         <div className={"modalFoodItem-header-wrapper"}>
-                            <label className={"modalFoodItem-title"}>Produkt suchen</label>
+                            <h1 className={"modalFoodItem-title"}>Produkt suchen</h1>
                             <Badge badgeContent={badgeCount}
                                    color="primary"
                             >
@@ -228,6 +234,12 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                             <button onClick={onSearchClick} disabled={startSearch}>Suchen</button>
                         </div>
                         <div className={"modalFoodItem_foodItems-wrapper"}>
+                            {
+                                startSearch &&
+                                <Box sx={{ display: 'flex', justifyContent: "center"}}>
+                                    <CircularProgress />
+                                </Box>
+                            }
                             {currentProducts &&
                             currentProducts.products.length === 0
                                 ?
