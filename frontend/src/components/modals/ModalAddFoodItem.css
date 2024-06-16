@@ -63,7 +63,7 @@
 }
 
 .modalAddFoodItem-btn-wrapper button.cancel,
-.modalAddFoodItem-btn-wrapper .addMealItems-btn{
+.modalItems-btn_wrapper .addMealItems-btn{
     border-radius: 16px;
     border: 1px solid #9018FE;
     background: linear-gradient(90deg, #562AFF 0%, #841CFE 100%);

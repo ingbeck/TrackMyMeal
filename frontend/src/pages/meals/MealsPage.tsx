@@ -105,38 +105,36 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                 isEditable
                 &&
                 <div className={"card"}>
-                    <div className={"card-header"}>
                         {
                             addButtonClicked
                                 ?
                                 <>
-                                    <div style={{flexBasis: "100%"}}>
-                                        <form>
-                                            <input className={"searchbar"} placeholder={"Name"}
-                                                   onChange={handleChange}/>
-                                        </form>
-                                        {
-                                            mealItems.length > 0 && mealItems.map(mealItem => <span key={mealItem.id}>{mealItem.name}, </span>)
-                                        }
-                                        <div className={"modalAddFoodItem-btn-wrapper"}>
-                                            <div style={{display:"flex", flexDirection:"column"}}>
-                                                <Badge className={"addMealItems-btn"}
-                                                       badgeContent={badgeCount}
-                                                       color="primary" onClick={() => setModalOpen(!modalOpen)}
-                                                >
-                                                    Zutaten hinzufügen
-                                                </Badge>
-                                                <button className={"addMealItems-btn add"} style={{width:"auto"}}>Fertig</button>
-                                            </div>
-
+                                    <div className={"card-header"}>
+                                        <div style={{flexBasis: "100%"}}>
+                                            <form>
+                                                <input className={"searchbar"} placeholder={"Name"}
+                                                       onChange={handleChange}/>
+                                            </form>
                                         </div>
+                                    </div>
+                                    {
+                                        mealItems.length > 0 && mealItems.map(mealItem => <span key={mealItem.id}>{mealItem.name}, </span>)
+                                    }
+                                    <div className={"modalItems-btn_wrapper"}>
+                                        <Badge className={"addMealItems-btn"}
+                                                  badgeContent={badgeCount}
+                                                  color="primary" onClick={() => setModalOpen(!modalOpen)}
+                                        >Zutaten hinzufügen</Badge>
+                                        <button className={"addMealItems-btn-add"}>Fertig</button>
                                     </div>
                                 </>
                                 :
-                                <button onClick={() => setAddButtonClicked(true)} style={{flexBasis: "100%"}}><AddButton
-                                    width={40} height={40}/></button>
+                                <div className={"card-header"}>
+                                    <button onClick={() => setAddButtonClicked(true)} style={{flexBasis: "100%"}}>
+                                        <AddButton width={40} height={40}/></button>
+                                </div>
                         }
-                    </div>
+
                 </div>
             }
             <MealGallery meals={filteredMeals}
@@ -177,7 +175,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                                 Items
                             </Badge>
                         </div>
-                        <div className={"search"}>
+                        <div className={"search"} style={{margin:"16px 24px 8px 24px"}}>
                             <SearchComponent handleSearchText={setSearchTextProduct}/>
                             <button onClick={onSearchClick} disabled={startSearch}>Suchen</button>
                         </div>
