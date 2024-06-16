@@ -93,6 +93,30 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
         setMealItems([...mealItems, mealItemToSave]);
     }
 
+    function renderMealItems(numberItemsToRender: number, mealItems: MealItem[]){
+        let mealItemsToRender : MealItem[];
+        let numberCommas : number;
+
+        if(mealItems.length > numberItemsToRender){
+            mealItemsToRender = mealItems.slice(0,numberItemsToRender);
+            numberCommas = numberItemsToRender+1;
+        }else{
+            mealItemsToRender =mealItems;
+            numberCommas = mealItems.length;
+        }
+
+        return mealItemsToRender.map((mealItem, count) => {
+                count++;
+                return <span key={mealItem.id} className={"meal_mealItem"}>{mealItem.name}{count < numberCommas && ","}</span>
+            }
+        )
+    }
+
+    function getTotalCalories(mealItems: MealItem[]){
+        return mealItems.reduce(function (sum, mealItem) { return sum + mealItem.calories; }, 0)
+    }
+
+
     return (
         <div className={"page-container"}>
             <div style={{display:"flex", justifyContent:"space-between"}}>
@@ -117,12 +141,23 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                                         </div>
                                     </div>
                                     {
-                                        mealItems.length > 0 && mealItems.map(mealItem => <span key={mealItem.id}>{mealItem.name}, </span>)
+                                        mealItems
+                                        &&
+                                        <>
+                                            <span className={"gradient"}><span
+                                                className={"serving"}>{getTotalCalories(mealItems)}</span> kcal</span>
+                                            <div className={"meal_mealItem-wrapper divider-top"}>
+                                                {renderMealItems(4, mealItems)}
+                                                {mealItems.length > 4 &&
+                                                    <span className={"meal_mealItem"}>...</span>}
+                                            </div>
+                                        </>
                                     }
+
                                     <div className={"modalItems-btn_wrapper"}>
                                         <Badge className={"addMealItems-btn"}
-                                                  badgeContent={badgeCount}
-                                                  color="primary" onClick={() => setModalOpen(!modalOpen)}
+                                               badgeContent={badgeCount}
+                                               color="primary" onClick={() => setModalOpen(!modalOpen)}
                                         >Zutaten hinzufügen</Badge>
                                         <button className={"addMealItems-btn-add"}>Fertig</button>
                                     </div>
@@ -140,7 +175,8 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                          searchText={searchText}
                          addMealToDiary={props.addMealToDiary}
                          isEditable={isEditable}
-                         deleteMeal={props.deleteMeal}/>
+                         deleteMeal={props.deleteMeal}
+                         renderMealItems={renderMealItems}/>
             <ModalAddFoodItem
                 open={modalFoodItemOpen}
                 handleClose={() => setModalFoodItemOpen(false)}

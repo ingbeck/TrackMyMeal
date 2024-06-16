@@ -9,13 +9,17 @@ import LunchButton from "../svg/meal-icons/LunchButton.tsx";
 import DinnerButton from "../svg/meal-icons/DinnerButton.tsx";
 import SnackButton from "../svg/meal-icons/SnackButton.tsx";
 import DeleteButton from "../svg/DeleteButton.tsx";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
 
 type MealItemCardProps = {
     meal: Meal,
     searchText: string,
     addMealToDiary: (mealType: string, meal: MealToSaveDto) => void,
     deleteMeal: (id : string) => void,
-    isEditable: boolean
+    isEditable: boolean,
+    renderMealItems: (numberItemsToRender : number, mealItems : MealItem[]) => ReactJSXElement
 }
 
 export default function MealItemCard(props: Readonly<MealItemCardProps>) {
@@ -29,25 +33,6 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
         highlightSearchText(props.searchText, props.meal.id);
 
     }, [props]);
-
-    function renderMealItems(numberItemsToRender: number){
-        let mealItemsToRender : MealItem[];
-        let numberCommas : number;
-
-        if(props.meal.mealItems.length > numberItemsToRender){
-            mealItemsToRender = props.meal.mealItems.slice(0,numberItemsToRender);
-            numberCommas = numberItemsToRender+1;
-        }else{
-            mealItemsToRender =props.meal.mealItems;
-            numberCommas = props.meal.mealItems.length;
-        }
-
-        return mealItemsToRender.map((mealItem, count) => {
-                count++;
-                return <span key={mealItem.id} className={"meal_mealItem"}>{mealItem.name}{count < numberCommas && ","}</span>
-            }
-        )
-    }
 
     function handleAddButtonClick(){
         setOpen(!open);
@@ -82,7 +67,7 @@ export default function MealItemCard(props: Readonly<MealItemCardProps>) {
                     }
                 </div>
                 <div className={"meal_mealItem-wrapper"}>
-                    {renderMealItems(numberMealItemsToRender)}
+                    {props.renderMealItems(numberMealItemsToRender, props.meal.mealItems)}
                     {props.meal.mealItems.length > numberMealItemsToRender &&
                         <span className={"meal_mealItem"}>...</span>}
                 </div>

@@ -41,3 +41,5 @@ export function getBackgroundColor(mealType : string) : string {
             return ""
     }
 }
+
+

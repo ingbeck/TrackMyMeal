@@ -1,4 +1,4 @@
-import {Meal, MealToSaveDto} from "../types/Meal.ts";
+import {Meal, MealItem, MealToSaveDto} from "../types/Meal.ts";
 import MealItemCard from "./cards/MealItemCard.tsx";
 import "./MealGallery.css"
 
@@ -7,7 +7,8 @@ type MealGalleryProps = {
     searchText: string,
     addMealToDiary: (mealType: string, meal: MealToSaveDto) => void,
     deleteMeal: (id : string) => void,
-    isEditable: boolean
+    isEditable: boolean,
+    renderMealItems: (numberItemsToRender : number, mealItems : MealItem[]) => void
 }
 export default function MealGallery(props: Readonly<MealGalleryProps>) {
 
@@ -21,7 +22,7 @@ export default function MealGallery(props: Readonly<MealGalleryProps>) {
                     searchText={props.searchText}
                     addMealToDiary={props.addMealToDiary}
                     deleteMeal={props.deleteMeal}
-                    isEditable={props.isEditable}/>)
+                    isEditable={props.isEditable} renderMealItems={props.renderMealItems}/>)
                 :
                 <span>Keine Mahlzeit gefunden</span>
             }

@@ -25,3 +25,8 @@
     color: #FFF;
     background: linear-gradient(90deg, #562AFF 0%, #841CFE 100%);
 }
+
+.divider-top {
+    margin-top: 8px;
+    border-top: solid 1px #DDD;
+}
