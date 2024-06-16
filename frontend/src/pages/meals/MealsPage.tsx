@@ -16,6 +16,7 @@ type MealsScreenProps = {
     setCurrentRoute : (url:string) => void,
     appUser: AppUser,
     addMealToDiary: (mealType: string, meal: MealToSaveDto) => void,
+    addNewMeal: (mealToSave : MealToSaveDto) => void,
     deleteMeal: (id : string) => void,
     meals: Meal[]
 }
@@ -45,6 +46,9 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
     function handleEditButtonClick(){
         setIsEditable(!isEditable);
         setAddButtonClicked(false);
+        if(isEditable){
+            setMealItems([]);
+        }
     }
 
     function handleChange(event: ChangeEvent<HTMLInputElement>){
@@ -113,7 +117,16 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
     }
 
     function getTotalCalories(mealItems: MealItem[]){
-        return mealItems.reduce(function (sum, mealItem) { return sum + mealItem.calories; }, 0)
+        return Math.floor(
+            mealItems.reduce(
+                function (sum, mealItem)
+                { return sum + mealItem.calories; }, 0)
+        )
+    }
+
+    function handleSubmitNewMeal(){
+        const mealToSave : MealToSaveDto = {name:mealName, mealItems:mealItems}
+        props.addNewMeal(mealToSave);
     }
 
 
@@ -141,14 +154,14 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                                         </div>
                                     </div>
                                     {
-                                        mealItems
+                                        mealItems.length !== 0
                                         &&
                                         <>
-                                            <span className={"gradient"}><span
+                                            <span className={"gradient"} style={{paddingTop:"16px"}}><span
                                                 className={"serving"}>{getTotalCalories(mealItems)}</span> kcal</span>
                                             <div className={"meal_mealItem-wrapper divider-top"}>
-                                                {renderMealItems(4, mealItems)}
-                                                {mealItems.length > 4 &&
+                                                {renderMealItems(3, mealItems)}
+                                                {mealItems.length > 3 &&
                                                     <span className={"meal_mealItem"}>...</span>}
                                             </div>
                                         </>
@@ -159,7 +172,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                                                badgeContent={badgeCount}
                                                color="primary" onClick={() => setModalOpen(!modalOpen)}
                                         >Zutaten hinzufügen</Badge>
-                                        <button className={"addMealItems-btn-add"}>Fertig</button>
+                                        <button className={"addMealItems-btn-add"} onClick={handleSubmitNewMeal}>Fertig</button>
                                     </div>
                                 </>
                                 :

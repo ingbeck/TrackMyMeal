@@ -164,6 +164,12 @@ export default function App() {
             .catch(error => console.log(error.message));
     }
 
+    function addNewMeal(mealToSave: MealToSaveDto){
+        axios.post("/api/meals/"+appUser.id, mealToSave)
+            .then((response) => setMeals([...meals, response.data]))
+            .catch(error => console.log(error.message))
+    }
+
     function deleteMeal(id:string){
         axios.delete("/api/meals/"+id)
             .then(() => getMealsByUserId(appUser.id))
@@ -201,6 +207,7 @@ export default function App() {
                   appUser={appUser}
                   meals={meals}
                   addMealToDiary={addMealToDiary}
+                  addNewMeal={addNewMeal}
                   deleteMeal={deleteMeal}/>
               }/>
               <Route path={"/profile"} element={<ProfilePage
