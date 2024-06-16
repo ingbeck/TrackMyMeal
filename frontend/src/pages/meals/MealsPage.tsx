@@ -9,7 +9,6 @@ import "./MealPage.css"
 import axios from "axios";
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../../types/OpenFoodFactsProducts.ts";
 import OpenFoodFactsProductsGallery from "../../components/OpenFoodFactsProductsGallery.tsx";
-import {FoodItem} from "../../types/Diary.ts";
 import {v4 as uuidv4} from "uuid";
 import ModalAddFoodItem from "../../components/modals/ModalAddFoodItem.tsx";
 
