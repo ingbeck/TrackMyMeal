@@ -7,15 +7,19 @@ import {AppUser} from "./types/AppUser.ts";
 import {AppUserCreateDto} from "./types/AppUserCreateDto.ts";
 import HomePage from "./pages/home/HomePage.tsx";
 import CalendarPage from "./pages/calendar/CalendarPage.tsx";
-import RecipesPage from "./pages/recipes/RecipesPage.tsx";
+import MealsPage from "./pages/meals/MealsPage.tsx";
 import ProfilePage from "./pages/profile/ProfilePage.tsx";
 import LoginProcessingScreen from "./pages/LoginProcessingPage.tsx";
 import axios from "axios";
 import {Diary,FoodItem} from "./types/Diary.ts";
 import AddFoodItem from "./pages/add-food-item/AddFoodItem.tsx";
-import {getDateToday} from "./Utility/Utility.ts";
+import {getDateToday} from "./Utility/DateTime.ts";
+import {Meal, MealToSaveDto} from "./types/Meal.ts";
 
 export default function App() {
+
+
+    const initialMeals:Meal[] = [{id:"", userId:"", name:"", mealItems:[], totalCalories: 0}]
 
     const[appUrl, setAppUrl] = useState<string>("")
     const[appUser, setAppUser] = useState<AppUser>({
@@ -35,8 +39,10 @@ export default function App() {
     const[diary, setDiary] = useState<Diary>({id:"", userId:"", diaryEntries:[]});
     const[currentRoute, setCurrentRoute] = useState<string>("")
     const[currentMeal, setCurrentMeal] = useState<string>("")
+    const[meals, setMeals] = useState<Meal[]>(initialMeals)
 
     const navigate = useNavigate();
+
 
     useEffect(() => {
         getAppUrl()
@@ -68,6 +74,7 @@ export default function App() {
     useEffect(() => {
         if(appUser.id !== "" && !appUser.isNewUser){
             getDiaryByUserId(appUser.id)
+            getMealsByUserId(appUser.id)
         }
     }, [appUser]);
 
@@ -145,6 +152,31 @@ export default function App() {
             .catch((error) => console.log(error.message))
     }
 
+    function getMealsByUserId(id: string |undefined){
+        axios.get("/api/meals/"+id)
+            .then(response => setMeals(response.data))
+            .catch(error => console.log(error.message));
+    }
+
+    function addMealToDiary(mealType: string, meal: MealToSaveDto){
+        axios.put("/api/meals/"+appUser.id+"/"+getDateToday()+"/"+mealType, meal)
+            .then(()  => getDiaryByUserId(appUser.id))
+            .catch(error => console.log(error.message));
+    }
+
+    function addNewMeal(mealToSave: MealToSaveDto){
+        axios.post("/api/meals/"+appUser.id, mealToSave)
+            .then((response) => setMeals([...meals, response.data]))
+            .catch(error => console.log(error.message))
+    }
+
+    function deleteMeal(id:string){
+        axios.delete("/api/meals/"+id)
+            .then(() => getMealsByUserId(appUser.id))
+            .catch(error => console.log(error.message));
+    }
+
+
     return (
       <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl} setCurrentMeal={setCurrentMeal}>
           <Routes>
@@ -170,7 +202,14 @@ export default function App() {
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}
                   diary={diary}/>}/>
-              <Route path={"/recipes"} element={<RecipesPage setCurrentRoute={setCurrentRoute}/>}/>
+              <Route path={"/recipes"} element={<MealsPage
+                  setCurrentRoute={setCurrentRoute}
+                  appUser={appUser}
+                  meals={meals}
+                  addMealToDiary={addMealToDiary}
+                  addNewMeal={addNewMeal}
+                  deleteMeal={deleteMeal}/>
+              }/>
               <Route path={"/profile"} element={<ProfilePage
                   setCurrentRoute={setCurrentRoute}
                   appUser={appUser}

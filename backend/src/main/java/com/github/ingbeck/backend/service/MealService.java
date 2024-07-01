@@ -1,5 +1,7 @@
 package com.github.ingbeck.backend.service;
 
+import com.github.ingbeck.backend.model.diary.FoodItem;
+import com.github.ingbeck.backend.model.diary.MealType;
 import com.github.ingbeck.backend.model.meal.Meal;
 import com.github.ingbeck.backend.model.meal.MealItem;
 import com.github.ingbeck.backend.model.meal.MealToSaveDto;
@@ -8,12 +10,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class MealService {
 
     private final MealRepository mealRepository;
+    private final DiaryService diaryService;
 
     public List<Meal> getMeals(){
         return mealRepository.findAll();
@@ -31,5 +35,11 @@ public class MealService {
 
     public void deleteMealById(String id){
         mealRepository.deleteById(id);
+    }
+
+    public void addMealToDiary(String userId, String date, MealToSaveDto mealToSave, MealType mealType){
+        for(MealItem mealItem: mealToSave.mealItems()){
+            diaryService.updateDiaryEntry(userId, date, new FoodItem(UUID.randomUUID().toString(), mealItem.name(), mealItem.amount(), mealItem.unit(), mealItem.calories(), mealType));
+        }
     }
 }

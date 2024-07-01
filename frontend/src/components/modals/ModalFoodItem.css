@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    padding: 24px 24px 8px 24px;
 }
 
 .modalFoodItem-title{
@@ -11,4 +11,10 @@
     font-style: normal;
     font-weight: 800;
     line-height: 36px;
+}
+
+.modalFoodItem_foodItems-wrapper {
+    max-height: 50dvh;
+    overflow: scroll;
+    padding: 16px 24px 0 24px;
 }

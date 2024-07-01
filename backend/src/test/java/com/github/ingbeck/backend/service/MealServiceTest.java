@@ -1,11 +1,16 @@
 package com.github.ingbeck.backend.service;
 
+import com.github.ingbeck.backend.model.diary.Diary;
+import com.github.ingbeck.backend.model.diary.DiaryEntry;
+import com.github.ingbeck.backend.model.diary.MealType;
 import com.github.ingbeck.backend.model.meal.Meal;
 import com.github.ingbeck.backend.model.meal.MealItem;
 import com.github.ingbeck.backend.model.meal.MealToSaveDto;
+import com.github.ingbeck.backend.repository.DiaryRepository;
 import com.github.ingbeck.backend.repository.MealRepository;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +20,8 @@ import static org.mockito.Mockito.*;
 class MealServiceTest {
 
     private final MealRepository mealRepository = mock(MealRepository.class);
-    private final MealService mealService = new MealService(mealRepository);
+    final DiaryRepository diaryRepository = mock(DiaryRepository.class);
+    private final MealService mealService = new MealService(mealRepository, new DiaryService(diaryRepository));
 
     List<Meal> listToExpect = List.of(
             new Meal("1", "2","Brot", 100, List.of(
@@ -87,6 +93,25 @@ class MealServiceTest {
 
         //
         verify(mealRepository).deleteById("2");
+    }
+
+    @Test
+    void addMealToDiary_whenCalledWithValidParameters_addMealItemsToDiary(){
+        //GIVEN
+        MealToSaveDto mealToAdd = new MealToSaveDto("Butterbrot", List.of(
+                new MealItem("1", "Brot", 80, "g", 80, 100),
+                new MealItem("1", "Butter", 20, "g", 80, 100)));
+
+        when(diaryRepository.findDiaryByUserId("1")).thenReturn(new Diary(
+                "2",
+                "1",
+                List.of(new DiaryEntry("2024-01-01", new ArrayList<>(List.of()), 0))
+        ));
+        //WHEN
+        mealService.addMealToDiary("1", "2024-01-01", mealToAdd, MealType.DINNER);
+
+        //THEN
+        verify(diaryRepository, times(8)).findDiaryByUserId("1");
     }
 
 }
