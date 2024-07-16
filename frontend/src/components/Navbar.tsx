@@ -41,7 +41,7 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                    className={props.currentRoute == appUrl+recipesRoute ? "navbar-item-active" : "navbar-item"}>
                     <div>
                         <img src={RecipeIcon} alt={""}/>
-                        <span>Rezepte</span>
+                        <span>Mahlzeiten</span>
                     </div>
                 </button>
                 <button onClick={() => navigate(profileRoute)}
