@@ -13,6 +13,7 @@ import {v4 as uuidv4} from "uuid";
 import ModalAddFoodItem from "../../components/modals/ModalAddFoodItem.tsx";
 import EditButton from "../../components/svg/EditButton.tsx";
 import CheckButton from "../../components/svg/CheckButton.tsx";
+import RecipeIcon from "../../assets/menu-icons/icon_recipe.svg";
 
 type MealsScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -228,7 +229,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                             <Badge badgeContent={badgeCount}
                                    color="primary"
                             >
-                                Items
+                                <img src={RecipeIcon} alt={""}/>
                             </Badge>
                         </div>
                         <div className={"search"} style={{margin:"16px 24px 8px 24px"}}>
