@@ -11,6 +11,8 @@ import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../../types/OpenFoodF
 import OpenFoodFactsProductsGallery from "../../components/OpenFoodFactsProductsGallery.tsx";
 import {v4 as uuidv4} from "uuid";
 import ModalAddFoodItem from "../../components/modals/ModalAddFoodItem.tsx";
+import EditButton from "../../components/svg/EditButton.tsx";
+import CheckButton from "../../components/svg/CheckButton.tsx";
 
 type MealsScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -141,7 +143,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
         <div className={"page-container"}>
             <div style={{display:"flex", justifyContent:"space-between"}}>
                 <h1>Mahlzeiten</h1>
-                <button onClick={handleEditButtonClick}>{isEditable ? "Fertig" : "Bearbeiten"}</button>
+                <button style={{background: "none", border:"none"}} onClick={handleEditButtonClick}>{isEditable ? <CheckButton width={40} height={40}/> : <EditButton width={40} height={40}/>}</button>
             </div>
             <SearchComponent handleSearchText={setSearchText}/>
             {
