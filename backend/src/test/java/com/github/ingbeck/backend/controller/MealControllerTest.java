@@ -150,4 +150,24 @@ class MealControllerTest {
                         """))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void userHasMeals_whenCalledWithUserHavingMeals_thenReturnTrue() throws Exception {
+        //GIVEN
+        mealRepository.save(mealToSave);
+
+        //THEN & WHEN
+        mvc.perform(get("/api/meals/2/hasMeals"))
+                .andExpect(content().string("true"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void userHasMeals_whenCalledWithUserNotHavingMeals_thenReturnFalse() throws Exception {
+        //GIVEN
+        //THEN & WHEN
+        mvc.perform(get("/api/meals/2/hasMeals"))
+                .andExpect(content().string("false"))
+                .andExpect(status().isOk());
+    }
 }

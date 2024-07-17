@@ -40,4 +40,9 @@ public class MealController {
     public void addMealToDiary(@PathVariable String id, @PathVariable String date, @PathVariable MealType mealType, @RequestBody MealToSaveDto mealToSaveDto){
         mealService.addMealToDiary(id, date, mealToSaveDto, mealType);
     }
+
+    @GetMapping("/{userId}/hasMeals")
+    public boolean userHasMeals(@PathVariable String userId){
+        return mealService.userHasMeals(userId);
+    }
 }
