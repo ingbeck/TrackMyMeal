@@ -113,4 +113,22 @@ class MealServiceTest {
         verify(diaryRepository, times(8)).findDiaryByUserId("1");
     }
 
+    @Test
+    void userHasMeal_whenCalledWithUserHavingMeals_thenReturnTrue(){
+        //GIVEN
+        when(mealRepository.findAllByUserId("2")).thenReturn(listToExpect);
+
+        //THEN & WHEN
+        assertTrue(mealService.userHasMeals("2"));
+    }
+
+    @Test
+    void userHasMeal_whenCalledWithUserNotHavingMeals_thenReturnTrue(){
+        //GIVEN
+        when(mealRepository.findAllByUserId("2")).thenReturn(null);
+
+        //THEN & WHEN
+        assertFalse(mealService.userHasMeals("2"));
+    }
+
 }

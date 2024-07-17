@@ -42,4 +42,8 @@ public class MealService {
             diaryService.updateDiaryEntry(userId, date, new FoodItem(UUID.randomUUID().toString(), mealItem.name(), mealItem.amount(), mealItem.unit(), mealItem.calories(), mealType));
         }
     }
+
+    public boolean userHasMeals(String userId){
+        return mealRepository.findAllByUserId(userId) != null;
+    }
 }
