@@ -24,7 +24,7 @@ export default function MealGallery(props: Readonly<MealGalleryProps>) {
                     deleteMeal={props.deleteMeal}
                     isEditable={props.isEditable} renderMealItems={props.renderMealItems}/>)
                 :
-                <span>Keine Mahlzeit gefunden</span>
+                <span className={"homescreen-meals-empty"}>Keine Mahlzeit gefunden</span>
             }
         </div>
     );
