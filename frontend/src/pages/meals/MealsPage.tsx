@@ -46,8 +46,13 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
-        props.checkIfUserHasMeals()
     }, [props, url]);
+
+    useEffect(() => {
+        if(props.meals.length < 1){
+            props.checkIfUserHasMeals();
+        }
+    }, [props]);
 
     function handleEditButtonClick(){
         setIsEditable(!isEditable);

@@ -167,7 +167,12 @@ export default function App() {
 
     function addNewMeal(mealToSave: MealToSaveDto){
         axios.post("/api/meals/"+appUser.id, mealToSave)
-            .then((response) => setMeals([...meals, response.data]))
+            .then((response) => {
+                setMeals([...meals, response.data])
+                if(meals.length === 0){
+                    setUserHasMeals(true);
+                }
+            })
             .catch(error => console.log(error.message))
     }
 
