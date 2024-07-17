@@ -2,8 +2,8 @@ import {Badge, Box, CircularProgress, Modal} from "@mui/material";
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../../types/OpenFoodFactsProducts.ts";
 import "./ModalAddFoodItem.css"
 import RecipeIcon from "../../assets/menu-icons/icon_recipe.svg";
-import SearchComponent from "../SearchComponent.tsx";
 import OpenFoodFactsProductsGallery from "../OpenFoodFactsProductsGallery.tsx";
+import {ChangeEvent} from "react";
 
 type ModalAddMealItemProps = {
     modalOpen : boolean,
@@ -18,6 +18,10 @@ type ModalAddMealItemProps = {
 }
 
 export default function ModalAddFoodItem(props: Readonly<ModalAddMealItemProps>) {
+
+    function handleInputOnChange(event:ChangeEvent<HTMLInputElement>){
+        props.setSearchTextProduct(event.target.value);
+    }
 
     return (
         <Modal open={props.modalOpen}
@@ -48,12 +52,12 @@ export default function ModalAddFoodItem(props: Readonly<ModalAddMealItemProps>)
                             <img src={RecipeIcon} alt={""}/>
                         </Badge>
                     </div>
-                    <div className={"search"} style={{margin:"16px 24px 8px 24px"}}>
-                        <SearchComponent handleSearchText={props.setSearchTextProduct}/>
+                    <div className={"search"} style={{padding: "16px 24px 8px 24px"}}>
+                        <input className={"searchbar"} style={{width:"100%"}} onChange={handleInputOnChange} placeholder={"Suche..."}/>
                         <button onClick={props.onSearchClick} disabled={props.startSearch}>Suchen</button>
                     </div>
                     <div className={"modalFoodItem_foodItems-wrapper"}>
-                        {
+                    {
                             props.startSearch &&
                             <Box sx={{ display: 'flex', justifyContent: "center"}}>
                                 <CircularProgress />

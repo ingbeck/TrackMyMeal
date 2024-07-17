@@ -72,7 +72,7 @@ export default function MealCard(props: Readonly<MealItemCardProps>) {
                         <span className={"meal_mealItem"}>...</span>}
                 </div>
             </div>
-            <Modal style={{placeSelf:"center"}} open={open} onClose={() => setOpen(!open)}>
+            <Modal style={{justifySelf:"center", alignSelf:"center"}} open={open} onClose={() => setOpen(!open)}>
                 <div className={"mealButton-wrapper"}>
                     <button onClick={() => handleMealButtonClick("BREAKFAST")}>
                         <BreakfastButton width={40} height={40}/>
