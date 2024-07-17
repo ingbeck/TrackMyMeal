@@ -8,7 +8,8 @@ type MealGalleryProps = {
     addMealToDiary: (mealType: string, meal: MealToSaveDto) => void,
     deleteMeal: (id : string) => void,
     isEditable: boolean,
-    renderMealItems: (numberItemsToRender : number, mealItems : MealItem[]) => void
+    renderMealItems: (numberItemsToRender : number, mealItems : MealItem[]) => void,
+    userHasMeals: boolean
 }
 export default function MealGallery(props: Readonly<MealGalleryProps>) {
 
@@ -24,7 +25,10 @@ export default function MealGallery(props: Readonly<MealGalleryProps>) {
                     deleteMeal={props.deleteMeal}
                     isEditable={props.isEditable} renderMealItems={props.renderMealItems}/>)
                 :
-                <span className={"homescreen-meals-empty"}>Keine Mahlzeit gefunden</span>
+                <div className={"homescreen-meals-empty"}>
+                    <span>Keine Mahlzeiten vorhanden</span>
+                    {!props.userHasMeals && <p>Drücke auf den runden Edit-Button oben rechts, um eine Mahlzeit&nbsp;zu erstellen.</p>}
+                </div>
             }
         </div>
     );

@@ -20,7 +20,9 @@ type MealsScreenProps = {
     addMealToDiary: (mealType: string, meal: MealToSaveDto) => void,
     addNewMeal: (mealToSave : MealToSaveDto) => void,
     deleteMeal: (id : string) => void,
-    meals: Meal[]
+    meals: Meal[],
+    userHasMeals: boolean,
+    checkIfUserHasMeals: () => void
 }
 export default function MealsPage(props: Readonly<MealsScreenProps>) {
 
@@ -44,6 +46,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
 
     useEffect(() => {
         props.setCurrentRoute(url)
+        props.checkIfUserHasMeals()
     }, [props, url]);
 
     function handleEditButtonClick(){
@@ -203,7 +206,8 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                          addMealToDiary={props.addMealToDiary}
                          isEditable={isEditable}
                          deleteMeal={props.deleteMeal}
-                         renderMealItems={renderMealItems}/>
+                         renderMealItems={renderMealItems}
+                         userHasMeals={props.userHasMeals}/>
 
             <ModalAddMealItem modalOpen={modalOpen}
                               badgeCount={badgeCount}

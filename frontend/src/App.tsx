@@ -40,6 +40,7 @@ export default function App() {
     const[currentRoute, setCurrentRoute] = useState<string>("")
     const[currentMeal, setCurrentMeal] = useState<string>("")
     const[meals, setMeals] = useState<Meal[]>(initialMeals)
+    const[userHasMeals, setUserHasMeals] = useState<boolean>(false)
 
     const navigate = useNavigate();
 
@@ -176,6 +177,12 @@ export default function App() {
             .catch(error => console.log(error.message));
     }
 
+    function checkIfUserHasMeals(){
+        axios.get("/api/meals/"+appUser.id+"/hasMeals")
+            .then(response => setUserHasMeals(response.data))
+            .catch(error => console.log(error.message));
+    }
+
 
     return (
       <Layout currentRoute={currentRoute} appUser={appUser} appUrl={appUrl} setCurrentMeal={setCurrentMeal}>
@@ -208,7 +215,9 @@ export default function App() {
                   meals={meals}
                   addMealToDiary={addMealToDiary}
                   addNewMeal={addNewMeal}
-                  deleteMeal={deleteMeal}/>
+                  deleteMeal={deleteMeal}
+                  checkIfUserHasMeals={checkIfUserHasMeals}
+                  userHasMeals={userHasMeals}/>
               }/>
               <Route path={"/profile"} element={<ProfilePage
                   setCurrentRoute={setCurrentRoute}
