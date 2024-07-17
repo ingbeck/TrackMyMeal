@@ -204,6 +204,7 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                          isEditable={isEditable}
                          deleteMeal={props.deleteMeal}
                          renderMealItems={renderMealItems}/>
+
             <ModalAddMealItem modalOpen={modalOpen}
                               badgeCount={badgeCount}
                               startSearch={startSearch}
@@ -213,12 +214,13 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                               onSearchClick={onSearchClick}
                               setModalMealItemsOpen={setModalMealItemsOpen}
                               setSearchTextProduct={setSearchTextProduct}/>
-            <ModalAddFoodItem
-                open={modalFoodItemOpen}
-                handleClose={() => setModalFoodItemOpen(false)}
-                setAmount={setAmount}
-                selectedFoodItem={selectedFoodItem}
-                addFoodItem={handleAddMealItem}/>
+
+            <ModalAddFoodItem open={modalFoodItemOpen}
+                              handleClose={() => setModalFoodItemOpen(false)}
+                              setAmount={setAmount}
+                              selectedFoodItem={selectedFoodItem}
+                              addFoodItem={handleAddMealItem}/>
+
             <ModalMealItems deleteMealItem={deleteMealItem}
                             open={modalMealItemsOpen}
                             mealItems={mealItems}
