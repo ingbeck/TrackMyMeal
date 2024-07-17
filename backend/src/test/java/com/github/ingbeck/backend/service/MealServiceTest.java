@@ -125,7 +125,7 @@ class MealServiceTest {
     @Test
     void userHasMeal_whenCalledWithUserNotHavingMeals_thenReturnTrue(){
         //GIVEN
-        when(mealRepository.findAllByUserId("2")).thenReturn(null);
+        when(mealRepository.findAllByUserId("2")).thenReturn(List.of());
 
         //THEN & WHEN
         assertFalse(mealService.userHasMeals("2"));

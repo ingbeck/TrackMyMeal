@@ -44,6 +44,6 @@ public class MealService {
     }
 
     public boolean userHasMeals(String userId){
-        return mealRepository.findAllByUserId(userId) != null;
+        return !mealRepository.findAllByUserId(userId).isEmpty();
     }
 }
