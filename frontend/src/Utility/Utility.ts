@@ -1,21 +1,15 @@
-export function getDateToday():string{
-    const today = new Date()
-    const day = today.getDate()
-    const month = today.getMonth() + 1
-    const yyyy = today.getFullYear()
+export function highlightSearchText(searchText : string, elementToHighlightId : string) {
+    const textToSearch: string = searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern: RegExp = new RegExp(textToSearch, "gi");
+    const elementToReplace = document.getElementById(elementToHighlightId)
 
-    let dd:string = day.toString();
-    let mm:string = month.toString();
-
-    if (day < 10) {
-        dd = '0' + day;
+    if (elementToReplace?.textContent) {
+        if (textToSearch !== "") {
+            elementToReplace.innerHTML = elementToReplace.textContent.replace(pattern, match => `<mark>${match}</mark>`)
+        } else {
+            elementToReplace.innerHTML = elementToReplace.textContent.replace(textToSearch, "")
+        }
     }
-
-    if (month < 10) {
-        mm = '0' + month;
-    }
-
-    return yyyy+"-"+mm+"-"+dd;
 }
 
 export function translateMealType(mealType : string) : string{
@@ -47,3 +41,5 @@ export function getBackgroundColor(mealType : string) : string {
             return ""
     }
 }
+
+

@@ -1,25 +1,22 @@
 import {Box, Modal} from "@mui/material";
-import FoodItemCard from "../cards/FoodItemCard.tsx";
-import {FoodItem} from "../../types/Diary.ts";
-import {translateMealType} from "../../Utility/Utility.ts";
 import "./ModalFoodItem.css"
+import {MealItem} from "../../types/Meal.ts";
+import MealItemCard from "../cards/MealItemCard.tsx";
 
-type ModalFoodItemsProps = {
-    deleteFoodItem? : (foodItemToDelete : FoodItem) => void,
+type ModalMealItemsProps = {
+    deleteMealItem : (mealItemToDelete : MealItem) => void,
     open : boolean,
-    foodItems : FoodItem[],
-    onClose : () => void,
-    mealType: string,
-    isHomescreen: boolean
+    mealItems : MealItem[],
+    onClose : () => void
 }
 
 
-export default function ModalFoodItems(props: Readonly<ModalFoodItemsProps>) {
+export default function ModalMealItems(props: Readonly<ModalMealItemsProps>) {
 
     return (
         <>
             {
-                props.foodItems.length !== 0
+                props.mealItems.length !== 0
                 &&
                 <Modal
                     open={props.open}
@@ -42,19 +39,18 @@ export default function ModalFoodItems(props: Readonly<ModalFoodItemsProps>) {
                     }}>
                         <div>
                             <div className={"modalFoodItem-header-wrapper"}>
-                                <label className={"modalFoodItem-title"}>{translateMealType(props.mealType)}</label>
+                                <label className={"modalFoodItem-title"}>Produkte</label>
                                 {
-                                    props.foodItems.length === 1
+                                    props.mealItems.length === 1
                                         ?
-                                        <span>{props.foodItems.length} Eintrag</span>
+                                        <span>{props.mealItems.length} Eintrag</span>
                                         :
-                                        <span>{props.foodItems.length} Einträge</span>
+                                        <span>{props.mealItems.length} Einträge</span>
                                 }
                             </div>
                             <div className={"modalFoodItem_foodItems-wrapper"}>
-                            {props.foodItems.map((foodItem) => <FoodItemCard key={foodItem.id} foodItem={foodItem}
-                                                                             isHomescreen={true}
-                                                                             deleteFoodItem={props.deleteFoodItem}/>)}
+                                {props.mealItems.map((mealItem) => <MealItemCard key={mealItem.id} mealItem={mealItem}
+                                                                                 deleteMealItem={props.deleteMealItem}/>)}
                             </div>
                             <div className={"modalAddFoodItem-btn-wrapper"} style={{padding:"16px 24px 24px 24px"}}>
                                 <button className={"cancel"}  onClick={props.onClose}>Zurück

@@ -18,7 +18,8 @@ import {Diary, DiaryEntry, FoodItem} from "../../types/Diary.ts";
 import ModalAddFoodItem from "../../components/modals/ModalAddFoodItem.tsx";
 import ModalFoodItems from "../../components/modals/ModalFoodItems.tsx";
 import {v4 as uuidv4} from 'uuid';
-import {getDateToday, translateMealType} from "../../Utility/Utility.ts";
+import {translateMealType} from "../../Utility/Utility.ts";
+import {getDateToday} from "../../Utility/DateTime.ts"
 
 type AddFoodItemProps = {
     setCurrentRoute : (url:string) => void,

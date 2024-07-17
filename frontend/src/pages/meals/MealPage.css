@@ -1,0 +1,33 @@
+.modalItems-btn_wrapper{
+    display: flex;
+    width: 100%;
+    align-self: center;
+    justify-content: space-between;
+}
+
+.addMealItems-btn,
+.addMealItems-btn-add{
+    border: solid;
+    border-radius: 16px;
+    padding: 16px;
+    place-self: center;
+    margin-top: 24px;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+}
+
+.addMealItems-btn-add{
+    justify-content: center;
+    border: none;
+    color: #FFF;
+    background: linear-gradient(90deg, #562AFF 0%, #841CFE 100%);
+}
+
+.divider-top {
+    flex-basis: 100%;
+    margin-top: 8px;
+    border-top: solid 1px #DDD;
+}

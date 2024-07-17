@@ -3,7 +3,7 @@ import {AppUser} from "../../types/AppUser.ts";
 import "./ProfilePage.css"
 import {ErrorState, FormInput} from "../registration/RegistrationPage.tsx";
 import {AppUserCreateDto} from "../../types/AppUserCreateDto.ts";
-import {getDateToday} from "../../Utility/Utility.ts";
+import {getDateToday} from "../../Utility/DateTime.ts";
 import * as Yup from "yup";
 import {validationSchema} from "../../YupValidationSchema.ts";
 
