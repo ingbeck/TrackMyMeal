@@ -1,5 +1,5 @@
 import {Meal, MealItem, MealToSaveDto} from "../types/Meal.ts";
-import MealItemCard from "./cards/MealItemCard.tsx";
+import MealCard from "./cards/MealCard.tsx";
 import "./MealGallery.css"
 
 type MealGalleryProps = {
@@ -16,7 +16,7 @@ export default function MealGallery(props: Readonly<MealGalleryProps>) {
         <div className={"mealGallery"}>
             {props.meals.length !== 0
                 ?
-                props.meals.map((meal) => <MealItemCard
+                props.meals.map((meal) => <MealCard
                     key={meal.id}
                     meal={meal}
                     searchText={props.searchText}

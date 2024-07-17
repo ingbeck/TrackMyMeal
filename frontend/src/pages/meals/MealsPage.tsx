@@ -4,16 +4,15 @@ import {Meal, MealItem, MealToSaveDto} from "../../types/Meal.ts";
 import SearchComponent from "../../components/SearchComponent.tsx";
 import MealGallery from "../../components/MealGallery.tsx";
 import AddButton from "../../components/svg/AddButton.tsx";
-import {Badge, Box, CircularProgress, Modal} from "@mui/material";
 import "./MealPage.css"
 import axios from "axios";
 import {OpenFoodFactsProduct, OpenFoodFactsProducts} from "../../types/OpenFoodFactsProducts.ts";
-import OpenFoodFactsProductsGallery from "../../components/OpenFoodFactsProductsGallery.tsx";
 import {v4 as uuidv4} from "uuid";
 import ModalAddFoodItem from "../../components/modals/ModalAddFoodItem.tsx";
+import ModalAddMealItem from "../../components/modals/ModalAddMealItem.tsx";
 import EditButton from "../../components/svg/EditButton.tsx";
 import CheckButton from "../../components/svg/CheckButton.tsx";
-import RecipeIcon from "../../assets/menu-icons/icon_recipe.svg";
+import ModalMealItems from "../../components/modals/ModalMealItems.tsx";
 
 type MealsScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -31,7 +30,8 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
     const[isEditable, setIsEditable] = useState<boolean>(false)
     const[modalOpen, setModalOpen] = useState<boolean>(false);
     const[modalFoodItemOpen, setModalFoodItemOpen] = useState<boolean>(false);
-    const[addButtonClicked, setAddButtonClicked] = useState<boolean>(false)
+    const[modalMealItemsOpen, setModalMealItemsOpen] = useState<boolean>(false);
+    const[addButtonClicked, setAddButtonClicked] = useState<boolean>(false);
     const[mealName, setMealName] = useState<string>("")
     const[mealItems, setMealItems] = useState<MealItem[]>([])
     const[currentProducts, setCurrentProducts] = useState<OpenFoodFactsProducts | null>(null)
@@ -98,6 +98,11 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
         };
         setModalFoodItemOpen(false);
         setMealItems([...mealItems, mealItemToSave]);
+    }
+
+    function deleteMealItem(mealItemToDelete: MealItem){
+        const newMealItems = mealItems.filter(mealItem => mealItem.id !== mealItemToDelete.id);
+        setMealItems(newMealItems);
     }
 
     function renderMealItems(numberItemsToRender: number, mealItems: MealItem[]){
@@ -176,17 +181,17 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                                             </div>
                                         </>
                                     }
-                                    <div className={"modalItems-btn_wrapper"}>
-                                        <Badge className={"addMealItems-btn"}
-                                               badgeContent={badgeCount}
-                                               color="primary" onClick={() => setModalOpen(!modalOpen)}
-                                        >Zutaten hinzufügen</Badge>
+                                    <div className={"modalItems-btn_wrapper"} style={{gap:8}}>
+                                        <button className={"addMealItems-btn"}
+                                                onClick={() => setModalOpen(!modalOpen)}
+                                                style={{flex: 1}}
+                                        >Essen hinzufügen</button>
                                         <button className={"addMealItems-btn-add"} onClick={handleSubmitNewMeal}>Fertig</button>
                                     </div>
                                 </>
                                 :
                                 <div className={"card-header"}>
-                                    <button onClick={() => setAddButtonClicked(true)} style={{flexBasis: "100%"}}>
+                                    <button onClick={() => setAddButtonClicked(true)} style={{flex: 1}}>
                                         <AddButton width={40} height={40}/></button>
                                 </div>
                         }
@@ -199,66 +204,25 @@ export default function MealsPage(props: Readonly<MealsScreenProps>) {
                          isEditable={isEditable}
                          deleteMeal={props.deleteMeal}
                          renderMealItems={renderMealItems}/>
+            <ModalAddMealItem modalOpen={modalOpen}
+                              badgeCount={badgeCount}
+                              startSearch={startSearch}
+                              onModalClose={onModalClose}
+                              currentProducts={currentProducts}
+                              onClickAddButton={onClickAddButton}
+                              onSearchClick={onSearchClick}
+                              setModalMealItemsOpen={setModalMealItemsOpen}
+                              setSearchTextProduct={setSearchTextProduct}/>
             <ModalAddFoodItem
                 open={modalFoodItemOpen}
                 handleClose={() => setModalFoodItemOpen(false)}
                 setAmount={setAmount}
                 selectedFoodItem={selectedFoodItem}
                 addFoodItem={handleAddMealItem}/>
-            <Modal open={modalOpen}
-                   onClose={onModalClose}
-                   aria-labelledby="modal-modal-title"
-                   aria-describedby="modal-modal-description"
-                   style={{margin:"0 16px 0 16px"}}
-            >
-                <Box sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: "100%",
-                    bgcolor: 'background.paper',
-                    borderRadius: "16px",
-                    boxShadow: 24,
-                    p: 4,
-                    padding:0
-                }}>
-                    <div>
-                        <div className={"modalFoodItem-header-wrapper"}>
-                            <h1 className={"modalFoodItem-title"}>Produkt suchen</h1>
-                            <Badge badgeContent={badgeCount}
-                                   color="primary"
-                            >
-                                <img src={RecipeIcon} alt={""}/>
-                            </Badge>
-                        </div>
-                        <div className={"search"} style={{margin:"16px 24px 8px 24px"}}>
-                            <SearchComponent handleSearchText={setSearchTextProduct}/>
-                            <button onClick={onSearchClick} disabled={startSearch}>Suchen</button>
-                        </div>
-                        <div className={"modalFoodItem_foodItems-wrapper"}>
-                            {
-                                startSearch &&
-                                <Box sx={{ display: 'flex', justifyContent: "center"}}>
-                                    <CircularProgress />
-                                </Box>
-                            }
-                            {currentProducts &&
-                            currentProducts.products.length === 0
-                                ?
-                                <span className={"homescreen-meals-empty"}>Keine Produkte gefunden</span>
-                                :
-                                <OpenFoodFactsProductsGallery openFoodFactsProducts={currentProducts} onClickAddButton={onClickAddButton}/>}
-                        </div>
-                        <div className={"modalAddFoodItem-btn-wrapper"} style={{padding: "16px 24px 24px 24px"}}>
-                            <button className={"cancel"}
-                                    onClick={onModalClose}>
-                                Zurück
-                            </button>
-                        </div>
-                    </div>
-                </Box>
-            </Modal>
+            <ModalMealItems deleteMealItem={deleteMealItem}
+                            open={modalMealItemsOpen}
+                            mealItems={mealItems}
+                            onClose={() => setModalMealItemsOpen(false)}/>
         </div>
     );
 }
