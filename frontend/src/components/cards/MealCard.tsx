@@ -3,7 +3,7 @@ import "./MealCard.css"
 import {useEffect, useState} from "react";
 import {highlightSearchText} from "../../Utility/Utility.ts";
 import AddButton from "../svg/AddButton.tsx";
-import {Modal} from "@mui/material";
+import {Box, Modal} from "@mui/material";
 import BreakfastButton from "../svg/meal-icons/BreakfastButton.tsx";
 import LunchButton from "../svg/meal-icons/LunchButton.tsx";
 import DinnerButton from "../svg/meal-icons/DinnerButton.tsx";
@@ -72,7 +72,18 @@ export default function MealCard(props: Readonly<MealItemCardProps>) {
                         <span className={"meal_mealItem"}>...</span>}
                 </div>
             </div>
-            <Modal style={{justifySelf:"center", alignSelf:"center"}} open={open} onClose={() => setOpen(!open)}>
+            <Modal open={open} onClose={() => setOpen(!open)}>
+                <Box sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    borderRadius: "16px",
+                    boxShadow: 24,
+                    p: 4,
+                    padding:0
+                }}>
                 <div className={"mealButton-wrapper"}>
                     <button onClick={() => handleMealButtonClick("BREAKFAST")}>
                         <BreakfastButton width={40} height={40}/>
@@ -91,6 +102,7 @@ export default function MealCard(props: Readonly<MealItemCardProps>) {
                         <span>Snack</span>
                     </button>
                 </div>
+                </Box>
             </Modal>
         </>
 
