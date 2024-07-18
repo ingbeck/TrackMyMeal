@@ -117,3 +117,10 @@
     padding: 24px;
 }
 
+.login-wrapper{
+    display: flex;
+    padding: 24px 24px 24px 24px ;
+    align-items: stretch;
+    justify-content: center;
+}
+

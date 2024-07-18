@@ -194,7 +194,13 @@ export default function App() {
           <Routes>
               <Route path={"/"} element={<StartPage
                   login={login}
-                  setCurrentRoute={setCurrentRoute}/>}/>
+                  setCurrentRoute={setCurrentRoute}
+                  isDemo={false}/>}/>
+              <Route path={"/demo"} element={<StartPage
+                  login={login}
+                  setCurrentRoute={setCurrentRoute}
+                  isDemo={true}
+                  getAppUserById={getAppUserById}/>}/>
               <Route path={"/login"} element={<LoginProcessingScreen
                   getMe={getMe}
                   appUser={appUser}/>}/>
