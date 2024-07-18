@@ -2,10 +2,8 @@
     display: flex;
     padding: 24px 24px 32px 24px;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: stretch;
     background: #FFF;
-    height: 93vh;
+    height: 100svh;
 }
 
 .startpage-hero-wrapper{
@@ -36,7 +34,6 @@
 .image-logo{
     width: 104px;
     height: 104px;
-    flex-shrink: 1;
 }
 
 .startpage-body-wrapper{
