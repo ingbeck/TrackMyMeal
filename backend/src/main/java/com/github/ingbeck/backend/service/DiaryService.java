@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Service
@@ -107,14 +106,13 @@ public class DiaryService {
 
         List<DiaryEntry> diaryEntries = new ArrayList<>();
         LocalDate today = LocalDate.now();
-        LocalDate[] dates = new LocalDate[7];
 
-        for(int i = 0; i < dates.length; i++){
-            dates[i] = today.minusDays(i-1L);
-        }
-
-        for(LocalDate date: dates){
-            diaryEntries.add(new DiaryEntry(date.toString(), List.of(), 0));
+        for(int i = 0; i < 7; i++){
+            diaryEntries.add(new DiaryEntry(
+                    today.minusDays(i-1L).toString(),
+                    demoFoodItems(i+1),
+                    demoFoodItems(i+1).stream().map(FoodItem::calories).reduce(0, Integer::sum))
+            );
         }
 
         return diaryEntries;
@@ -122,11 +120,9 @@ public class DiaryService {
 
     public List<FoodItem> demoFoodItems(int day){
 
-        FoodItem haferCappuccino = new FoodItem(new ObjectId().toString(), "Hafer Cappuccino", 230, "g", 98, MealType.BREAKFAST);
-
         return switch (day) {
             case 1 -> List.of(
-                    haferCappuccino,
+                    new FoodItem(new ObjectId().toString(), "Hafer Cappuccino", 230, "g", 98, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Bio Roggen Brot", 60, "g", 128, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Bio Schwarzwälder Schinken", 80, "g", 184, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Butter", 5, "g", 37, MealType.BREAKFAST),
@@ -138,7 +134,7 @@ public class DiaryService {
                     new FoodItem(new ObjectId().toString(), "Snickers", 50, "g", 241, MealType.SNACK)
             );
             case 2 -> List.of(
-                    haferCappuccino,
+                    new FoodItem(new ObjectId().toString(), "Hafer Cappuccino", 230, "g", 98, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Haferflocken", 40, "g", 148, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Alpen Milch", 200, "g", 132, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Agavendicksaft", 5, "g", 15, MealType.BREAKFAST),
@@ -149,7 +145,7 @@ public class DiaryService {
                     new FoodItem(new ObjectId().toString(), "Butter", 10, "g", 74, MealType.DINNER)
             );
             case 3 -> List.of(
-                    haferCappuccino,
+                    new FoodItem(new ObjectId().toString(), "Hafer Cappuccino", 230, "g", 98, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Haferflocken", 40, "g", 148, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Alpen Milch", 200, "g", 132, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Agavendicksaft", 5, "g", 15, MealType.BREAKFAST),
@@ -162,11 +158,11 @@ public class DiaryService {
                     new FoodItem(new ObjectId().toString(), "Bio Linsen Chips", 80, "g", 311, MealType.SNACK)
             );
             case 4 -> List.of(
-                    haferCappuccino,
+                    new FoodItem(new ObjectId().toString(), "Hafer Cappuccino", 230, "g", 98, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Bagel mit Schinken", 220, "g", 440, MealType.BREAKFAST)
             );
             case 5 -> List.of(
-                    haferCappuccino,
+                    new FoodItem(new ObjectId().toString(), "Hafer Cappuccino", 230, "g", 98, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Bio Berry Bircher Müsli", 80, "g", 301, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Alpen Milch", 200, "g", 132, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Dinkel Toast", 40, "g", 106, MealType.LUNCH),
@@ -177,7 +173,7 @@ public class DiaryService {
                     new FoodItem(new ObjectId().toString(), "Tiramisu", 125, "g", 291, MealType.DINNER)
             );
             case 6 -> List.of(
-                    haferCappuccino,
+                    new FoodItem(new ObjectId().toString(), "Hafer Cappuccino", 230, "g", 98, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Haferflocken", 40, "g", 148, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Alpen Milch", 200, "g", 132, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Agavendicksaft", 5, "g", 15, MealType.BREAKFAST),
@@ -190,7 +186,7 @@ public class DiaryService {
                     new FoodItem(new ObjectId().toString(), "Alpen-Vollmilch-Schokolade", 80, "g", 429, MealType.SNACK)
             );
             case 7 -> List.of(
-                    haferCappuccino,
+                    new FoodItem(new ObjectId().toString(), "Hafer Cappuccino", 230, "g", 98, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Bio Roggen Brot", 60, "g", 128, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Bio Schwarzwälder Schinken", 80, "g", 184, MealType.BREAKFAST),
                     new FoodItem(new ObjectId().toString(), "Butter", 5, "g", 37, MealType.BREAKFAST),
