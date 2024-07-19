@@ -5,6 +5,7 @@ import {ChangeEvent, useEffect, useState} from "react";
 import DesktopStartPage from "./DesktopStartPage.tsx";
 import {useNavigate} from "react-router-dom";
 import {Drawer} from "@mui/material";
+import axios from "axios";
 
 type StartScreenProps = {
     login: () => void,
@@ -26,16 +27,34 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
 
     const[loginIsOpen, setLoginIsOpen] = useState<boolean>(false)
     const[formData, setFormData] = useState<FormLoginInput>({username:"", password:""})
+    const[accountAuthorized, setAccountAuthorized] = useState<boolean>(false)
 
     useEffect(() => {
         props.setCurrentRoute(url)
     }, [props, url]);
 
+    function checkIfAccountIsAuthorized(){
+        axios.get("/api/demo/login/"+formData.username+"/"+formData.password)
+            .then(response => setAccountAuthorized(response.data))
+            .catch(error => console.log(error.message))
+    }
+
     function loginDemo(){
-        if(props.getAppUserById){
-            props.getAppUserById("6698db77f221e7396941d052")
-            navigate("/home")
+            if(props.getAppUserById){
+                props.getAppUserById("6698db77f221e7396941d052")
+                navigate("/home")
+            }
+    }
+
+    function handleSubmit(e: { preventDefault: () => void; }){
+        e.preventDefault()
+
+        if(accountAuthorized){
+            loginDemo()
+        }else{
+            window.alert("Account nicht autorisiert!")
         }
+
     }
 
     function onClose(){
@@ -89,7 +108,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                     <DesktopStartPage/>
             }
             <Drawer open={loginIsOpen} onClose={onClose} anchor={"bottom"}>
-                <div className={"login-wrapper"}>
+                <form className={"login-wrapper"} onSubmit={handleSubmit}>
                     <div  className={"modalAddFoodItem-btn-wrapper"}>
                         <input className={"searchbar"}
                                placeholder={"Username"}
@@ -100,9 +119,9 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                                name={"password"}
                                onChange={handleInputChange}
                                type={"password"}/>
-                        <button className={"add"} onClick={loginDemo}>Los geht's!</button>
+                        <button className={"add"} onClick={checkIfAccountIsAuthorized}>Los geht's!</button>
                     </div>
-                </div>
+                </form>
             </Drawer>
         </>
     );
