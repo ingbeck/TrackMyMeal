@@ -31,7 +31,12 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public  void deleteUserById(@PathVariable String id){
+    public void deleteUserById(@PathVariable String id){
         userService.deleteUserById(id);
+    }
+
+    @PostMapping("/demo/{name}")
+    public AppUser createDemoUser(@PathVariable String name){
+        return userService.createDemoUser(name);
     }
 }

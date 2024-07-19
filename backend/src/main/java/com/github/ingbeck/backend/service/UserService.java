@@ -1,10 +1,12 @@
 package com.github.ingbeck.backend.service;
 
+import com.github.ingbeck.backend.model.appuser.ActivityLevel;
 import com.github.ingbeck.backend.model.appuser.AppUser;
 import com.github.ingbeck.backend.model.appuser.AppUserCreateDto;
 import com.github.ingbeck.backend.model.appuser.AppUserGender;
 import com.github.ingbeck.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -41,6 +43,38 @@ public class UserService {
                 false
         );
         return userRepository.save(appUserToSave);
+    }
+
+    public AppUser createDemoUser(String name){
+
+        String id = new ObjectId().toString();
+        String birthdate = "1990-07-17";
+        int age = calculateAge(birthdate);
+        int height = 176;
+        int weight = 86;
+        AppUserGender gender = AppUserGender.MALE;
+        ActivityLevel activityLevel = ActivityLevel.COUCHPOTATO;
+
+        int bmr = (int)calculateBMR(height,weight,calculateAge(birthdate),gender);
+        int bmrWithActivity = (int)(bmr*activityLevel.getLevel());
+
+        AppUser userToCreate = new AppUser(
+                id,
+                name,
+                birthdate,
+                age,
+                "https://lh3.googleusercontent.com/a/ACg8ocLuwovd3WyFZ3JPIPtoZhnqzfu78pijyskJW0H7a5W3nIhxDjFg=s96-c",
+                gender,
+                height,
+                weight,
+                activityLevel,
+                bmr,
+                bmrWithActivity,
+                false
+        );
+
+        diaryService.createDemoDiary(id);
+        return userRepository.save(userToCreate);
     }
 
     public void deleteUserById(String id){
