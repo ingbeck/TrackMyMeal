@@ -1,22 +1,81 @@
 import "./StartPage.css"
 import Logo from "../../assets/logo.png"
 import GoogleLogo from "../../assets/google.svg"
-import {useEffect} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import DesktopStartPage from "./DesktopStartPage.tsx";
+import {useNavigate} from "react-router-dom";
+import {Drawer} from "@mui/material";
+import axios from "axios";
 
 type StartScreenProps = {
     login: () => void,
-    setCurrentRoute: (url:string) => void
+    setCurrentRoute: (url:string) => void,
+    createDemoUser?: (name: string) => void,
+    isDemo: boolean
+}
+
+type FormLoginInput = {
+    username:string,
+    password:string
 }
 
 export default function StartPage(props: Readonly<StartScreenProps>) {
 
     const url = window.location.href;
     const isMobile = /iPhone|iPod|Android/i.test(navigator.userAgent);
+    const navigate = useNavigate()
+
+    const[loginIsOpen, setLoginIsOpen] = useState<boolean>(false)
+    const[formData, setFormData] = useState<FormLoginInput>({username:"", password:""})
 
     useEffect(() => {
         props.setCurrentRoute(url)
     }, [props, url]);
+
+    async function checkIfAccountIsAuthorized(): Promise<boolean> {
+        return await axios.get("/api/demo/login/" + formData.username.toLowerCase() + "/" + formData.password)
+            .then(response => {
+                return Boolean(response.data)
+            })
+            .catch(() => {
+                return false
+            });
+
+    }
+
+    function loginDemo(isAuthorized : boolean){
+        if(isAuthorized && props.createDemoUser){
+            props.createDemoUser(capitalize(formData.username))
+            navigate("/home")
+        }else{
+            window.alert("Account nicht gefunden")
+        }
+    }
+
+    function capitalize(stringToCapitalize: string) : string{
+        return stringToCapitalize.charAt(0).toUpperCase() + stringToCapitalize.slice(1);
+    }
+
+    function handleSubmit(e: { preventDefault: () => void; }){
+        e.preventDefault()
+        checkIfAccountIsAuthorized().then(response => loginDemo(response))
+    }
+
+    function onClose(){
+        setLoginIsOpen(false);
+        setFormData({username: "", password:""});
+    }
+
+    function handleInputChange(event: ChangeEvent<HTMLInputElement>){
+        const value = event.target.value;
+        const name = event.target.name;
+
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+
+    }
 
     return (
         <>
@@ -36,15 +95,39 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                                 <h1 className={"startpage-wrapper-text"}>Track My Meal</h1>
                                 <p>Dein mobiles Kalorientagebuch für eine&nbsp;ausgewogene Ernährung</p>
                             </div>
-                            <button className={"btn-login"} onClick={props.login}>
-                                <img src={GoogleLogo} alt={"Logo von Google"}/><span>Mit Google anmelden</span>
-                            </button>
+                            {
+                                props.isDemo
+                                    ?
+                                    <button className={"btn-login"} onClick={() => setLoginIsOpen(true)}>
+                                        Login
+                                    </button>
+                                    :
+                                    <button className={"btn-login"} onClick={props.login}>
+                                        <img src={GoogleLogo} alt={"Logo von Google"}/><span>Mit Google anmelden</span>
+                                    </button>
+                            }
                             <span className={"copyright"}>© 2024 Ingo Becker</span>
                         </div>
                     </div>
                     :
                     <DesktopStartPage/>
             }
+            <Drawer open={loginIsOpen} onClose={onClose} anchor={"bottom"}>
+                <form className={"login-wrapper"} onSubmit={handleSubmit}>
+                    <div  className={"modalAddFoodItem-btn-wrapper"}>
+                        <input className={"searchbar"}
+                               placeholder={"Username"}
+                               name={"username"}
+                               onChange={handleInputChange}/>
+                        <input className={"searchbar"}
+                               placeholder={"Passwort"}
+                               name={"password"}
+                               onChange={handleInputChange}
+                               type={"password"}/>
+                        <button className={"add"}>Los geht's!</button>
+                    </div>
+                </form>
+            </Drawer>
         </>
     );
 }

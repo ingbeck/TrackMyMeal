@@ -60,6 +60,14 @@ export default function HomePage(props: Readonly<HomeScreenProps>) {
     return (
         <div className={"page-container"}>
             <h1>Heute</h1>
+            {
+                props.appUser.demoUser
+                &&
+                <div className={"demobanner"}>
+                    <h3>Demokonto</h3>
+                    <p>Änderungen werden nur für die Sessiondauer gespeichert und nach dem Abmelden zurück&shy;gesetzt.</p>
+                </div>
+            }
             <div className={"homescreen-dailyProgress"}>
                 <span id={"dailyProgress-caption"}>Ziel</span>
                 <div id={"progress"} className={"progressbar"}>

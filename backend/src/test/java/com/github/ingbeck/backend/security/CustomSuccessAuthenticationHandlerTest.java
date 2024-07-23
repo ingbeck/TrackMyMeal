@@ -68,7 +68,9 @@ class CustomSuccessAuthenticationHandlerTest {
                     null,
                     0,
                     0,
-                    true
+                    true,
+                    "",
+                    false
             );
 
             when(userRepository.findById("987654321")).thenReturn(Optional.of(user));
@@ -117,7 +119,9 @@ class CustomSuccessAuthenticationHandlerTest {
                     null,
                     0,
                     0,
-                    true
+                    true,
+                    "",
+                    false
             );
 
             when(userRepository.findById("987654321")).thenReturn(Optional.of(user));

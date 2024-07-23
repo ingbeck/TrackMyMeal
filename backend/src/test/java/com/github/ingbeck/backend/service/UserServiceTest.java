@@ -53,6 +53,18 @@ class UserServiceTest {
         assertThrows(NoSuchElementException.class, () -> service.createUser("2", appUserCreateDto));
     }
 
+    @Test
+    void createDemoUser_whenCalled_returnValidUser(){
+        //GIVEN
+        //THEN
+        service.createDemoUser("Max");
+
+        //WHEN
+        verify(repo).save(any(AppUser.class));
+        verify(diaryService).createDemoDiary(any());
+    }
+
+
     private static AppUser getAppUser(AppUserCreateDto appUserCreateDto) {
         int bmr = (int)(66.47 + 13.75 * appUserCreateDto.weight() + 5.003 * appUserCreateDto.height() - 6.755 * 32);
         int bmrWithActivity = (int)(bmr * appUserCreateDto.activityLevel().getLevel());
@@ -69,8 +81,11 @@ class UserServiceTest {
                 ActivityLevel.ATHLETE,
                 bmr,
                 bmrWithActivity,
+                false,
+                "2024-01-01",
                 false
         );
     }
+
 
 }

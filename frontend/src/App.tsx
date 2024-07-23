@@ -34,7 +34,9 @@ export default function App() {
         activityLevel : "",
         bmr : 0,
         bmrWithActivity : 0,
-        isNewUser : true
+        newUser : true,
+        creationDate : "",
+        demoUser : false
     })
     const[diary, setDiary] = useState<Diary>({id:"", userId:"", diaryEntries:[]});
     const[currentRoute, setCurrentRoute] = useState<string>("")
@@ -67,17 +69,21 @@ export default function App() {
                 activityLevel : loggedInUser.activityLevel,
                 bmr : loggedInUser.bmr,
                 bmrWithActivity : loggedInUser.bmrWithActivity,
-                isNewUser : loggedInUser.isNewUser
+                newUser : loggedInUser.newUser,
+                creationDate : loggedInUser.creationDate,
+                demoUser : loggedInUser.demoUser
             })
         }
     }, []);
 
     useEffect(() => {
-        if(appUser.id !== "" && !appUser.isNewUser){
+        if(appUser.id !== "" && !appUser.newUser){
             getDiaryByUserId(appUser.id)
             getMealsByUserId(appUser.id)
         }
     }, [appUser]);
+
+
 
     function login(){
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -104,6 +110,15 @@ export default function App() {
                 setAppUser(response.data);
                 localStorage.setItem("user", JSON.stringify(response.data));
             })
+    }
+
+    function createDemoUser(name: string){
+        axios.post("/api/users/demo/"+name)
+            .then(response => {
+                setAppUser(response.data);
+                localStorage.setItem("user", JSON.stringify(response.data));
+            })
+            .catch(error => console.log(error.message));
     }
     function getAppUrl(){
         axios.get("/api/currentUrl")
@@ -143,7 +158,7 @@ export default function App() {
         axios.delete("/api/users/"+ id)
             .then(() => {
                 localStorage.clear();
-                navigate("/")
+                appUser.demoUser ? navigate("/demo") : navigate("/");
             })
     }
 
@@ -194,7 +209,13 @@ export default function App() {
           <Routes>
               <Route path={"/"} element={<StartPage
                   login={login}
-                  setCurrentRoute={setCurrentRoute}/>}/>
+                  setCurrentRoute={setCurrentRoute}
+                  isDemo={false}/>}/>
+              <Route path={"/demo"} element={<StartPage
+                  login={login}
+                  setCurrentRoute={setCurrentRoute}
+                  isDemo={true}
+                  createDemoUser={createDemoUser}/>}/>
               <Route path={"/login"} element={<LoginProcessingScreen
                   getMe={getMe}
                   appUser={appUser}/>}/>
