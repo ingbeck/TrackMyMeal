@@ -46,6 +46,11 @@ export default function ProfilePage(props: Readonly<ProfileScreenProps>) {
             props.deleteUser(props.appUser.id)
     }
 
+    function logoutDemoUser(){
+        if (window.confirm("Der Demoaccount wird hierdurch zurückgesetzt. Möchtest du fortfahren?"))
+            props.deleteUser(props.appUser.id)
+    }
+
     function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>){
         const value = event.target.value;
         const name = event.target.name;
@@ -200,7 +205,7 @@ export default function ProfilePage(props: Readonly<ProfileScreenProps>) {
                     <button onClick={cancel} className={"add"}>
                         {isEditable ? "Abbrechen" : "Profil bearbeiten"}
                     </button>
-                    {!isEditable && <button onClick={props.logout} className={"cancel"}>Logout</button>}
+                    {!isEditable && <button onClick={props.appUser.demoUser ? logoutDemoUser :props.logout} className={"cancel"}>Logout</button>}
                     {isEditable &&
                         <>
                             <button onClick={update} className={"cancel"}>Speichern</button>
