@@ -40,22 +40,19 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
     }
 
     function loginDemo(){
-            if(props.createDemoUser){
-                props.createDemoUser(formData.username)
-                navigate("/home")
-            }
+        if(accountAuthorized && props.createDemoUser){
+            props.createDemoUser(formData.username)
+            navigate("/home")
+        }else{
+            window.alert("Account nicht gefunden")
+        }
     }
 
     function handleSubmit(e: { preventDefault: () => void; }){
         e.preventDefault()
 
         checkIfAccountIsAuthorized()
-
-        if(accountAuthorized){
-            loginDemo()
-        }else{
-            window.alert("Account nicht autorisiert!")
-        }
+        loginDemo()
 
     }
 
