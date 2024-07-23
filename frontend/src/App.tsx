@@ -34,7 +34,9 @@ export default function App() {
         activityLevel : "",
         bmr : 0,
         bmrWithActivity : 0,
-        isNewUser : true
+        isNewUser : true,
+        creationDate : "",
+        isDemoUser : false
     })
     const[diary, setDiary] = useState<Diary>({id:"", userId:"", diaryEntries:[]});
     const[currentRoute, setCurrentRoute] = useState<string>("")
@@ -67,7 +69,9 @@ export default function App() {
                 activityLevel : loggedInUser.activityLevel,
                 bmr : loggedInUser.bmr,
                 bmrWithActivity : loggedInUser.bmrWithActivity,
-                isNewUser : loggedInUser.isNewUser
+                isNewUser : loggedInUser.isNewUser,
+                creationDate : loggedInUser.creationDate,
+                isDemoUser : loggedInUser.creationDate
             })
         }
     }, []);
