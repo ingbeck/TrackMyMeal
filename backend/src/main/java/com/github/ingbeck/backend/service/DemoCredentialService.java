@@ -13,9 +13,9 @@ public class DemoCredentialService {
 
     public boolean isAuthorized(String username, String password){
 
-        DemoCredential credentialToCheck = demoCredentialRepository.findDemoCredentialByUsername(username).orElse(new DemoCredential("", "", "", ""));
+        DemoCredential credentialToCheck = demoCredentialRepository.findDemoCredentialByUsername(username).orElse(null);
 
-        if(credentialToCheck.id().isEmpty()){
+        if(credentialToCheck == null){
             return false;
         }else{
             return credentialToCheck.password().equals(password);
