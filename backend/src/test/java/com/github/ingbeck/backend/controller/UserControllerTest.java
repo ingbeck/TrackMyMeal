@@ -14,8 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -131,4 +130,18 @@ class UserControllerTest {
                                         """));
     }
 
+    @Test
+    void createDemoUser_whenCalledWithName_thenReturnDemoUserWithGivenName() throws Exception{
+        //GIVEN
+        //THEN & WHEN
+        mvc.perform(post("/api/users/demo/"+"Max"))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .json("""
+                                        {
+                                            "name": "Max"
+                                        }
+                                        """))
+                .andExpect(jsonPath("$.id").isNotEmpty());
+    }
 }
