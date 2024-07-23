@@ -105,6 +105,15 @@ export default function App() {
                 localStorage.setItem("user", JSON.stringify(response.data));
             })
     }
+
+    function createDemoUser(name: string){
+        axios.post("/api/users/demo/"+name)
+            .then(response => {
+                setAppUser(response.data);
+                localStorage.setItem("user", JSON.stringify(response.data));
+            })
+            .catch(error => console.log(error.message));
+    }
     function getAppUrl(){
         axios.get("/api/currentUrl")
             .then(response => {
@@ -200,7 +209,7 @@ export default function App() {
                   login={login}
                   setCurrentRoute={setCurrentRoute}
                   isDemo={true}
-                  getAppUserById={getAppUserById}/>}/>
+                  createDemoUser={createDemoUser}/>}/>
               <Route path={"/login"} element={<LoginProcessingScreen
                   getMe={getMe}
                   appUser={appUser}/>}/>

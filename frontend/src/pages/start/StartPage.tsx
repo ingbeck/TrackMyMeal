@@ -10,7 +10,7 @@ import axios from "axios";
 type StartScreenProps = {
     login: () => void,
     setCurrentRoute: (url:string) => void,
-    getAppUserById?: (id: string | undefined) => void,
+    createDemoUser?: (name: string) => void,
     isDemo: boolean
 }
 
@@ -40,8 +40,8 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
     }
 
     function loginDemo(){
-            if(props.getAppUserById){
-                props.getAppUserById("6698db77f221e7396941d052")
+            if(props.createDemoUser){
+                props.createDemoUser(formData.username)
                 navigate("/home")
             }
     }
