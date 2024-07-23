@@ -10,7 +10,7 @@ export type AppUser = {
     activityLevel : string,
     bmr : number,
     bmrWithActivity : number,
-    isNewUser : boolean,
+    newUser : boolean,
     creationDate : string,
-    isDemoUser : boolean
+    demoUser : boolean
 }

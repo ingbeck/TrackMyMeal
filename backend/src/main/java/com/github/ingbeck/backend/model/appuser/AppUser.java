@@ -24,9 +24,9 @@ public class AppUser {
     private ActivityLevel activityLevel;
     private int bmr;
     private int bmrWithActivity;
-    private boolean isNewUser;
+    private boolean newUser;
     private String creationDate;
-    private boolean isDemoUser;
+    private boolean demoUser;
 
     public AppUser(Map<String, Object> attributes){
         this.id = getStringAttribute(attributes, "sub");
@@ -40,9 +40,9 @@ public class AppUser {
         this.activityLevel = null;
         this.bmr = 0;
         this.bmrWithActivity = 0;
-        this.isNewUser = true;
+        this.newUser = true;
         this.creationDate = "";
-        this.isDemoUser = false;
+        this.demoUser = false;
     }
 
 }

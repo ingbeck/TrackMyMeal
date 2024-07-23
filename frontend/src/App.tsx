@@ -71,7 +71,7 @@ export default function App() {
                 bmrWithActivity : loggedInUser.bmrWithActivity,
                 isNewUser : loggedInUser.isNewUser,
                 creationDate : loggedInUser.creationDate,
-                isDemoUser : loggedInUser.creationDate
+                isDemoUser : loggedInUser.isDemoUser
             })
         }
     }, []);
@@ -156,7 +156,7 @@ export default function App() {
         axios.delete("/api/users/"+ id)
             .then(() => {
                 localStorage.clear();
-                navigate("/")
+                appUser.isDemoUser ? navigate("/demo") : navigate("/");
             })
     }
 
