@@ -109,7 +109,7 @@ public class DiaryService {
 
         for(int i = 0; i < 7; i++){
             diaryEntries.add(new DiaryEntry(
-                    today.minusDays(i-1L).toString(),
+                    today.minusDays(7L-i).toString(),
                     demoFoodItems(i+1),
                     demoFoodItems(i+1).stream().map(FoodItem::calories).reduce(0, Integer::sum))
             );
