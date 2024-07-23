@@ -49,6 +49,8 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
     function handleSubmit(e: { preventDefault: () => void; }){
         e.preventDefault()
 
+        checkIfAccountIsAuthorized()
+
         if(accountAuthorized){
             loginDemo()
         }else{
@@ -70,6 +72,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
             ...formData,
             [name]: value
         })
+
     }
 
     return (
@@ -119,7 +122,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                                name={"password"}
                                onChange={handleInputChange}
                                type={"password"}/>
-                        <button className={"add"} onClick={checkIfAccountIsAuthorized}>Los geht's!</button>
+                        <button className={"add"}>Los geht's!</button>
                     </div>
                 </form>
             </Drawer>
