@@ -34,9 +34,9 @@ export default function App() {
         activityLevel : "",
         bmr : 0,
         bmrWithActivity : 0,
-        isNewUser : true,
+        newUser : true,
         creationDate : "",
-        isDemoUser : false
+        demoUser : false
     })
     const[diary, setDiary] = useState<Diary>({id:"", userId:"", diaryEntries:[]});
     const[currentRoute, setCurrentRoute] = useState<string>("")
@@ -77,7 +77,7 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-        if(appUser.id !== "" && !appUser.isNewUser){
+        if(appUser.id !== "" && !appUser.newUser){
             getDiaryByUserId(appUser.id)
             getMealsByUserId(appUser.id)
         }
