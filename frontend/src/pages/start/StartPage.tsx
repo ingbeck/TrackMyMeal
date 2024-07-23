@@ -27,20 +27,24 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
 
     const[loginIsOpen, setLoginIsOpen] = useState<boolean>(false)
     const[formData, setFormData] = useState<FormLoginInput>({username:"", password:""})
-    const[accountAuthorized, setAccountAuthorized] = useState<boolean>(false)
 
     useEffect(() => {
         props.setCurrentRoute(url)
     }, [props, url]);
 
-    function checkIfAccountIsAuthorized(){
-        axios.get("/api/demo/login/"+formData.username+"/"+formData.password)
-            .then(response => setAccountAuthorized(response.data))
-            .catch(error => console.log(error.message))
+    async function checkIfAccountIsAuthorized(): Promise<boolean> {
+        return await axios.get("/api/demo/login/" + formData.username + "/" + formData.password)
+            .then(response => {
+                return Boolean(response.data)
+            })
+            .catch(() => {
+                return false
+            });
+
     }
 
-    function loginDemo(){
-        if(accountAuthorized && props.createDemoUser){
+    function loginDemo(isAuthorized : boolean){
+        if(isAuthorized && props.createDemoUser){
             props.createDemoUser(formData.username)
             navigate("/home")
         }else{
@@ -50,10 +54,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
 
     function handleSubmit(e: { preventDefault: () => void; }){
         e.preventDefault()
-
-        checkIfAccountIsAuthorized()
-        loginDemo()
-
+        checkIfAccountIsAuthorized().then(response => loginDemo(response))
     }
 
     function onClose(){
