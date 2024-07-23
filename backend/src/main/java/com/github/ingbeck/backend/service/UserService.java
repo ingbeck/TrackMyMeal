@@ -40,6 +40,8 @@ public class UserService {
                 appUserCreateDto.activityLevel(),
                 bmr,
                 bmrWithActivity,
+                false,
+                LocalDate.now().toString(),
                 false
         );
         return userRepository.save(appUserToSave);
@@ -70,7 +72,9 @@ public class UserService {
                 activityLevel,
                 bmr,
                 bmrWithActivity,
-                false
+                false,
+                LocalDate.now().toString(),
+                true
         );
 
         diaryService.createDemoDiary(id);

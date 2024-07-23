@@ -42,6 +42,8 @@ class UserControllerTest {
                 ActivityLevel.COUCHPOTATO,
                 1988,
                 2385,
+                false,
+                "2024-01-01",
                 false
         );
         userRepository.save(appUser);
@@ -62,9 +64,11 @@ class UserControllerTest {
                                             "activityLevel": "COUCHPOTATO",
                                             "bmr": 1988,
                                             "bmrWithActivity": 2385,
-                                            "newUser": false
+                                            "newUser": false,
+                                            "demoUser": false
                                         }
-                                        """));
+                                        """))
+                .andExpect(jsonPath("$.creationDate").isNotEmpty());
     }
 
     @Test
@@ -94,6 +98,8 @@ class UserControllerTest {
                 null,
                 0,
                 0,
+                false,
+                "",
                 false
         );
         userRepository.save(appUser);
@@ -125,9 +131,11 @@ class UserControllerTest {
                                             "activityLevel": "COUCHPOTATO",
                                             "bmr": 1981,
                                             "bmrWithActivity": 2377,
-                                            "newUser": false
+                                            "newUser": false,
+                                            "demoUser": false
                                         }
-                                        """));
+                                        """))
+                .andExpect(jsonPath("$.creationDate").isNotEmpty());
     }
 
     @Test

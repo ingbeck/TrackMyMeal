@@ -81,6 +81,8 @@ class UserServiceTest {
                 ActivityLevel.ATHLETE,
                 bmr,
                 bmrWithActivity,
+                false,
+                "2024-01-01",
                 false
         );
     }
