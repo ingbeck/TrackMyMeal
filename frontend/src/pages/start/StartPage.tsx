@@ -33,7 +33,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
     }, [props, url]);
 
     async function checkIfAccountIsAuthorized(): Promise<boolean> {
-        return await axios.get("/api/demo/login/" + formData.username + "/" + formData.password)
+        return await axios.get("/api/demo/login/" + formData.username.toLowerCase() + "/" + formData.password)
             .then(response => {
                 return Boolean(response.data)
             })
@@ -45,11 +45,15 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
 
     function loginDemo(isAuthorized : boolean){
         if(isAuthorized && props.createDemoUser){
-            props.createDemoUser(formData.username)
+            props.createDemoUser(capitalize(formData.username))
             navigate("/home")
         }else{
             window.alert("Account nicht gefunden")
         }
+    }
+
+    function capitalize(stringToCapitalize: string) : string{
+        return stringToCapitalize.charAt(0).toUpperCase() + stringToCapitalize.slice(1);
     }
 
     function handleSubmit(e: { preventDefault: () => void; }){
