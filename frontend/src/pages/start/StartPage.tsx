@@ -118,12 +118,14 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                         <input className={"searchbar"}
                                placeholder={"Username"}
                                name={"username"}
-                               onChange={handleInputChange}/>
+                               onChange={handleInputChange}
+                               required/>
                         <input className={"searchbar"}
                                placeholder={"Passwort"}
                                name={"password"}
                                onChange={handleInputChange}
-                               type={"password"}/>
+                               type={"password"}
+                               required/>
                         <button className={"add"}>Los geht's!</button>
                     </div>
                 </form>
