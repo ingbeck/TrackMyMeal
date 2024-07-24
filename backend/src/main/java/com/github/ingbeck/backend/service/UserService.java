@@ -42,7 +42,7 @@ public class UserService {
                 bmrWithActivity,
                 false,
                 LocalDate.now().toString(),
-                false
+                currentUser.isDemoUser()
         );
         return userRepository.save(appUserToSave);
     }
