@@ -65,7 +65,7 @@ public class UserService {
                 name,
                 birthdate,
                 age,
-                "https://lh3.googleusercontent.com/a/ACg8ocLuwovd3WyFZ3JPIPtoZhnqzfu78pijyskJW0H7a5W3nIhxDjFg=s96-c",
+                "https://res.cloudinary.com/dttofbtsu/image/upload/f_auto,q_auto/v1/trackmymeal/hoac0fslobdhddfjneyn",
                 gender,
                 height,
                 weight,
