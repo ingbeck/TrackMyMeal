@@ -1,11 +1,9 @@
 package com.github.ingbeck.backend.controller;
 
+import com.github.ingbeck.backend.model.democredentials.DemoCredentialDto;
 import com.github.ingbeck.backend.service.DemoCredentialService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,8 +12,8 @@ public class DemoCredentialController {
 
     private final DemoCredentialService demoCredentialService;
 
-    @GetMapping("/login/{username}/{password}")
-    public boolean isAuthorized(@PathVariable String username, @PathVariable String password){
-        return demoCredentialService.isAuthorized(username, password);
+    @PostMapping("/login")
+    public boolean isAuthorized(@RequestBody DemoCredentialDto credentialDto){
+        return demoCredentialService.isAuthorized(credentialDto);
     }
 }

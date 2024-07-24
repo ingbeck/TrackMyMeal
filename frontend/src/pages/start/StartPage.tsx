@@ -33,7 +33,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
     }, [props, url]);
 
     async function checkIfAccountIsAuthorized(): Promise<boolean> {
-        return await axios.get("/api/demo/login/" + formData.username.toLowerCase() + "/" + formData.password)
+        return await axios.post("/api/demo/login",{username: formData.username, password: formData.password})
             .then(response => {
                 return Boolean(response.data)
             })
@@ -118,14 +118,12 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                         <input className={"searchbar"}
                                placeholder={"Username"}
                                name={"username"}
-                               onChange={handleInputChange}
-                               required/>
+                               onChange={handleInputChange}/>
                         <input className={"searchbar"}
                                placeholder={"Passwort"}
                                name={"password"}
                                onChange={handleInputChange}
-                               type={"password"}
-                               required/>
+                               type={"password"}/>
                         <button className={"add"}>Los geht's!</button>
                     </div>
                 </form>

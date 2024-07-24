@@ -1,6 +1,7 @@
 package com.github.ingbeck.backend.service;
 
 import com.github.ingbeck.backend.model.democredentials.DemoCredential;
+import com.github.ingbeck.backend.model.democredentials.DemoCredentialDto;
 import com.github.ingbeck.backend.repository.DemoCredentialRepository;
 import org.junit.jupiter.api.Test;
 
@@ -19,24 +20,36 @@ class DemoCredentialServiceTest {
     @Test
     void isAuthorized_whenCredentialsDoNotExist_returnFalse(){
         //GIVEN
+        DemoCredentialDto demoCredentialDto = new DemoCredentialDto("testUser", "123");
         //THEN & WHEN
-        assertFalse(demoCredentialService.isAuthorized("test", "test"));
+        assertFalse(demoCredentialService.isAuthorized(demoCredentialDto));
     }
 
     @Test
     void isAuthorized_whenCredentialsExistAndPasswordIsValid_returnTrue(){
         //GIVEN
+        DemoCredentialDto demoCredentialDto = new DemoCredentialDto("testUser", "123");
         when(demoCredentialRepository.findDemoCredentialByUsername("testUser")).thenReturn(Optional.of(testCredential));
+
         //THEN & WHEN
-        assertTrue(demoCredentialService.isAuthorized("testUser", "123"));
+        assertTrue(demoCredentialService.isAuthorized(demoCredentialDto));
     }
 
     @Test
     void isAuthorized_whenCredentialsExistAndPasswordIsInvalid_returnFalse(){
         //GIVEN
+        DemoCredentialDto demoCredentialDto = new DemoCredentialDto("testUser", "321");
         when(demoCredentialRepository.findDemoCredentialByUsername("testUser")).thenReturn(Optional.of(testCredential));
         //THEN & WHEN
-        assertFalse(demoCredentialService.isAuthorized("testUser", "321"));
+        assertFalse(demoCredentialService.isAuthorized(demoCredentialDto));
+    }
+
+    @Test
+    void isAuthorized_whenCredentialsAreEmpty_returnFalse(){
+        //GIVEN
+        DemoCredentialDto demoCredentialDto = new DemoCredentialDto("", "");
+        //THEN & WHEN
+        assertFalse(demoCredentialService.isAuthorized(demoCredentialDto));
     }
 
 }
