@@ -5,6 +5,8 @@ import com.github.ingbeck.backend.repository.DemoCredentialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 @RequiredArgsConstructor
 public class DemoCredentialService {
@@ -13,12 +15,11 @@ public class DemoCredentialService {
 
     public boolean isAuthorized(String username, String password){
 
-        DemoCredential credentialToCheck = demoCredentialRepository.findDemoCredentialByUsername(username).orElse(null);
-
-        if(credentialToCheck == null){
-            return false;
-        }else{
+        try{
+            DemoCredential credentialToCheck = demoCredentialRepository.findDemoCredentialByUsername(username).orElseThrow(() -> new NoSuchElementException("User not found"));
             return credentialToCheck.password().equals(password);
+        }catch (NoSuchElementException e ){
+            return false;
         }
     }
 }
