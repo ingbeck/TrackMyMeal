@@ -1,6 +1,7 @@
 package com.github.ingbeck.backend.service;
 
 import com.github.ingbeck.backend.model.democredentials.DemoCredential;
+import com.github.ingbeck.backend.model.democredentials.DemoCredentialDto;
 import com.github.ingbeck.backend.repository.DemoCredentialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,13 +14,14 @@ public class DemoCredentialService {
 
     private final DemoCredentialRepository demoCredentialRepository;
 
-    public boolean isAuthorized(String username, String password){
+    public boolean isAuthorized(DemoCredentialDto credentialsSubmitted){
 
         try{
-            DemoCredential credentialToCheck = demoCredentialRepository.findDemoCredentialByUsername(username).orElseThrow(() -> new NoSuchElementException("User not found"));
-            return credentialToCheck.password().equals(password);
-        }catch (NoSuchElementException e ){
+            DemoCredential credentialToCheck = demoCredentialRepository.findDemoCredentialByUsername(credentialsSubmitted.username()).orElseThrow(() -> new NoSuchElementException("User not found"));
+            return credentialToCheck.password().equals(credentialsSubmitted.password());
+        }catch (NoSuchElementException e){
             return false;
         }
+
     }
 }
