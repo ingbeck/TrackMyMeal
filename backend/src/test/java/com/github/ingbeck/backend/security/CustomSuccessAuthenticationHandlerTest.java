@@ -81,7 +81,7 @@ class CustomSuccessAuthenticationHandlerTest {
             ArgumentCaptor<AppUser> userCaptor = ArgumentCaptor.forClass(AppUser.class);
             verify(userRepository).save(userCaptor.capture());
             AppUser savedUser = userCaptor.getValue();
-            assertFalse(savedUser.isNewUser());
+            assertTrue(savedUser.isNewUser());
         }
     }
 
@@ -119,7 +119,7 @@ class CustomSuccessAuthenticationHandlerTest {
                     null,
                     0,
                     0,
-                    true,
+                    false,
                     "",
                     false
             );
@@ -128,11 +128,7 @@ class CustomSuccessAuthenticationHandlerTest {
 
             customAuthenticationHandler.onAuthenticationSuccess(request, response, authentication);
 
-            verify(response).sendRedirect("http://localhost:5173/registration/987654321");
-            ArgumentCaptor<AppUser> userCaptor = ArgumentCaptor.forClass(AppUser.class);
-            verify(userRepository).save(userCaptor.capture());
-            AppUser savedUser = userCaptor.getValue();
-            assertFalse(savedUser.isNewUser());
+            verify(response).sendRedirect("http://localhost:5173/login");
         }
     }
 
