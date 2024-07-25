@@ -56,6 +56,7 @@ public class UserService {
         int weight = 86;
         AppUserGender gender = AppUserGender.MALE;
         ActivityLevel activityLevel = ActivityLevel.COUCHPOTATO;
+        LocalDate creationDate = LocalDate.now().minusDays(7L);
 
         int bmr = (int)calculateBMR(height,weight,calculateAge(birthdate),gender);
         int bmrWithActivity = (int)(bmr*activityLevel.getLevel());
@@ -73,7 +74,7 @@ public class UserService {
                 bmr,
                 bmrWithActivity,
                 false,
-                LocalDate.now().toString(),
+                creationDate.toString(),
                 true
         );
 
