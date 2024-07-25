@@ -31,7 +31,6 @@ public class CustomSuccessAuthenticationHandler implements AuthenticationSuccess
         if(!appUser.isNewUser()){
             response.sendRedirect(appURL + "/login");
         }else{
-            appUser.setNewUser(false);
             userRepository.save(appUser);
             response.sendRedirect(appURL + "/registration/"+id);
         }
