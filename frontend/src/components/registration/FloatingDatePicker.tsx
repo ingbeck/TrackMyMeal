@@ -1,7 +1,6 @@
 import {ChangeEvent, useState} from 'react';
 import "./FloatingInput.css"
 import {getDateToday} from "../../Utility/DateTime.ts";
-// @ts-ignore
 import InputMask from "react-input-mask";
 
 type FloatingDatePickerProps = {

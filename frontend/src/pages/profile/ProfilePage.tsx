@@ -6,7 +6,6 @@ import {AppUserCreateDto} from "../../types/AppUserCreateDto.ts";
 import {formatDate, getDateToday} from "../../Utility/DateTime.ts";
 import * as Yup from "yup";
 import {validationSchema} from "../../YupValidationSchema.ts";
-// @ts-ignore
 import InputMask from "react-input-mask";
 
 type ProfileScreenProps = {
