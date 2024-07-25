@@ -41,6 +41,7 @@ export default function FloatingDatePicker(props: Readonly<FloatingDatePickerPro
                   }}}
                   onChange={handleChange}
                   placeholder={props.error ? props.error : props.label}/>
+           <span className={"err"}>{props.error}</span>
        </div>
     );
 }
