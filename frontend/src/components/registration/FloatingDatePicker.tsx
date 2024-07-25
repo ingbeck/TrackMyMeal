@@ -24,12 +24,13 @@ export default function FloatingDatePicker(props: Readonly<FloatingDatePickerPro
     return (
        <div className={hasError ? "input-container-error" : "input-container"}>
            <InputMask className={"input-container-datepicker"}
-                  value={value}
-                  name={props.name}
+                      value={value}
+                      name={props.name}
                       mask="99.99.9999"
-                  max={getDateToday()}
-                  onChange={handleChange}
-                  placeholder={props.label}/>
+                      max={getDateToday()}
+                      onChange={handleChange}
+                      placeholder={props.label}
+                      inputMode={"numeric"}/>
            <span className={"err"}>{props.error}</span>
        </div>
     );
