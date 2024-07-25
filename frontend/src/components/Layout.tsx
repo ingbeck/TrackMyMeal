@@ -21,13 +21,13 @@ export default function Layout(props: Readonly<LayoutProps>) {
 
     const startScreen:string = props.appUrl + "/"
     const demoStartScreen:string = props.appUrl + "/demo"
-    const regScreen:string = props.appUrl + "/registration/" + props.appUser.id
+    const isRegScreen:boolean = props.appUser.newUser
     const addFoodItemScreen = props.appUrl + "/add-food-item"
     const homeScreen:string = props.appUrl + "/home"
     const isInApp = props.currentRoute != startScreen &&
-        props.currentRoute != regScreen  &&
+        !isRegScreen  &&
         props.currentRoute != addFoodItemScreen &&
-        props.currentRoute != demoStartScreen
+        props.currentRoute != demoStartScreen;
     const navigate = useNavigate();
     const [open, setOpen] = useState<boolean>(false);
     const [isFirstLoaded, setIsFirstLoaded] = useState<boolean>(false);

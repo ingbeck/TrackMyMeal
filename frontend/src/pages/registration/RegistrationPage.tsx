@@ -67,7 +67,7 @@ export default function RegistrationPage(props: Readonly<RegistrationScreenProps
     ];
 
     useEffect(() => {
-        props.setCurrentRoute(url)
+        props.setCurrentRoute(url);
     }, [props, url]);
 
     function handleChange(event: ChangeEvent<HTMLInputElement>){
