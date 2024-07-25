@@ -3,9 +3,10 @@ import {AppUser} from "../../types/AppUser.ts";
 import "./ProfilePage.css"
 import {ErrorState, FormInput} from "../registration/RegistrationPage.tsx";
 import {AppUserCreateDto} from "../../types/AppUserCreateDto.ts";
-import {getDateToday} from "../../Utility/DateTime.ts";
+import {formatDate, getDateToday} from "../../Utility/DateTime.ts";
 import * as Yup from "yup";
 import {validationSchema} from "../../YupValidationSchema.ts";
+import InputMask from "react-input-mask";
 
 type ProfileScreenProps = {
     setCurrentRoute : (url:string) => void,
@@ -52,8 +53,14 @@ export default function ProfilePage(props: Readonly<ProfileScreenProps>) {
     }
 
     function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>){
-        const value = event.target.value;
         const name = event.target.name;
+        let value;
+
+        if(name === "birthday"){
+            value = formatDate(event.target.value)
+        }else{
+            value = event.target.value;
+        }
 
         setFormData({
             ...formData,
@@ -162,9 +169,9 @@ export default function ProfilePage(props: Readonly<ProfileScreenProps>) {
                             {errors.birthday !== "" && <div className={"profilescreen-stats-item-error-message"}>{errors.birthday}</div>}
                             <div className={errors.birthday !== "" ? "profilescreen-stats-item-error" :"profilescreen-stats-item"}>
                                 <span>Geburtstag</span>
-                                <input name={"birthday"}
-                                       value={formData.birthday}
-                                       type={"date"}
+                                <InputMask name={"birthday"}
+                                       value={formattedDate(formData.birthday)}
+                                           mask={"99.99.9999"}
                                        onChange={handleChange}
                                        max={getDateToday()}
                                 />

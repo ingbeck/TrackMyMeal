@@ -1,6 +1,7 @@
-import {ChangeEvent, useEffect, useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 import "./FloatingInput.css"
 import {getDateToday} from "../../Utility/DateTime.ts";
+import InputMask from "react-input-mask";
 
 type FloatingDatePickerProps = {
     label: string,
@@ -11,13 +12,7 @@ type FloatingDatePickerProps = {
 export default function FloatingDatePicker(props: Readonly<FloatingDatePickerProps>) {
 
     const [value, setValue] = useState('');
-    const [isClicked, setIsClicked] = useState<boolean>(false)
     const hasError = props.error !== "" && props.error !== undefined
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-
-    useEffect(() => {
-        setIsClicked(false)
-    }, []);
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const value = e.target.value
@@ -28,19 +23,13 @@ export default function FloatingDatePicker(props: Readonly<FloatingDatePickerPro
 
     return (
        <div className={hasError ? "input-container-error" : "input-container"}>
-           <input className={"input-container-datepicker"}
-                  type={isClicked || isIOS ? "date" : "text"}
+           <InputMask className={"input-container-datepicker"}
                   value={value}
-                  id="dateInput"
                   name={props.name}
+                      mask="99.99.9999"
                   max={getDateToday()}
-                  onClick={() => setIsClicked(true)}
-                  onBlur={() => {
-                      if(value === ''){
-                          setIsClicked(false)
-                  }}}
                   onChange={handleChange}
-                  placeholder={props.error ? props.error : props.label}/>
+                  placeholder={props.label}/>
            <span className={"err"}>{props.error}</span>
        </div>
     );

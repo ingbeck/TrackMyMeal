@@ -9,6 +9,7 @@ import FloatingDatePicker from "../../components/registration/FloatingDatePicker
 import * as Yup from 'yup';
 import CustomRadioGroup from "../../components/registration/CustomRadioGroup.tsx";
 import {validationSchema} from "../../YupValidationSchema.ts";
+import {formatDate} from "../../Utility/DateTime.ts";
 
 type RegistrationScreenProps = {
     createUser : (id:string | undefined, appUserCreateDto:AppUserCreateDto) => void,
@@ -71,8 +72,14 @@ export default function RegistrationPage(props: Readonly<RegistrationScreenProps
     }, [props, url]);
 
     function handleChange(event: ChangeEvent<HTMLInputElement>){
-        const value = event.target.value;
+        let value;
         const name = event.target.name;
+
+        if(name === "birthday"){
+            value = formatDate(event.target.value)
+        }else{
+            value = event.target.value;
+        }
 
         setFormData({
             ...formData,

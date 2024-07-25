@@ -28,3 +28,10 @@ export function isCurrentMonth(date : Date): boolean{
     const now : Date = new Date();
     return ((date.getFullYear()) != now.getFullYear() || (date.getMonth() != now.getMonth()));
 }
+
+export function formatDate(dateString: string) : string{
+
+    const partOfDate : string[] = dateString.split(".")
+
+    return `${partOfDate[2]}-${partOfDate[1]}-${partOfDate[0]}`
+}
