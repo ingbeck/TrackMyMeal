@@ -170,11 +170,11 @@ export default function ProfilePage(props: Readonly<ProfileScreenProps>) {
                             <div className={errors.birthday !== "" ? "profilescreen-stats-item-error" :"profilescreen-stats-item"}>
                                 <span>Geburtstag</span>
                                 <InputMask name={"birthday"}
-                                       value={formattedDate(formData.birthday)}
+                                           value={formattedDate(formData.birthday)}
                                            mask={"99.99.9999"}
-                                       onChange={handleChange}
-                                       max={getDateToday()}
-                                />
+                                           onChange={handleChange}
+                                           max={getDateToday()}
+                                           inputMode={"numeric"}/>
                             </div>
                             <div className={"profilescreen-stats-item"}>
                                 <div className={"activity-radio-wrapper"}>
