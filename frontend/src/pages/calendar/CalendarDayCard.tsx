@@ -5,7 +5,8 @@ type CalendarDayCardProps = {
     isToday : (day: number) => boolean,
     percentage: number,
     clickCalendarDay: (day: number) => void,
-    isLaterThanToday: (day: number) => boolean
+    isLaterThanToday: (day: number) => boolean,
+    isBeforeUserCreationDate: (day: number) => boolean
 }
 
 export default function CalendarDayCard(props: Readonly<CalendarDayCardProps>) {
@@ -16,7 +17,7 @@ export default function CalendarDayCard(props: Readonly<CalendarDayCardProps>) {
     return (
         <>
             {
-                !props.isLaterThanToday(props.calendarDay.day)
+                !props.isLaterThanToday(props.calendarDay.day) && !props.isBeforeUserCreationDate(props.calendarDay.day)
                     ?
                     <button className={"day"}
                             onClick={() => props.clickCalendarDay(props.calendarDay.day)}

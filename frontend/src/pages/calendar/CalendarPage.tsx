@@ -60,6 +60,7 @@ export default function CalendarPage(props: Readonly<CalendarScreenProps>) {
                 </div>
                 <CalendarView
                     appUserCalories={props.appUser.bmrWithActivity}
+                    appUserCreationDate={props.appUser.creationDate}
                     diaryEntries={props.diary.diaryEntries}
                     date={date}
                 />
