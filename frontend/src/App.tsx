@@ -15,6 +15,7 @@ import {Diary,FoodItem} from "./types/Diary.ts";
 import AddFoodItem from "./pages/add-food-item/AddFoodItem.tsx";
 import {getDateToday} from "./Utility/DateTime.ts";
 import {Meal, MealToSaveDto} from "./types/Meal.ts";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 export default function App() {
 
@@ -219,11 +220,14 @@ export default function App() {
               <Route path={"/login"} element={<LoginProcessingScreen
                   getMe={getMe}
                   appUser={appUser}/>}/>
-              <Route path={"/home"} element={<HomePage
-                  setCurrentRoute={setCurrentRoute}
-                  deleteFoodItems={deleteFoodItem}
-                  appUser={appUser}
-                  diary={diary}/>
+              <Route path={"/home"} element={
+                  <ProtectedRoute appUser={appUser}>
+                      <HomePage
+                          setCurrentRoute={setCurrentRoute}
+                          deleteFoodItems={deleteFoodItem}
+                          appUser={appUser}
+                          diary={diary}/>
+                  </ProtectedRoute>
               }/>
               <Route path={"/registration/:id"} element={<RegistrationPage
                   createUser={createUser}
@@ -231,34 +235,47 @@ export default function App() {
                   appUser={appUser}
                   setCurrentRoute={setCurrentRoute}/>
               }/>
-              <Route path={"/calendar"} element={<CalendarPage
-                  appUser={appUser}
-                  setCurrentRoute={setCurrentRoute}
-                  diary={diary}/>}/>
-              <Route path={"/recipes"} element={<MealsPage
-                  setCurrentRoute={setCurrentRoute}
-                  appUser={appUser}
-                  meals={meals}
-                  addMealToDiary={addMealToDiary}
-                  addNewMeal={addNewMeal}
-                  deleteMeal={deleteMeal}
-                  checkIfUserHasMeals={checkIfUserHasMeals}
-                  userHasMeals={userHasMeals}/>
+              <Route path={"/calendar"} element={
+                  <ProtectedRoute appUser={appUser}>
+                      <CalendarPage
+                          appUser={appUser}
+                          setCurrentRoute={setCurrentRoute}
+                          diary={diary}/>
+                  </ProtectedRoute>
               }/>
-              <Route path={"/profile"} element={<ProfilePage
-                  setCurrentRoute={setCurrentRoute}
-                  appUser={appUser}
-                  deleteUser={deleteUser}
-                  logout={logout}
-                  updateUser={createUser}/>
+              <Route path={"/recipes"} element={
+                  <ProtectedRoute appUser={appUser}>
+                      <MealsPage
+                          setCurrentRoute={setCurrentRoute}
+                          appUser={appUser}
+                          meals={meals}
+                          addMealToDiary={addMealToDiary}
+                          addNewMeal={addNewMeal}
+                          deleteMeal={deleteMeal}
+                          checkIfUserHasMeals={checkIfUserHasMeals}
+                          userHasMeals={userHasMeals}/>
+                  </ProtectedRoute>
               }/>
-              <Route path={"/add-food-item"} element={<AddFoodItem
-                  mealType={currentMeal}
-                  appUser={appUser}
-                  setCurrentRoute={setCurrentRoute}
-                  updateDiaryEntry={updateDiaryEntry}
-                  diary={diary}
-                  deleteFoodItem={deleteFoodItem}/>
+              <Route path={"/profile"} element={
+                  <ProtectedRoute appUser={appUser}>
+                      <ProfilePage
+                          setCurrentRoute={setCurrentRoute}
+                          appUser={appUser}
+                          deleteUser={deleteUser}
+                          logout={logout}
+                          updateUser={createUser}/>
+                  </ProtectedRoute>
+              }/>
+              <Route path={"/add-food-item"} element={
+                  <ProtectedRoute appUser={appUser}>
+                      <AddFoodItem
+                          mealType={currentMeal}
+                          appUser={appUser}
+                          setCurrentRoute={setCurrentRoute}
+                          updateDiaryEntry={updateDiaryEntry}
+                          diary={diary}
+                          deleteFoodItem={deleteFoodItem}/>
+                  </ProtectedRoute>
               }/>
           </Routes>
       </Layout>
