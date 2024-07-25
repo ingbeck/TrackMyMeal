@@ -5,6 +5,7 @@ import "./CalendarView.css"
 import {Drawer} from "@mui/material";
 import {useState} from "react";
 import DiaryEntryView from "./DiaryEntryView.tsx";
+
 type CalendarViewProps = {
     diaryEntries: DiaryEntry[],
     appUserCalories: number,
