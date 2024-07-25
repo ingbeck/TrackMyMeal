@@ -8,6 +8,7 @@ import DiaryEntryView from "./DiaryEntryView.tsx";
 type CalendarViewProps = {
     diaryEntries: DiaryEntry[],
     appUserCalories: number,
+    appUserCreationDate: string,
     date : Date
 }
 
@@ -89,6 +90,13 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
         return today < dateToCheck;
     }
 
+    function isBeforeUserCreationDate(day: number) : boolean{
+        const creationDate = new Date(props.appUserCreationDate);
+        const dateToCheck = new Date(month.year, month.month, day+1);
+
+        return dateToCheck < creationDate
+    }
+
     function percentageCaloriesOfDiaryEntry(diaryEntryTotalCalories?: number): number{
         let percentage: number = 0;
 
@@ -157,7 +165,8 @@ export default function CalendarView(props: Readonly<CalendarViewProps>) {
                                                                    calendarDay={day} isToday={isToday}
                                                                    percentage={getDiaryEntryCaloriesByDate(month.year, month.month, day.day)}
                                                                    clickCalendarDay={onClickCalendarDay}
-                                                                   isLaterThanToday={isLaterThanToday}/>)
+                                                                   isLaterThanToday={isLaterThanToday}
+                                                                   isBeforeUserCreationDate={isBeforeUserCreationDate}/>)
                 }
                 {
                     month.calendarDays[month.calendarDays.length - 1].weekday != 6 && fillWithNextDays(month.calendarDays[month.calendarDays.length - 1].weekday)
