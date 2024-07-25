@@ -15,7 +15,8 @@ type RegistrationScreenProps = {
     createUser : (id:string | undefined, appUserCreateDto:AppUserCreateDto) => void,
     createDiary : (id:string | undefined) => void,
     setCurrentRoute : (url:string) => void,
-    appUser : AppUser
+    appUser : AppUser,
+    getMe : () => void
 }
 
 export type FormInput = {
@@ -70,6 +71,10 @@ export default function RegistrationPage(props: Readonly<RegistrationScreenProps
     useEffect(() => {
         props.setCurrentRoute(url);
     }, [props, url]);
+
+    useEffect(() => {
+        props.getMe()
+    }, []);
 
     function handleChange(event: ChangeEvent<HTMLInputElement>){
         let value;

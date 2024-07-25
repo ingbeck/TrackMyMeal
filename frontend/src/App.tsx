@@ -229,7 +229,8 @@ export default function App() {
                   createUser={createUser}
                   createDiary={createDiary}
                   appUser={appUser}
-                  setCurrentRoute={setCurrentRoute}/>
+                  setCurrentRoute={setCurrentRoute}
+                  getMe={getMe}/>
               }/>
               <Route path={"/calendar"} element={<CalendarPage
                   appUser={appUser}
