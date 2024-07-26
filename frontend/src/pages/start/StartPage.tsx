@@ -110,7 +110,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                         </div>
                     </div>
                     :
-                    <DesktopStartPage/>
+                    <DesktopStartPage isDemo={props.isDemo}/>
             }
             <Drawer open={loginIsOpen} onClose={onClose} anchor={"bottom"}>
                 <form className={"login-wrapper"} onSubmit={handleSubmit}>

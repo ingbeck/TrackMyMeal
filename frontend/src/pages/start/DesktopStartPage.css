@@ -2,28 +2,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vH;
+    height: 100dvh;
 }
 
 .startpageDesktop {
     display: flex;
+    gap: 24px;
     align-items: center;
     justify-content: center;
     border-radius: 16px;
-    background: #fff;
-    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.12);
     padding: 0 16px 0 72px;
-    height: 964px;
+    height: 90%;
 }
 
 .iphone {
     display: flex;
     flex-direction: column;
+    flex: 1;
     padding: 16px;
-    width: 390px;
-    height: 844px;
+    height: 85%;
+    width: 100px;
     border-radius: 40px;
-    box-shadow: 0 0 0 11px #1f1f1f, 0 0 0 13px #191919, 0 0 0 20px #111;
+    outline: solid 15px #000;
+    margin: 16px;
 }
 
 .iphone button {
@@ -33,12 +34,35 @@
     justify-content: center;
 }
 
-.iphone button:hover {
-    opacity: 0.5;
+.qrcode{
+    max-width: 100px;
+    min-width: 100px;
+    margin-top: 12px;
+    align-self: center;
+    transition: all 0.4s;
+}
+
+.hover{
+    opacity: 0.2;
+    transition: all 0.4s;
+}
+
+.lens{
+    position: absolute;
+    margin-top: 12px;
+    opacity: 0;
+    max-width: 100px;
+    max-height: 100px;
+    transition: all 0.2s;
+}
+
+.lens-hover{
+    opacity: 1;
+    transition: all 0.5s;
 }
 
 .description {
-    margin-left: 24px;
+    flex: 1;
     color: #666;
     text-align: center;
     max-width: 450px;
