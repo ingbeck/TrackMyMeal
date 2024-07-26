@@ -99,7 +99,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                                 props.isDemo
                                     ?
                                     <button className={"btn-login"} onClick={() => setLoginIsOpen(true)}>
-                                        Login
+                                        Jetzt anmelden
                                     </button>
                                     :
                                     <button className={"btn-login"} onClick={props.login}>
@@ -110,7 +110,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                         </div>
                     </div>
                     :
-                    <DesktopStartPage/>
+                    <DesktopStartPage isDemo={props.isDemo}/>
             }
             <Drawer open={loginIsOpen} onClose={onClose} anchor={"bottom"}>
                 <form className={"login-wrapper"} onSubmit={handleSubmit}>

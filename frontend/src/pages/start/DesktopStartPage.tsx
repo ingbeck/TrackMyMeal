@@ -1,12 +1,26 @@
 import "./DesktopStartPage.css"
 import QrCode from "../../assets/qr-trackmymeal-net.svg"
+import QrCodeDemo from "../../assets/qr-trackmymeal-net-demo.svg"
 import Logo from "../../assets/logo.png"
+import Lens from "../../assets/lens.svg"
 import {useState} from "react";
 import {Modal} from "@mui/material";
 
-export default function DesktopStartPage() {
+type DesktopStartPageProps = {
+    isDemo: boolean
+}
+
+export default function DesktopStartPage(props: Readonly<DesktopStartPageProps>) {
     const [qrCodeOpen, setQrCodeOpen] = useState<boolean>(false)
     const [mouseEnter, setMouseEnter] = useState<boolean>(false)
+
+    function isDemoQrCode(isDemo: boolean){
+        if(isDemo){
+            return QrCodeDemo
+        }else{
+            return QrCode
+        }
+    }
 
     return (
         <div className={"startpageDesktop_container"}>
@@ -27,13 +41,20 @@ export default function DesktopStartPage() {
                         onClick={() => setQrCodeOpen(!qrCodeOpen)}
                         onMouseEnter={() => setMouseEnter(!mouseEnter)}
                         onMouseLeave={() => setMouseEnter(!mouseEnter)}>
-                        <img src={QrCode} alt={"QRCode"} style={{maxWidth: 250, maxHeight: 250, alignSelf: "center"}}/>
+                        <img src={isDemoQrCode(props.isDemo)}
+                             alt={"QRCode"}
+                             className={mouseEnter ? "qrcode hover" : "qrcode"}/>
+                        <img src={Lens}
+                             alt={"Lens"}
+                             className={mouseEnter ? "lens lens-hover" : "lens"}/>
                     </button>
                 </div>
                 <p className={"description"}>Scanne den QR-Code mit deinem Handy und los geht's!</p>
                 <Modal open={qrCodeOpen} onClose={() => setQrCodeOpen(false)}
                        style={{display: 'flex', placeContent: 'center'}}>
-                    <img src={QrCode} alt={"QRCode"} style={{height: 500, width: 500, alignSelf: "center"}}/>
+                    <img src={isDemoQrCode(props.isDemo)}
+                         alt={"QRCode"}
+                         style={{height: 500, width: 500, alignSelf: "center"}}/>
                 </Modal>
             </div>
         </div>

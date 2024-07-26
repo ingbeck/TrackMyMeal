@@ -1,6 +1,6 @@
 .startpage{
     display: flex;
-    padding: 24px 24px 0 24px;
+    padding: 24px 24px 0px 24px;
     flex-direction: column;
     justify-content: space-between;
     background: #FFF;
@@ -19,6 +19,8 @@
     background-image: url("../../assets/startpage-imgs/img-slider-1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    background-position:center;
+    background-position-y: 35%;
     border-radius: 16px;
     flex-basis: 100%;
 }
@@ -42,7 +44,6 @@
 .startpage-body-wrapper{
     position: relative;
     bottom: 60px;
-    margin-bottom: 24px;
     display: flex;
     padding: 0 24px 0 24px;
     flex-direction: column;
