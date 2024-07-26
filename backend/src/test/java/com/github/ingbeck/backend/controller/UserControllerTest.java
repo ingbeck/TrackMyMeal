@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -99,7 +101,7 @@ class UserControllerTest {
                 0,
                 0,
                 false,
-                "",
+                LocalDate.now().toString(),
                 false
         );
         userRepository.save(appUser);
