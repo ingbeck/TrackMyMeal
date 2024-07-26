@@ -99,7 +99,7 @@ export default function StartPage(props: Readonly<StartScreenProps>) {
                                 props.isDemo
                                     ?
                                     <button className={"btn-login"} onClick={() => setLoginIsOpen(true)}>
-                                        Anmelden
+                                        Jetzt anmelden
                                     </button>
                                     :
                                     <button className={"btn-login"} onClick={props.login}>

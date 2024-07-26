@@ -19,6 +19,8 @@
     background-image: url("../../assets/startpage-imgs/img-slider-1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    background-position:center;
+    background-position-y: 35%;
     border-radius: 16px;
     flex-basis: 100%;
 }
