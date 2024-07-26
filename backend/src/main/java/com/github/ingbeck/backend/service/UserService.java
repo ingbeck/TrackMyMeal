@@ -44,6 +44,11 @@ public class UserService {
                 LocalDate.now().toString(),
                 currentUser.isDemoUser()
         );
+
+        if(!currentUser.isNewUser()){
+            appUserToSave.setCreationDate(currentUser.getCreationDate());
+        }
+
         return userRepository.save(appUserToSave);
     }
 
