@@ -1,7 +1,8 @@
 import "./DesktopStartPage.css"
 import QrCode from "../../assets/qr-trackmymeal-net.svg"
 import QrCodeDemo from "../../assets/qr-trackmymeal-net-demo.svg"
-import Logo from "../../assets/logo.png"
+import Phone from "../../assets/phone.jpg"
+import DemoPhone from "../../assets/demo-phone.jpg"
 import Lens from "../../assets/lens.svg"
 import {useState} from "react";
 import {Modal} from "@mui/material";
@@ -25,18 +26,8 @@ export default function DesktopStartPage(props: Readonly<DesktopStartPageProps>)
     return (
         <div className={"startpageDesktop_container"}>
             <div className={"startpageDesktop"}>
-                <div className={"iphone"}>
-                    <div className={"startpage-hero-wrapper"}>
-                        <div className={"image-hero"}></div>
-                        <div className={"logo-wrapper"}>
-                            <img src={Logo} className={"image-logo"}
-                                 alt={"Logo der App"}/>
-                        </div>
-                    </div>
-                    <div className={"headline-wrapper"}>
-                        <h1 className={"startpage-wrapper-text"}>Track My Meal</h1>
-                        <p>Dein mobiles Kalorientagebuch für eine&nbsp;ausgewogene Ernährung</p>
-                    </div>
+                <img id={"phone"} src={props.isDemo ? DemoPhone : Phone} alt={""}/>
+                <div className={"startpageDesktopText-wrapper"}>
                     <button
                         onClick={() => setQrCodeOpen(!qrCodeOpen)}
                         onMouseEnter={() => setMouseEnter(!mouseEnter)}
@@ -48,8 +39,8 @@ export default function DesktopStartPage(props: Readonly<DesktopStartPageProps>)
                              alt={"Lens"}
                              className={mouseEnter ? "lens lens-hover" : "lens"}/>
                     </button>
+                    <p className={"description"}>Einfach den Code mit der Kamera-App des Smartphones scannen und schon geht's los!</p>
                 </div>
-                <p className={"description"}>Scanne den QR-Code mit deinem Handy und los geht's!</p>
                 <Modal open={qrCodeOpen} onClose={() => setQrCodeOpen(false)}
                        style={{display: 'flex', placeContent: 'center'}}>
                     <img src={isDemoQrCode(props.isDemo)}
